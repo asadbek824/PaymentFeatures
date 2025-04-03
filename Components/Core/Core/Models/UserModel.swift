@@ -8,5 +8,11 @@
 import Foundation
 
 public struct UserModel: Codable {
+    public let id: Int
+    public let fullName: String
     
+    public init(id: Int, fullName: String) {
+        self.id = id
+        self.fullName = fullName
+    }
 }

@@ -17,8 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private let tabBarItemsData = [
-        TabBarItemData(image: "house.fill", title: "главная", type: .uikit(HomeViewController())),
-        TabBarItemData(image: "arrow.left.arrow.right", title: "перевод", type: .swiftui(AnyView(PaymentsView()))),
+        TabBarItemData(
+            image: "house.fill",
+            title: "главная",
+            type: .uikit(HomeAssemblyImpl.assemble())
+        ),
+        TabBarItemData(
+            image: "arrow.left.arrow.right",
+            title: "перевод",
+            type: .swiftui(AnyView(PaymentsView()))
+        )
     ]
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -54,24 +62,4 @@ extension AppDelegate {
         
         return tabBars
     }
-}
-
-enum TabType {
-    case uikit(UIViewController)
-    case swiftui(AnyView)
-    
-    var viewController: UIViewController {
-        switch self {
-        case .uikit(let vc):
-            return vc
-        case .swiftui(let view):
-            return UIHostingController(rootView: view)
-        }
-    }
-}
-
-struct TabBarItemData {
-    let image: String
-    let title: String
-    let type: TabType
 }
