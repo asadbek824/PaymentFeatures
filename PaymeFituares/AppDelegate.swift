@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     
-    func createTabBarItems(tabBarItems: [TabBarItemData]) -> [UIViewController] {
+    private func createTabBarItems(tabBarItems: [TabBarItemData]) -> [UIViewController] {
         var tabBars: [UIViewController] = []
         
         for item in tabBarItems {
