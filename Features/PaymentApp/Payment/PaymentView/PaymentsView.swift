@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct PaymentsView: View {
+public struct PaymentsView: View {
     
-    var body: some View {
+    public init() {  }
+    
+    public var body: some View {
         Text("PaymentsView")
     }
 }

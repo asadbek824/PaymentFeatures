@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final public class HomeViewController: UIViewController {
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .red

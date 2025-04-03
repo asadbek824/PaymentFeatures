@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     static var appColor = AppColor()
     
     static func rgb(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> UIColor {
@@ -18,7 +18,7 @@ extension UIColor {
         UIColor(red: value/255, green: value/255, blue: value/255, alpha: 1)
     }
 }
-struct AppColor {
-    let primary: UIColor = .rgb(86, 189, 199)
+public struct AppColor {
+    public let primary: UIColor = .rgb(86, 189, 199)
 }
 

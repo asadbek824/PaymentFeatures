@@ -7,6 +7,9 @@
 
 import UIKit
 import SwiftUI
+import Core
+import Home
+import Payment
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
