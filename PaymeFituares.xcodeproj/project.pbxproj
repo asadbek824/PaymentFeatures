@@ -21,6 +21,16 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5968BBA82D9EB02C00247DB0 /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		5968BBAA2D9EB04100247DB0 /* Features */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Features;
+			sourceTree = "<group>";
+		};
 		59C4EF8D2D9E893A004F85A8 /* PaymeFituares */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -46,6 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				59C4EF8D2D9E893A004F85A8 /* PaymeFituares */,
+				5968BBA82D9EB02C00247DB0 /* Components */,
+				5968BBAA2D9EB04100247DB0 /* Features */,
 				59C4EF8C2D9E893A004F85A8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,6 +86,8 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				5968BBA82D9EB02C00247DB0 /* Components */,
+				5968BBAA2D9EB04100247DB0 /* Features */,
 				59C4EF8D2D9E893A004F85A8 /* PaymeFituares */,
 			);
 			name = PaymeFituares;
