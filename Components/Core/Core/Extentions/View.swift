@@ -30,4 +30,20 @@ public extension View {
                 )
         }
     }
+    
+    func backButton(_ action: (() -> Void)? = nil) -> some View {
+        self
+            .navigationBarBackButtonHidden()
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        Utils.topViewController()?.dismiss(animated: true)
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.secondaryLabel)
+                    }
+                }
+            }
+    }
 }
