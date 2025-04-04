@@ -20,6 +20,8 @@ public extension UIColor {
 }
 
 public struct AppColor {
-    public let primary: UIColor = .rgb(86, 189, 199)
+    public let primary: UIColor = .rgb(101, 200, 201)
+    public let secondary: UIColor = .rgbAll(255)
+    public let green: UIColor = .rgb(129, 179, 107)
 }
 
