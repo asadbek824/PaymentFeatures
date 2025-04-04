@@ -5,8 +5,8 @@
 //  Created by Akbarshah Jumanazarov on 4/4/25.
 //
 
-import SwiftUI
 import Core
+import SwiftUI
 
 struct PayShareView: View {
     
@@ -14,68 +14,43 @@ struct PayShareView: View {
     
     var body: some View {
         VStack {
-            if vm.isConnected {
-                ConnectedView()
-            } else {
-                SearchingView()
+            GeometryReader {
+                let size = $0.size
+                
+                ZStack {
+                    RadarView()
+                    RadarTargetView(title: "Me")
+                }
+                .frame(width: size.width, height: size.height)
+            }
+            .overlay(alignment: .top) {
+                DiscoveredTargetsView()
             }
         }
+        .backButton()
         .fillSuperview()
         .navigationTitle("Pay Share")
         .navigationBarTitleDisplayMode(.inline)
         .background(.secondarySystemBackground)
-        .backButton()
+        .sheet(isPresented: $vm.showSheet) {
+            Text("dfsdf")
+                .presentationDetents([.medium])
+        }
     }
     
     @ViewBuilder
-    private func SearchingView() -> some View {
-        GeometryReader {
-            let size = $0.size
-            ZStack {
-                RadarView()
-                RadarTargetView(title: "Me")
-                    .scaleEffect(vm.isScaling ? 1.2 : 1.0)
-                    .animation(
-                        .easeInOut(duration: 1.2)
-                        .repeatForever(autoreverses: true),
-                        value: vm.isScaling
-                    )
+    private func DiscoveredTargetsView() -> some View {
+        HStack(spacing: 16) {
+            ForEach(vm.multipeerService.discoveredPeers) { device in
+                RadarTargetView(title: device.name)
+                    .onTapGesture {
+                        vm.connect(to: device)
+                    }
             }
-            .frame(maxWidth: size.width, maxHeight: size.height)
         }
-    }
-    
-    @ViewBuilder
-    private func ConnectedView() -> some View {
-        VStack {
-            RadarTargetView(title: "Other")
-            
-            Rectangle()
-                .fill(.secondaryLabel)
-                .frame(width: 2, height: .screenWidth / 2)
-                .overlay {
-                    Image(systemName: "link.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .foregroundStyle(.appPrimary)
-                        .background()
-                        .clipShape(.circle)
-                        .scaleEffect(vm.isScaling ? 1.2 : 1.0)
-                        .animation(
-                            .easeInOut(duration: 1.2)
-                            .repeatForever(autoreverses: true),
-                            value: vm.isScaling
-                        )
-                        .onAppear {
-                            vm.isScaling = true
-                        }
-                }
-                
-            RadarTargetView(title: "Me")
-                .padding(.top, -16)
-        }
-        .fillSuperview()
+        .padding()
+        .padding(.top, .screenWidth / 4)
+        .frame(maxWidth: .infinity)
     }
 }
 

@@ -15,7 +15,7 @@ struct RadarView: View {
         ZStack {
             ForEach(vm.circles) { circle in
                 Circle()
-                    .fill(Color.teal.opacity(circle.opacity))
+                    .fill(.appPrimary.opacity(circle.opacity))
                     .frame(width: circle.size, height: circle.size)
             }
         }
