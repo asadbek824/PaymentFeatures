@@ -9,6 +9,7 @@ import Foundation
 
 protocol HomeBusseinessProtocol {
     func loadUserData() async
+    func loadUserCarts() async
 }
 
 final class HomeInteractor {
@@ -31,6 +32,15 @@ extension HomeInteractor: HomeBusseinessProtocol {
             presenter.displayUser(user: user)
         } catch {
             print("Ошибка загрузки пользователя:", error)
+        }
+    }
+    
+    func loadUserCarts() async {
+        do {
+            let carts = try await worker.fetchUserBalanceAndExpenses()
+            presenter.displayCarts(carts: carts)
+        } catch {
+            print("Ошибка загрузки carts:", error)
         }
     }
 }
