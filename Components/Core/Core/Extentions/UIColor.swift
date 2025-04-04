@@ -18,6 +18,7 @@ public extension UIColor {
         UIColor(red: value/255, green: value/255, blue: value/255, alpha: 1)
     }
 }
+
 public struct AppColor {
     public let primary: UIColor = .rgb(86, 189, 199)
 }
