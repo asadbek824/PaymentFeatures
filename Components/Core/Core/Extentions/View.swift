@@ -37,7 +37,11 @@ public extension View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        Utils.topViewController()?.dismiss(animated: true)
+                        if let action {
+                            action()
+                        } else {
+                            Utils.topViewController()?.dismiss(animated: true)
+                        }
                     } label: {
                         Image(systemName: "chevron.left")
                             .fontWeight(.semibold)

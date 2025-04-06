@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_payme-pay-share._tcp</string>
+		<string>_payme-pay-share._udp</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>We need access to your local network to enable peer-to-peer connectivity.</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This app uses Bluetooth to discover and connect to nearby devices.</string>
+</dict>
 </plist>

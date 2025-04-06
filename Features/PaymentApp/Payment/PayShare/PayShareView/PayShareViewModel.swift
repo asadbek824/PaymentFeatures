@@ -12,41 +12,83 @@ import Foundation
 class PayShareViewModel: ObservableObject {
     
     @Published var showSheet: Bool = false
-    @Published var multipeerService = MultipeerService()
-    @Published var messageText = ""
-    @Published var isConnecting = false
-    @Published var showPeerList = false
+    @Published var connectedPeer: PeerDevice?
+    @Published private(set) var multipeerService: MultipeerService?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
         print("Initializing and starting peer discovery...")
-        multipeerService.start()
-        multipeerService.onConnectionStatusChanged = { [weak self] status in
-            self?.isConnecting = status.contains("Connecting")
+        self.multipeerService = MultipeerService()
+        setupSubscriptions()
+        multipeerService?.start()
+    }
+    
+    private func setupSubscriptions() {
+        multipeerService?.$discoveredPeers
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+            .store(in: &cancellables)
+            
+        multipeerService?.$connectedPeers
+            .receive(on: DispatchQueue.main)
+            .map { $0.first }
+            .sink { [weak self] peer in
+                self?.connectedPeer = peer
+            }
+            .store(in: &cancellables)
+        
+        multipeerService?.$connectionStatus
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                self?.handleConnectionStatus(status)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleConnectionStatus(_ status: ConnectionStatus) {
+        switch status {
+        case .notConnected:
+            print("notConnected")
+        case .searching:
+            print("searching")
+        case .connecting(let to):
+            print("connecting")
+        case .connected(let to):
+            print("connected")
+        case .failed(let error):
+            print("failed")
+        case .stopped:
+            print("stopped")
+        @unknown default:
+            print("unknown default")
         }
     }
     
     func stopSearching() {
         print("Stopping peer discovery...")
-        multipeerService.stop()
+        multipeerService?.stop()
     }
     
     func connect(to peer: PeerDevice) {
         print("Attempting to connect to \(peer.name)")
-        isConnecting = true
-        multipeerService.connectToPeer(peer)
+        multipeerService?.connectToPeer(peer)
+        showSheet = true
     }
     
     func disconnect() {
         print("Disconnecting...")
-        multipeerService.disconnect()
+        multipeerService?.disconnect()
     }
     
-    func sendMessage() {
-        guard !messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
-        print("Sending message: \(messageText)")
-        if multipeerService.sendMessage(messageText) {
-            messageText = ""
+    func sendMessage(_ text: String) -> Bool {
+        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return false
         }
+        
+        print("Sending message: \(text)")
+        return multipeerService?.sendMessage(text) == true ? true : false
     }
-    
 }

@@ -17,12 +17,16 @@ public class MultipeerService: NSObject, ObservableObject {
     private var advertiser: MCNearbyServiceAdvertiser
     private var browser: MCNearbyServiceBrowser
     
-    @Published public var discoveredPeers: [PeerDevice] = []
+    @Published public var discoveredPeers: [PeerDevice] = [] {
+        didSet {
+            print("📱 MultipeerService: Updated discoveredPeers count: \(discoveredPeers.count)")
+        }
+    }
     @Published public var connectedPeers: [PeerDevice] = []
     @Published public var messages: [PeerMessage] = []
-    @Published public var connectionStatus = "Not Connected"
+    @Published public var connectionStatus: ConnectionStatus = .notConnected
     
-    public var onConnectionStatusChanged: ((String) -> Void)?
+//    public var onConnectionStatusChanged: ((ConnectionStatus) -> Void)?
     
     public override init() {
         print("MultipeerService: Initializing...")
@@ -49,7 +53,7 @@ public class MultipeerService: NSObject, ObservableObject {
         browser.startBrowsingForPeers()
         print("MultipeerService: Started browsing")
         
-        connectionStatus = "Searching for peers..."
+        connectionStatus = .searching
     }
     
     public func stop() {
@@ -57,19 +61,19 @@ public class MultipeerService: NSObject, ObservableObject {
         advertiser.stopAdvertisingPeer()
         browser.stopBrowsingForPeers()
         session.disconnect()
-        connectionStatus = "Stopped"
+        connectionStatus = .stopped
         print("MultipeerService: All services stopped")
     }
     
     public func connectToPeer(_ peer: PeerDevice) {
         browser.invitePeer(peer.id, to: session, withContext: nil, timeout: 30)
-        connectionStatus = "Inviting \(peer.name)..."
+        connectionStatus = .connecting(to: peer.name)
     }
     
     public func disconnect() {
         session.disconnect()
         updateConnectedPeers()
-        connectionStatus = "Disconnected"
+        connectionStatus = .notConnected
     }
     
     public func sendMessage(_ text: String) -> Bool {
@@ -100,9 +104,9 @@ public class MultipeerService: NSObject, ObservableObject {
         // Update connection status based on peers
         if !connectedPeers.isEmpty {
             let peerNames = connectedPeers.map { $0.name }.joined(separator: ", ")
-            connectionStatus = "Connected to: \(peerNames)"
+            connectionStatus = .connected(to: peerNames)
         } else {
-            connectionStatus = "Not Connected"
+            connectionStatus = .notConnected
         }
         
         // Also update discovered peers to reflect connection status
@@ -114,12 +118,12 @@ public class MultipeerService: NSObject, ObservableObject {
     
     public func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
         print("❌ MultipeerService: Failed to start browsing: \(error.localizedDescription)")
-        connectionStatus = "Failed to start browsing"
+        connectionStatus = .failed(error: "Failed to start browsing")
     }
     
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
         print("❌ MultipeerService: Failed to start advertising: \(error.localizedDescription)")
-        connectionStatus = "Failed to start advertising"
+        connectionStatus = .failed(error: "Failed to start advertising")
     }
 }
 
@@ -130,20 +134,20 @@ extension MultipeerService: MCSessionDelegate {
             switch state {
             case .connected:
                 print("✅ MultipeerService: Connected to \(peerID.displayName)")
-                self.connectionStatus = "Connected to \(peerID.displayName)"
+                self.connectionStatus = .connected(to: peerID.displayName)
             case .connecting:
                 print("⏳ MultipeerService: Connecting to \(peerID.displayName)...")
-                self.connectionStatus = "Connecting to \(peerID.displayName)..."
+                self.connectionStatus = .connecting(to: peerID.displayName)
             case .notConnected:
                 print("❌ MultipeerService: Disconnected from \(peerID.displayName)")
-                self.connectionStatus = "Disconnected from \(peerID.displayName)"
+                self.connectionStatus = .notConnected
             @unknown default:
                 print("⚠️ MultipeerService: Unknown state for \(peerID.displayName)")
-                self.connectionStatus = "Unknown connection state"
+                self.connectionStatus = .failed(error: "Unknown connection state")
             }
             
             self.updateConnectedPeers()
-            self.onConnectionStatusChanged?(self.connectionStatus)
+//            self.onConnectionStatusChanged?(self.connectionStatus)
         }
     }
     
@@ -208,9 +212,13 @@ extension MultipeerService: MCNearbyServiceAdvertiserDelegate {
 extension MultipeerService: MCNearbyServiceBrowserDelegate {
     public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         print("✨ MultipeerService: Found peer: \(peerID.displayName)")
-        DispatchQueue.main.async {
+        
+        // Ensure UI updates happen on main thread and trigger objectWillChange
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             let peer = PeerDevice(id: peerID, isConnected: self.session.connectedPeers.contains(peerID))
             if !self.discoveredPeers.contains(where: { $0.id == peerID }) {
+                self.objectWillChange.send()
                 self.discoveredPeers.append(peer)
                 print("📱 MultipeerService: Added new peer to discovered peers: \(peerID.displayName)")
             }
@@ -219,7 +227,9 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
     
     public func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         print("🔍 MultipeerService: Lost peer: \(peerID.displayName)")
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.objectWillChange.send()
             self.discoveredPeers.removeAll(where: { $0.id == peerID })
         }
     }
