@@ -21,9 +21,7 @@ public class MultipeerService: NSObject, ObservableObject {
     @Published public var connectedPeers: [PeerDevice] = []
     @Published public var messages: [PeerMessage] = []
     @Published public var connectionStatus: ConnectionStatus = .notConnected
-    
-//    public var onConnectionStatusChanged: ((ConnectionStatus) -> Void)?
-    
+        
     public override init() {
         print("MultipeerService: Initializing...")
         session = MCSession(peer: myPeerId, securityIdentity: nil, encryptionPreference: .none)
@@ -40,7 +38,7 @@ public class MultipeerService: NSObject, ObservableObject {
     
     public func start() {
         print("MultipeerService: Starting services...")
-        stop() // This will ensure we're starting fresh
+        stop()
         
         advertiser.startAdvertisingPeer()
         print("MultipeerService: Started advertising")
@@ -87,11 +85,10 @@ public class MultipeerService: NSObject, ObservableObject {
             try session.send(data, toPeers: session.connectedPeers, with: .reliable)
             print("📤 MultipeerService: Sending message: \(text)")
             
-            // Add to local messages
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.messages.append(PeerMessage(text: text, sender: self.myPeerId.displayName, isFromSelf: true))
-                self.objectWillChange.send()  // Explicitly notify observers
+                self.objectWillChange.send()
             }
             return true
         } catch {
@@ -103,7 +100,6 @@ public class MultipeerService: NSObject, ObservableObject {
     private func updateConnectedPeers() {
         connectedPeers = session.connectedPeers.map { PeerDevice(id: $0, isConnected: true) }
         
-        // Update connection status based on peers
         if !connectedPeers.isEmpty {
             let peerNames = connectedPeers.map { $0.name }.joined(separator: ", ")
             connectionStatus = .connected(to: peerNames)
@@ -111,7 +107,6 @@ public class MultipeerService: NSObject, ObservableObject {
             connectionStatus = .notConnected
         }
         
-        // Also update discovered peers to reflect connection status
         for i in 0..<discoveredPeers.count {
             let isConnected = session.connectedPeers.contains(discoveredPeers[i].id)
             discoveredPeers[i].isConnected = isConnected
