@@ -11,6 +11,7 @@ import Core
 protocol HomePresentetionProtocol {
     func displayUser(user: UserModel)
     func displayCarts(carts: [UserBalanceAndExpensesModel])
+    func displayBanners(banners: [BannerModel])
 }
 
 final class HomePresenter {
@@ -42,6 +43,13 @@ extension HomePresenter: HomePresentetionProtocol {
         DispatchQueue.main.async {
             self.view?.updateUserBalanceAndExpensess(formattedBalance, formattedExpenses, currency)
         }
+    }
+    
+    func displayBanners(banners: [BannerModel]) {
+        guard let firstBanner = banners.first else { return }
+        let imageUrl = firstBanner.media.src ?? ""
+        let title = firstBanner.media.title
+        view?.updateBannerImageAndTitle(imageUrl, title)
     }
 }
 

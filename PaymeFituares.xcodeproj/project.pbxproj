@@ -78,6 +78,7 @@
 /* Begin PBXFileReference section */
 		594D97252D9EF7C70045D271 /* HomeApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HomeApp.xcodeproj; path = HomeApp/HomeApp.xcodeproj; sourceTree = "<group>"; };
 		594D98B52D9FF3FC0045D271 /* ServiceApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ServiceApp.xcodeproj; path = ServiceApp/ServiceApp.xcodeproj; sourceTree = "<group>"; };
+		59619A792DA2A0A9005A674C /* AssetsKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AssetsKit.xcodeproj; path = AssetsKit/AssetsKit.xcodeproj; sourceTree = "<group>"; };
 		59C4EF8B2D9E893A004F85A8 /* PaymeFituares.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymeFituares.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Core.xcodeproj; path = Core/Core.xcodeproj; sourceTree = "<group>"; };
 		59FB1E5F2D9EC00700D58B5A /* PaymentApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PaymentApp.xcodeproj; path = PaymentApp/PaymentApp.xcodeproj; sourceTree = "<group>"; };
@@ -137,6 +138,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		59619A7A2DA2A0A9005A674C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		59C4EF822D9E893A004F85A8 = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +167,7 @@
 		59FB1DDB2D9EBD9900D58B5A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				59619A792DA2A0A9005A674C /* AssetsKit.xcodeproj */,
 				59FB1EFB2D9EE8E900D58B5A /* NetworkManager.xcodeproj */,
 				59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */,
 			);
@@ -260,6 +269,10 @@
 			productRefGroup = 59C4EF8C2D9E893A004F85A8 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 59619A7A2DA2A0A9005A674C /* Products */;
+					ProjectRef = 59619A792DA2A0A9005A674C /* AssetsKit.xcodeproj */;
+				},
 				{
 					ProductGroup = 59FB1DF32D9EBDB900D58B5A /* Products */;
 					ProjectRef = 59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */;

@@ -10,6 +10,7 @@ import Foundation
 protocol HomeBusseinessProtocol {
     func loadUserData() async
     func loadUserCarts() async
+    func loadBanner() async
 }
 
 final class HomeInteractor {
@@ -41,6 +42,15 @@ extension HomeInteractor: HomeBusseinessProtocol {
             presenter.displayCarts(carts: carts)
         } catch {
             print("Ошибка загрузки carts:", error)
+        }
+    }
+    
+    func loadBanner() async {
+        do {
+            let banners = try await worker.featchBanners()
+            presenter.displayBanners(banners: banners)
+        } catch {
+            print("Ошибка загрузки banners:", error)
         }
     }
 }
