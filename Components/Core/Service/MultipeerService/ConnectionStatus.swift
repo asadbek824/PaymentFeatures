@@ -1,6 +1,7 @@
 import Foundation
 
 public enum ConnectionStatus {
+    
     case notConnected
     case searching
     case connecting(to: String)

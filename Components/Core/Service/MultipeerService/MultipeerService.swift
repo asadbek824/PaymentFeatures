@@ -17,11 +17,7 @@ public class MultipeerService: NSObject, ObservableObject {
     private var advertiser: MCNearbyServiceAdvertiser
     private var browser: MCNearbyServiceBrowser
     
-    @Published public var discoveredPeers: [PeerDevice] = [] {
-        didSet {
-            print("📱 MultipeerService: Updated discoveredPeers count: \(discoveredPeers.count)")
-        }
-    }
+    @Published public var discoveredPeers: [PeerDevice] = []
     @Published public var connectedPeers: [PeerDevice] = []
     @Published public var messages: [PeerMessage] = []
     @Published public var connectionStatus: ConnectionStatus = .notConnected
@@ -44,8 +40,7 @@ public class MultipeerService: NSObject, ObservableObject {
     
     public func start() {
         print("MultipeerService: Starting services...")
-        discoveredPeers.removeAll()
-        connectedPeers.removeAll()
+        stop() // This will ensure we're starting fresh
         
         advertiser.startAdvertisingPeer()
         print("MultipeerService: Started advertising")
@@ -61,6 +56,8 @@ public class MultipeerService: NSObject, ObservableObject {
         advertiser.stopAdvertisingPeer()
         browser.stopBrowsingForPeers()
         session.disconnect()
+        discoveredPeers.removeAll()
+        connectedPeers.removeAll()
         connectionStatus = .stopped
         print("MultipeerService: All services stopped")
     }
@@ -74,6 +71,11 @@ public class MultipeerService: NSObject, ObservableObject {
         session.disconnect()
         updateConnectedPeers()
         connectionStatus = .notConnected
+        clearMessages()
+    }
+    
+    public func clearMessages() {
+        messages = []
     }
     
     public func sendMessage(_ text: String) -> Bool {
@@ -147,7 +149,6 @@ extension MultipeerService: MCSessionDelegate {
             }
             
             self.updateConnectedPeers()
-//            self.onConnectionStatusChanged?(self.connectionStatus)
         }
     }
     
@@ -174,38 +175,6 @@ extension MultipeerService: MCNearbyServiceAdvertiserDelegate {
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("📨 MultipeerService: Received invitation from peer: \(peerID.displayName)")
         invitationHandler(true, self.session)
-//        DispatchQueue.main.async {
-//            self.handleInvitation(from: peerID, invitationHandler: invitationHandler)
-//        }
-    }
-    
-    private func handleInvitation(from peerID: MCPeerID, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        let alertController = UIAlertController(
-            title: "Connection Request",
-            message: "\(peerID.displayName) wants to connect",
-            preferredStyle: .alert
-        )
-        
-        alertController.addAction(UIAlertAction(title: "Accept", style: .default) { _ in
-            invitationHandler(true, self.session)
-        })
-        
-        alertController.addAction(UIAlertAction(title: "Decline", style: .cancel) { _ in
-            invitationHandler(false, nil)
-        })
-        
-        // Find the currently presented view controller
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first,
-           let rootViewController = window.rootViewController {
-            
-            var currentViewController = rootViewController
-            while let presentedViewController = currentViewController.presentedViewController {
-                currentViewController = presentedViewController
-            }
-            
-            currentViewController.present(alertController, animated: true)
-        }
     }
 }
 
@@ -213,11 +182,13 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
     public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
         print("✨ MultipeerService: Found peer: \(peerID.displayName)")
         
-        // Ensure UI updates happen on main thread and trigger objectWillChange
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            let peer = PeerDevice(id: peerID, isConnected: self.session.connectedPeers.contains(peerID))
-            if !self.discoveredPeers.contains(where: { $0.id == peerID }) {
+            
+            self.discoveredPeers.removeAll(where: { $0.id == peerID })
+            
+            if !self.session.connectedPeers.contains(peerID) {
+                let peer = PeerDevice(id: peerID, isConnected: false)
                 self.objectWillChange.send()
                 self.discoveredPeers.append(peer)
                 print("📱 MultipeerService: Added new peer to discovered peers: \(peerID.displayName)")
@@ -231,6 +202,14 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
             guard let self = self else { return }
             self.objectWillChange.send()
             self.discoveredPeers.removeAll(where: { $0.id == peerID })
+            self.connectedPeers.removeAll(where: { $0.id == peerID })
+            
+            if self.connectedPeers.isEmpty {
+                switch self.connectionStatus {
+                case .searching: break  // Do nothing if already searching
+                default: self.connectionStatus = .notConnected
+                }
+            }
         }
     }
 }

@@ -9,8 +9,8 @@ import Foundation
 
 public struct PeerMessage: Identifiable, Equatable {
     public let id = UUID()
-    let text: String
-    let sender: String
-    let isFromSelf: Bool
-    let timestamp = Date()
+    public let text: String
+    public let sender: String
+    public let isFromSelf: Bool
+    public let timestamp = Date()
 }

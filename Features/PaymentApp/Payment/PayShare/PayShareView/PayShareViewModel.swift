@@ -14,6 +14,7 @@ class PayShareViewModel: ObservableObject {
     @Published var showSheet: Bool = false
     @Published var connectedPeer: PeerDevice?
     @Published private(set) var multipeerService: MultipeerService?
+    @Published var receivedMessage: PeerMessage?
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -46,6 +47,19 @@ class PayShareViewModel: ObservableObject {
                 self?.handleConnectionStatus(status)
             }
             .store(in: &cancellables)
+        
+        multipeerService?.$messages
+             .receive(on: DispatchQueue.main)
+             .compactMap { messages -> [PeerMessage] in
+                 messages.filter { !$0.isFromSelf }
+             }
+             .filter { !$0.isEmpty }
+             .compactMap { $0.last }
+             .sink { [weak self] message in
+                 self?.receivedMessage = message
+                 self?.multipeerService?.clearMessages()
+             }
+             .store(in: &cancellables)
     }
     
     private func handleConnectionStatus(_ status: ConnectionStatus) {
