@@ -76,8 +76,8 @@ private extension PaymeGoCell {
 
         circleView.addSubview(iconImageView)
         
-        iconImageView.setConstraint(.width, from: self, CGFloat(integerLiteral: .forty))
-        iconImageView.setConstraint(.height, from: self, CGFloat(integerLiteral: .forty))
+        iconImageView.setConstraint(.width, from: self, CGFloat(integerLiteral: .fiftySix))
+        iconImageView.setConstraint(.height, from: self, CGFloat(integerLiteral: .fiftySix))
         iconImageView.centerXAnchor.constraint(equalTo: circleView.centerXAnchor).isActive = true
         iconImageView.centerYAnchor.constraint(equalTo: circleView.centerYAnchor).isActive = true
     }

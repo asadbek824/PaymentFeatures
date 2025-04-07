@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59619B3D2DA2ADF3005A674C /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59619B3C2DA2ADF3005A674C /* Core.framework */; };
 		59FB1E7F2D9EC10400D58B5A /* Payment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E6A2D9EC03800D58B5A /* Payment.framework */; };
 		59FB1E802D9EC10400D58B5A /* Payment.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E6A2D9EC03800D58B5A /* Payment.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1E882D9EC36200D58B5A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E852D9EC35300D58B5A /* Core.framework */; };
@@ -39,6 +40,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		59619B3C2DA2ADF3005A674C /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E4E2D9EC00600D58B5A /* PaymentApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymentApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E6A2D9EC03800D58B5A /* Payment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Payment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E852D9EC35300D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59619B3D2DA2ADF3005A674C /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +115,7 @@
 		59FB1E842D9EC35300D58B5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				59619B3C2DA2ADF3005A674C /* Core.framework */,
 				59FB1E852D9EC35300D58B5A /* Core.framework */,
 			);
 			name = Frameworks;

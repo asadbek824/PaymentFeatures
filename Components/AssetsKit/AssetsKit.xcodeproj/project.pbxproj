@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		59619A6E2DA2A0A9005A674C /* AssetsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AssetsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59619B362DA2AD55005A674C /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,6 +47,7 @@
 			isa = PBXGroup;
 			children = (
 				59619A702DA2A0A9005A674C /* AssetsKit */,
+				59619B352DA2AD55005A674C /* Frameworks */,
 				59619A6F2DA2A0A9005A674C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +58,14 @@
 				59619A6E2DA2A0A9005A674C /* AssetsKit.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		59619B352DA2AD55005A674C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59619B362DA2AD55005A674C /* Core.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -105,6 +115,7 @@
 				TargetAttributes = {
 					59619A6D2DA2A0A9005A674C = {
 						CreatedOnToolsVersion = 16.1;
+						LastSwiftMigration = 1610;
 					};
 				};
 			};
@@ -152,6 +163,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -181,6 +193,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -190,6 +203,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
