@@ -12,6 +12,7 @@ import Core
 protocol HomeWorkeringProtocol {
     func fetchUser() async throws -> UserModel
     func fetchUserBalanceAndExpenses() async throws -> [UserBalanceAndExpensesModel]
+    func featchBanners() async throws -> [BannerModel]
 }
 
 final class HomeWorker {
@@ -20,18 +21,18 @@ final class HomeWorker {
 }
 
 extension HomeWorker {
-
+    
 }
 
 //MARK: - HomeWorkeringProtocol Implementation
 extension HomeWorker: HomeWorkeringProtocol {
     
     func fetchUser() async throws -> UserModel {
-//        return try await NetworkService.shared.request(
-//            url: "/user/profile",
-//            decode: UserModel.self,
-//            method: .get
-//        )
+        //        return try await NetworkService.shared.request(
+        //            url: "/user/profile",
+        //            decode: UserModel.self,
+        //            method: .get
+        //        )
         return UserModel(id: 1, fullName: "Asadbek Yoldoshev")
     }
     
@@ -79,6 +80,25 @@ extension HomeWorker: HomeWorkeringProtocol {
                         currency: "сум"
                     )
             ),
+        ]
+    }
+    
+    func featchBanners() async throws -> [BannerModel] {
+        //        return try await NetworkService.shared.request(
+        //            url: "",
+        //            decode: [BannerModel].self,
+        //            method: .get
+        //        )
+        return [
+            BannerModel(
+                id: 1,
+                media: BannerMedia(
+                    id: 1,
+                    src: "https://png.pngtree.com/background/20210711/original/pngtree-light-green-japanese-furniture-home-improvement-carnival-e-commerce-banner-picture-image_1076913.jpg",
+                    type: "",
+                    title: "10 квартир — и одна\nможет стать вашей!"
+                )
+            )
         ]
     }
 }
