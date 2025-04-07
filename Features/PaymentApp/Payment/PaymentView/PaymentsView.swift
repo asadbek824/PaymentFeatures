@@ -167,6 +167,7 @@ public struct PaymentsView: View {
                 .foregroundStyle(.appPrimary)
             
             Text(title)
+                .foregroundStyle(.label)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Image(systemName: accessory)
