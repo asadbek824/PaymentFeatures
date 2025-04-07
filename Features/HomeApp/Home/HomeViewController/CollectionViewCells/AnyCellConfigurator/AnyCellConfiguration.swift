@@ -12,6 +12,7 @@ enum HomeSectionItem {
     case paymeGo([PaymeGoItemViewModel])
     case banner(BannerViewModel)
     case finicalServices([FinicalServicesViewModel])
+    case popular([PopularViewModel])
 }
 
 protocol CollectionCellConfigurator {

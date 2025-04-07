@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Core
 
 final class SectionHeaderView: UICollectionReusableView {
     
@@ -13,23 +14,21 @@ final class SectionHeaderView: UICollectionReusableView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .black
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         backgroundColor = .clear
         addSubview(titleLabel)
         
-        NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor)
-        ])
+        titleLabel.setConstraint(.top, from: self, .zero)
+        titleLabel.setConstraint(.bottom, from: self, .zero)
+        titleLabel.setConstraint(.left, from: self, CGFloat(integerLiteral: .sixteen))
+        titleLabel.setConstraint(.right, from: self, CGFloat(integerLiteral: .sixteen))
     }
     
     func configure(title: String) {

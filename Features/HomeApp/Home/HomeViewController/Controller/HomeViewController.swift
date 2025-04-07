@@ -18,6 +18,7 @@ public final class HomeViewController: UIViewController {
     //MARK: Interactor And Router
     private let interactor: HomeBusseinessProtocol
     private let router: HomeRoutingProtocol
+    private var bannerCarousel: PopularBannerCarouselController?
     
     //MARK: UIElements
     private let navLeftButton = UIButton()
@@ -42,6 +43,11 @@ public final class HomeViewController: UIViewController {
         
         interactor.loadAllData()
         setUpView()
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        bannerCarousel?.stop()
     }
     
     required init?(coder: NSCoder) {
@@ -102,6 +108,7 @@ private extension HomeViewController {
         collectionView.register(BalanceCell.self, forCellWithReuseIdentifier: BalanceCell.identifier)
         collectionView.register(PaymeGoCell.self, forCellWithReuseIdentifier: PaymeGoCell.identifier)
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
+        collectionView.register(PopularCell.self, forCellWithReuseIdentifier: PopularCell.identifier)
         collectionView.register(
             FinicalServicesCell.self,
             forCellWithReuseIdentifier: FinicalServicesCell.identifier
@@ -129,12 +136,17 @@ private extension HomeViewController {
             case .paymeGo: return LayoutFactory.paymeGoLayout()
             case .banner: return LayoutFactory.bannerLayout()
             case .finicalServices: return LayoutFactory.financeServiceLayout()
+            case .popular: return LayoutFactory.popularLayout()
             }
         }
         
         layout.register(
-            BackgrounViewWhiteIsCornerRadiusExsist.self,
-            forDecorationViewOfKind: BackgrounViewWhiteIsCornerRadiusExsist.reuseIdentifier
+            BackgrounViewWhiteIsCornerRadiusExsistToTop.self,
+            forDecorationViewOfKind: BackgrounViewWhiteIsCornerRadiusExsistToTop.reuseIdentifier
+        )
+        layout.register(
+            BackgrounViewWhiteIsCornerRadiusExsistToBottom.self,
+            forDecorationViewOfKind: BackgrounViewWhiteIsCornerRadiusExsistToBottom.reuseIdentifier
         )
         layout.register(
             BackgrounViewWhite.self,
@@ -155,6 +167,18 @@ extension HomeViewController: HomeViewDisplayProtocol {
     func display(sections: [HomeSectionItem]) {
         self.sections = sections
         DispatchQueue.main.async { self.collectionView.reloadData() }
+        
+        if let sectionIndex = sections.firstIndex(
+            where: { if case .popular = $0 { return true } else { return false } }
+        ),
+           case .popular(let items) = sections[sectionIndex] {
+            bannerCarousel = PopularBannerCarouselController(
+                collectionView: collectionView,
+                sectionIndex: sectionIndex,
+                numberOfItems: items.count
+            )
+            bannerCarousel?.start()
+        }
     }
 }
 
@@ -172,6 +196,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         case .banner: return 1
         case .paymeGo(let items): return items.count
         case .finicalServices(let items): return items.count
+        case .popular(let items): return items.count
         }
     }
     
@@ -222,6 +247,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             ) as? FinicalServicesCell else { return UICollectionViewCell() }
             
             cell.configure(with: vm.title, image: vm.image)
+            
+            return cell
+        case .popular(let items):
+            let vm = items[indexPath.item]
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PopularCell.identifier,
+                for: indexPath
+            ) as? PopularCell else { return UICollectionViewCell() }
+            
+            cell.configure(with: vm.image, title: vm.title)
             
             return cell
         }

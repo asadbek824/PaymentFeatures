@@ -29,13 +29,15 @@ extension HomeInteractor: HomeBusseinessProtocol {
         Task {
             async let user = worker.fetchUser()
             async let carts = worker.fetchUserBalanceAndExpenses()
-            async let banners = worker.featchBanners()
+            async let banners = worker.fetchBanners()
+            async let popularBanners = worker.fetchPopularBanners()
             
             do {
                 try await presenter.display(
                     user: user,
                     carts: carts,
-                    banners: banners
+                    banners: banners,
+                    popularBanners: popularBanners
                 )
             } catch {
                 print("Ошибка:", error)

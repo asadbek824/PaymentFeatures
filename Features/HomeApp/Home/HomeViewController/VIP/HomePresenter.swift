@@ -9,7 +9,12 @@ import Foundation
 import Core
 
 protocol HomePresentetionProtocol {
-    func display(user: UserModel, carts: [UserBalanceAndExpensesModel], banners: [BannerModel])
+    func display(
+        user: UserModel,
+        carts: [UserBalanceAndExpensesModel],
+        banners: [BannerModel],
+        popularBanners: [BannerModel]
+    )
 }
 
 final class HomePresenter {
@@ -22,12 +27,20 @@ final class HomePresenter {
 //MARK: - HomePresentetionProtocol Implementation
 extension HomePresenter: HomePresentetionProtocol {
     
-    func display(user: UserModel, carts: [UserBalanceAndExpensesModel], banners: [BannerModel]) {
+    func display(
+        user: UserModel,
+        carts: [UserBalanceAndExpensesModel],
+        banners: [BannerModel],
+        popularBanners: [BannerModel]
+    ) {
         let initials = String(user.fullName.split(separator: " ").compactMap { $0.first }.prefix(2))
         
         let totalBalance = carts.reduce(0) { $0 + $1.cartId.balance }
         let totalExpenses = carts.reduce(0) { $0 + $1.cartId.expenses }
         let currency = carts.first?.cartId.currency ?? "сум"
+        let popularBanners = popularBanners.map {
+            PopularViewModel(id: $0.media.id, image: $0.media.src ?? "", title: $0.media.title)
+        }
         
         let sections: [HomeSectionItem] = [
             .balance(BalanceViewModel(
@@ -48,7 +61,8 @@ extension HomePresenter: HomePresentetionProtocol {
             .finicalServices([
                 FinicalServicesViewModel(image: Asset.Image.transfer, title: "перевести средства"),
                 FinicalServicesViewModel(image: Asset.Image.tbsbank, title: "кредит от TBC Bank")
-            ])
+            ]),
+            .popular(popularBanners)
         ]
         
         DispatchQueue.main.async {
