@@ -12,7 +12,6 @@
 		59FB1E802D9EC10400D58B5A /* Payment.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E6A2D9EC03800D58B5A /* Payment.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1E882D9EC36200D58B5A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E852D9EC35300D58B5A /* Core.framework */; };
 		59FB1E892D9EC36200D58B5A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E852D9EC35300D58B5A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AD5C1F3D2D9FBA12005D9BB5 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */; };
 		AD5C1F3E2D9FBA12005D9BB5 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -114,6 +113,7 @@
 				59FB1E6B2D9EC03800D58B5A /* Payment */,
 				59FB1E842D9EC35300D58B5A /* Frameworks */,
 				59FB1E4F2D9EC00600D58B5A /* Products */,
+				AD05900D2DA3A843009BEEB7 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,6 +133,14 @@
 				59FB1E852D9EC35300D58B5A /* Core.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AD05900D2DA3A843009BEEB7 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
