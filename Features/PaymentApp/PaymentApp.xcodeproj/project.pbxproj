@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59619B3D2DA2ADF3005A674C /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59619B3C2DA2ADF3005A674C /* Core.framework */; };
 		59FB1E7F2D9EC10400D58B5A /* Payment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E6A2D9EC03800D58B5A /* Payment.framework */; };
 		59FB1E802D9EC10400D58B5A /* Payment.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E6A2D9EC03800D58B5A /* Payment.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1E882D9EC36200D58B5A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E852D9EC35300D58B5A /* Core.framework */; };
 		59FB1E892D9EC36200D58B5A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E852D9EC35300D58B5A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD5C1F3E2D9FBA12005D9BB5 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,12 +38,25 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AD5C1F3F2D9FBA12005D9BB5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD5C1F3E2D9FBA12005D9BB5 /* Core.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		59619B3C2DA2ADF3005A674C /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E4E2D9EC00600D58B5A /* PaymentApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymentApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E6A2D9EC03800D58B5A /* Payment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Payment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E852D9EC35300D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -84,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59619B3D2DA2ADF3005A674C /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +113,7 @@
 				59FB1E6B2D9EC03800D58B5A /* Payment */,
 				59FB1E842D9EC35300D58B5A /* Frameworks */,
 				59FB1E4F2D9EC00600D58B5A /* Products */,
+				AD05900D2DA3A843009BEEB7 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,9 +129,18 @@
 		59FB1E842D9EC35300D58B5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				59619B3C2DA2ADF3005A674C /* Core.framework */,
 				59FB1E852D9EC35300D58B5A /* Core.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AD05900D2DA3A843009BEEB7 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +188,7 @@
 				59FB1E662D9EC03800D58B5A /* Sources */,
 				59FB1E672D9EC03800D58B5A /* Frameworks */,
 				59FB1E682D9EC03800D58B5A /* Resources */,
+				AD5C1F3F2D9FBA12005D9BB5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -386,7 +413,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PaymentApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 3DJM2CZRX2;
+				DEVELOPMENT_TEAM = 92M23D65YY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -420,7 +447,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PaymentApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 3DJM2CZRX2;
+				DEVELOPMENT_TEAM = 92M23D65YY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

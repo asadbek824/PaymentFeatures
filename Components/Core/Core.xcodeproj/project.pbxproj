@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		59619B2A2DA2A8CA005A674C /* AssetsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59619B292DA2A8CA005A674C /* AssetsKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		59619B292DA2A8CA005A674C /* AssetsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AssetsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DE72D9EBDB900D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -29,6 +34,11 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		AD5C201E2D9FE923005D9BB5 /* Service */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Service;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,16 +46,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59619B2A2DA2A8CA005A674C /* AssetsKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59619B282DA2A8CA005A674C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59619B292DA2A8CA005A674C /* AssetsKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		59FB1DDD2D9EBDB900D58B5A = {
 			isa = PBXGroup;
 			children = (
+				AD5C201E2D9FE923005D9BB5 /* Service */,
 				59FB1DE92D9EBDB900D58B5A /* Core */,
+				59619B282DA2A8CA005A674C /* Frameworks */,
 				59FB1DE82D9EBDB900D58B5A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,6 +107,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				59FB1DE92D9EBDB900D58B5A /* Core */,
+				AD5C201E2D9FE923005D9BB5 /* Service */,
 			);
 			name = Core;
 			packageProductDependencies = (
@@ -163,7 +185,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -201,7 +223,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -13,8 +13,8 @@ public struct PaymentsView: View {
     @State private var text: String = ""
     @FocusState private var isTextFocused: Bool
     @State private var hasReceivers: Bool = false
-    
-    public init() {  }
+        
+    public init() { }
     
     public var body: some View {
         VStack(spacing: 50) {
@@ -108,29 +108,55 @@ public struct PaymentsView: View {
     private func BottomButtons() -> some View {
         VStack(spacing: 16) {
             VStack(spacing: 0) {
-                CustomButton(
-                    image: "phone",
-                    title: "По номеру телефона",
-                    accessory: "chevron.right"
-                )
+                NavigationLink {
+                    
+                } label: {
+                    CustomButton(
+                        image: "phone",
+                        title: "По номеру телефона",
+                        accessory: "chevron.right"
+                    )
+                }
+                
                 
                 Divider()
                     .padding(.leading, 50)
                 
-                CustomButton(
-                    image: "creditcard",
-                    title: "Перевод на мою карту",
-                    accessory: "chevron.right"
-                )
+                NavigationLink {
+                    
+                } label: {
+                    CustomButton(
+                        image: "creditcard",
+                        title: "Перевод на мою карту",
+                        accessory: "chevron.right"
+                    )
+                }
+                
+                Divider()
+                    .padding(.leading, 50)
+                
+                NavigationLink {
+                    PayShareView()
+                } label: {
+                    CustomButton(
+                        image: "target",
+                        title: "Перевод по Pay Share",
+                        accessory: "chevron.right"
+                    )
+                }
             }
             .background(.tertiarySystemBackground)
             .clipShape(.rect(cornerRadius: 16))
             
-            CustomButton(
-                image: "rectangle.portrait.on.rectangle.portrait.angled",
-                title: "Добавить открытку",
-                accessory: "plus"
-            )
+            Button {
+                
+            } label: {
+                CustomButton(
+                    image: "rectangle.portrait.on.rectangle.portrait.angled",
+                    title: "Добавить открытку",
+                    accessory: "plus"
+                )
+            }
         }
     }
     
@@ -141,6 +167,7 @@ public struct PaymentsView: View {
                 .foregroundStyle(.appPrimary)
             
             Text(title)
+                .foregroundStyle(.label)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Image(systemName: accessory)
