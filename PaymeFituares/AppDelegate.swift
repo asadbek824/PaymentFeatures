@@ -10,6 +10,7 @@ import SwiftUI
 import Core
 import Home
 import Payment
+import Services
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: "arrow.left.arrow.right",
             title: "перевод",
             type: .swiftui(AnyView(PaymentsView()))
+        ),
+        TabBarItemData(
+            image: "square.grid.2x2",
+            title: "сервисы",
+            type: .swiftui(AnyView(ServicesView()))
         )
     ]
 

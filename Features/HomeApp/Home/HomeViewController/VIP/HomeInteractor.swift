@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HomeBusseinessProtocol {
-    func loadUserData() async
+    func loadAllData()
 }
 
 final class HomeInteractor {
@@ -25,12 +25,21 @@ final class HomeInteractor {
 //MARK: - HomeBusseinessProtocol Implementation
 extension HomeInteractor: HomeBusseinessProtocol {
     
-    func loadUserData() async {
-        do {
-            let user = try await worker.fetchUser()
-            presenter.displayUser(user: user)
-        } catch {
-            print("Ошибка загрузки пользователя:", error)
+    func loadAllData() {
+        Task {
+            async let user = worker.fetchUser()
+            async let carts = worker.fetchUserBalanceAndExpenses()
+            async let banners = worker.featchBanners()
+            
+            do {
+                try await presenter.display(
+                    user: user,
+                    carts: carts,
+                    banners: banners
+                )
+            } catch {
+                print("Ошибка:", error)
+            }
         }
     }
 }
