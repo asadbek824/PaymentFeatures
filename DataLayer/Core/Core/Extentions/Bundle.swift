@@ -5,7 +5,7 @@
 //  Created by Asadbek Yoldoshev on 4/6/25.
 //
 
-import AssetsKit
+import DesignSystem
 
 public extension Bundle {
     static let assetsKit: Bundle = {

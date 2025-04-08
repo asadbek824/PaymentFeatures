@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5969DDB22DA54FA600EA6655 /* Home.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD922DA546B800EA6655 /* Home.framework */; };
+		5969DDB32DA54FA600EA6655 /* Home.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD922DA546B800EA6655 /* Home.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5969DDB42DA54FAD00EA6655 /* Payment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD992DA546B800EA6655 /* Payment.framework */; };
+		5969DDB52DA54FAD00EA6655 /* Payment.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD992DA546B800EA6655 /* Payment.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5969DDB62DA54FB100EA6655 /* Services.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD9F2DA546B800EA6655 /* Services.framework */; };
+		5969DDB72DA54FB100EA6655 /* Services.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD9F2DA546B800EA6655 /* Services.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5969DDC42DA550A200EA6655 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD8C2DA546B800EA6655 /* DesignSystem.framework */; };
+		5969DDC52DA550A200EA6655 /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD8C2DA546B800EA6655 /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1DFC2D9EBDE700D58B5A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1DF72D9EBDBA00D58B5A /* Core.framework */; };
 		59FB1DFD2D9EBDE700D58B5A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1DF72D9EBDBA00D58B5A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1F092D9EEB8700D58B5A /* NetworkManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1F002D9EE8E900D58B5A /* NetworkManager.framework */; };
@@ -14,6 +22,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5969DD8B2DA546B800EA6655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59619A6E2DA2A0A9005A674C;
+			remoteInfo = DesignSystem;
+		};
+		5969DD912DA546B800EA6655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 594D97252D9EF7C70045D271 /* HomeDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 594D97302D9EF7E70045D271;
+			remoteInfo = Home;
+		};
+		5969DD982DA546B800EA6655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59FB1E5F2D9EC00700D58B5A /* PaymentDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59FB1E6A2D9EC03800D58B5A;
+			remoteInfo = Payment;
+		};
+		5969DD9E2DA546B800EA6655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 594D98B52D9FF3FC0045D271 /* ServiceDemo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 594D98C02D9FF40F0045D271;
+			remoteInfo = Services;
+		};
 		59FB1DF62D9EBDBA00D58B5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */;
@@ -31,6 +67,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5969DE292DA563A700EA6655 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59FB1DFE2D9EBDE700D58B5A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,6 +85,10 @@
 			files = (
 				59FB1F0A2D9EEB8700D58B5A /* NetworkManager.framework in Embed Frameworks */,
 				59FB1DFD2D9EBDE700D58B5A /* Core.framework in Embed Frameworks */,
+				5969DDB32DA54FA600EA6655 /* Home.framework in Embed Frameworks */,
+				5969DDC52DA550A200EA6655 /* DesignSystem.framework in Embed Frameworks */,
+				5969DDB72DA54FB100EA6655 /* Services.framework in Embed Frameworks */,
+				5969DDB52DA54FAD00EA6655 /* Payment.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,6 +99,8 @@
 		594D97252D9EF7C70045D271 /* HomeDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HomeDemo.xcodeproj; path = HomeApp/HomeDemo.xcodeproj; sourceTree = "<group>"; };
 		594D98B52D9FF3FC0045D271 /* ServiceDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ServiceDemo.xcodeproj; path = ServiceApp/ServiceDemo.xcodeproj; sourceTree = "<group>"; };
 		59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = AssetsKit/DesignSystem.xcodeproj; sourceTree = "<group>"; };
+		5969DE102DA563A500EA6655 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		5969DE122DA563A500EA6655 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		59C4EF8B2D9E893A004F85A8 /* PaymeFituares.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymeFituares.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Core.xcodeproj; path = Core/Core.xcodeproj; sourceTree = "<group>"; };
 		59FB1E5F2D9EC00700D58B5A /* PaymentDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PaymentDemo.xcodeproj; path = PaymentApp/PaymentDemo.xcodeproj; sourceTree = "<group>"; };
@@ -83,12 +135,24 @@
 			files = (
 				59FB1F092D9EEB8700D58B5A /* NetworkManager.framework in Frameworks */,
 				59FB1DFC2D9EBDE700D58B5A /* Core.framework in Frameworks */,
+				5969DDB22DA54FA600EA6655 /* Home.framework in Frameworks */,
+				5969DDC42DA550A200EA6655 /* DesignSystem.framework in Frameworks */,
+				5969DDB62DA54FB100EA6655 /* Services.framework in Frameworks */,
+				5969DDB42DA54FAD00EA6655 /* Payment.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		597C28582DA4F179001593DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5969DD8C2DA546B800EA6655 /* DesignSystem.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		59C4EF822D9E893A004F85A8 = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +203,8 @@
 		59FB1DFB2D9EBDE700D58B5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5969DE102DA563A500EA6655 /* WidgetKit.framework */,
+				5969DE122DA563A500EA6655 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -147,6 +213,30 @@
 			isa = PBXGroup;
 			children = (
 				59FB1F002D9EE8E900D58B5A /* NetworkManager.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59FE586A2DA41A5800A46FB9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5969DD9F2DA546B800EA6655 /* Services.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59FE586C2DA41A5800A46FB9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5969DD922DA546B800EA6655 /* Home.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59FE586E2DA41A5800A46FB9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5969DD992DA546B800EA6655 /* Payment.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +252,7 @@
 				59C4EF882D9E893A004F85A8 /* Frameworks */,
 				59C4EF892D9E893A004F85A8 /* Resources */,
 				59FB1DFE2D9EBDE700D58B5A /* Embed Frameworks */,
+				5969DE292DA563A700EA6655 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -210,8 +301,24 @@
 					ProjectRef = 59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */;
 				},
 				{
+					ProductGroup = 597C28582DA4F179001593DA /* Products */;
+					ProjectRef = 59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */;
+				},
+				{
+					ProductGroup = 59FE586C2DA41A5800A46FB9 /* Products */;
+					ProjectRef = 594D97252D9EF7C70045D271 /* HomeDemo.xcodeproj */;
+				},
+				{
 					ProductGroup = 59FB1EFC2D9EE8E900D58B5A /* Products */;
 					ProjectRef = 59FB1EFB2D9EE8E900D58B5A /* NetworkManager.xcodeproj */;
+				},
+				{
+					ProductGroup = 59FE586E2DA41A5800A46FB9 /* Products */;
+					ProjectRef = 59FB1E5F2D9EC00700D58B5A /* PaymentDemo.xcodeproj */;
+				},
+				{
+					ProductGroup = 59FE586A2DA41A5800A46FB9 /* Products */;
+					ProjectRef = 594D98B52D9FF3FC0045D271 /* ServiceDemo.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -222,6 +329,34 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		5969DD8C2DA546B800EA6655 /* DesignSystem.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DesignSystem.framework;
+			remoteRef = 5969DD8B2DA546B800EA6655 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5969DD922DA546B800EA6655 /* Home.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Home.framework;
+			remoteRef = 5969DD912DA546B800EA6655 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5969DD992DA546B800EA6655 /* Payment.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Payment.framework;
+			remoteRef = 5969DD982DA546B800EA6655 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5969DD9F2DA546B800EA6655 /* Services.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Services.framework;
+			remoteRef = 5969DD9E2DA546B800EA6655 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		59FB1DF72D9EBDBA00D58B5A /* Core.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -264,9 +399,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PaymeFituares/PaymeFituares.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -297,9 +433,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PaymeFituares/PaymeFituares.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
