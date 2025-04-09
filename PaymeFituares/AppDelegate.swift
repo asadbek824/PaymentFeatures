@@ -5,18 +5,19 @@
 //  Created by Asadbek Yoldoshev on 4/3/25.
 //
 
-import UIKit
-import SwiftUI
 import Core
 import Home
+import UIKit
+import SwiftUI
 import Payment
 import Services
+import NavigationCoordinator
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
     private let tabBarItemsData = [
         TabBarItemData(
             image: "house.fill",
@@ -35,37 +36,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     ]
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         
         let tabBarVC = UITabBarController()
-        tabBarVC.viewControllers = createTabBarItems(tabBarItems: tabBarItemsData)
+        let tabViewControllers = createTabBarItems(tabBarItems: tabBarItemsData)
+        tabBarVC.viewControllers = tabViewControllers
         tabBarVC.selectedIndex = 0
         tabBarVC.tabBar.backgroundColor = .white
         tabBarVC.tabBar.tintColor = .appColor.primary
-        
+
+        let firstNavVC = tabViewControllers.first as? UINavigationController ?? UINavigationController()
+
+        let factory = DefaultNavigationFactory()
+        AppNavigationCoordinator.shared.setRoot(
+            navigationController: firstNavVC,
+            factory: factory
+        )
+
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
-        
+
         return true
     }
-}
 
-extension AppDelegate {
-    
     private func createTabBarItems(tabBarItems: [TabBarItemData]) -> [UIViewController] {
-        var tabBars: [UIViewController] = []
-        
-        for item in tabBarItems {
-            let viewController = item.type.viewController
-            let navVC = UINavigationController(rootViewController: viewController)
-            
+        return tabBarItems.map { item in
+            let vc = item.type.viewController
+            let navVC = UINavigationController(rootViewController: vc)
             navVC.tabBarItem.title = item.title
             navVC.tabBarItem.image = UIImage(systemName: item.image)
-            
-            tabBars.append(navVC)
+            return navVC
         }
-        
-        return tabBars
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.scheme == "payme", url.host == "pay-share" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                AppNavigationCoordinator.shared.navigate(to: .payShare)
+            }
+            return true
+        }
+        return false
     }
 }

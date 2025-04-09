@@ -15,6 +15,7 @@
 		594D975D2D9EF87B0045D271 /* NetworkManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 594D975B2D9EF87B0045D271 /* NetworkManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		594D975F2D9EF8810045D271 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D975E2D9EF8810045D271 /* Core.framework */; };
 		594D97632D9EF8860045D271 /* NetworkManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D97622D9EF8860045D271 /* NetworkManager.framework */; };
+		5969E70C2DA67E0700EA6655 /* NavigationCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969E70B2DA67E0700EA6655 /* NavigationCoordinator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		594D975E2D9EF8810045D271 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		594D97622D9EF8860045D271 /* NetworkManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NetworkManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5969DDC62DA550C600EA6655 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5969E7032DA674A700EA6655 /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5969E70B2DA67E0700EA6655 /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -96,6 +99,7 @@
 			files = (
 				594D975F2D9EF8810045D271 /* Core.framework in Frameworks */,
 				594D97632D9EF8860045D271 /* NetworkManager.framework in Frameworks */,
+				5969E70C2DA67E0700EA6655 /* NavigationCoordinator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +128,8 @@
 		594D97572D9EF8750045D271 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5969E70B2DA67E0700EA6655 /* NavigationCoordinator.framework */,
+				5969E7032DA674A700EA6655 /* NavigationCoordinator.framework */,
 				5969DDC62DA550C600EA6655 /* DesignSystem.framework */,
 				594D97622D9EF8860045D271 /* NetworkManager.framework */,
 				594D975E2D9EF8810045D271 /* Core.framework */,
