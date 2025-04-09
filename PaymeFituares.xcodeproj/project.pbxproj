@@ -15,6 +15,11 @@
 		5969DDB72DA54FB100EA6655 /* Services.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD9F2DA546B800EA6655 /* Services.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5969DDC42DA550A200EA6655 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD8C2DA546B800EA6655 /* DesignSystem.framework */; };
 		5969DDC52DA550A200EA6655 /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DD8C2DA546B800EA6655 /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5969E6F42DA66F6700EA6655 /* NavigationCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969E6D02DA66D0400EA6655 /* NavigationCoordinator.framework */; };
+		5969E6F52DA66F6700EA6655 /* NavigationCoordinator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5969E6D02DA66D0400EA6655 /* NavigationCoordinator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5969E7142DA67F1E00EA6655 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DE102DA563A500EA6655 /* WidgetKit.framework */; };
+		5969E7152DA67F1E00EA6655 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DE122DA563A500EA6655 /* SwiftUI.framework */; };
+		5969E7262DA67F2000EA6655 /* PaymeShareWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5969E7132DA67F1E00EA6655 /* PaymeShareWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		59FB1DFC2D9EBDE700D58B5A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1DF72D9EBDBA00D58B5A /* Core.framework */; };
 		59FB1DFD2D9EBDE700D58B5A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1DF72D9EBDBA00D58B5A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1F092D9EEB8700D58B5A /* NetworkManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1F002D9EE8E900D58B5A /* NetworkManager.framework */; };
@@ -50,6 +55,20 @@
 			remoteGlobalIDString = 594D98C02D9FF40F0045D271;
 			remoteInfo = Services;
 		};
+		5969E6CF2DA66D0400EA6655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5969E6CB2DA66D0400EA6655 /* NavigationCoordinator.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5969E6C02DA66D0300EA6655;
+			remoteInfo = NavigationCoordinator;
+		};
+		5969E7242DA67F2000EA6655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59C4EF832D9E893A004F85A8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5969E7122DA67F1E00EA6655;
+			remoteInfo = PaymeShareWidgetExtension;
+		};
 		59FB1DF62D9EBDBA00D58B5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */;
@@ -73,6 +92,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5969E7262DA67F2000EA6655 /* PaymeShareWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +106,7 @@
 				59FB1F0A2D9EEB8700D58B5A /* NetworkManager.framework in Embed Frameworks */,
 				59FB1DFD2D9EBDE700D58B5A /* Core.framework in Embed Frameworks */,
 				5969DDB32DA54FA600EA6655 /* Home.framework in Embed Frameworks */,
+				5969E6F52DA66F6700EA6655 /* NavigationCoordinator.framework in Embed Frameworks */,
 				5969DDC52DA550A200EA6655 /* DesignSystem.framework in Embed Frameworks */,
 				5969DDB72DA54FB100EA6655 /* Services.framework in Embed Frameworks */,
 				5969DDB52DA54FAD00EA6655 /* Payment.framework in Embed Frameworks */,
@@ -101,6 +122,8 @@
 		59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = AssetsKit/DesignSystem.xcodeproj; sourceTree = "<group>"; };
 		5969DE102DA563A500EA6655 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		5969DE122DA563A500EA6655 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		5969E6CB2DA66D0400EA6655 /* NavigationCoordinator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = NavigationCoordinator.xcodeproj; path = NavigationCoordinator/NavigationCoordinator.xcodeproj; sourceTree = "<group>"; };
+		5969E7132DA67F1E00EA6655 /* PaymeShareWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PaymeShareWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		59C4EF8B2D9E893A004F85A8 /* PaymeFituares.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymeFituares.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Core.xcodeproj; path = Core/Core.xcodeproj; sourceTree = "<group>"; };
 		59FB1E5F2D9EC00700D58B5A /* PaymentDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PaymentDemo.xcodeproj; path = PaymentApp/PaymentDemo.xcodeproj; sourceTree = "<group>"; };
@@ -108,6 +131,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5969E72A2DA67F2000EA6655 /* Exceptions for "PaymeShareWidget" folder in "PaymeShareWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5969E7122DA67F1E00EA6655 /* PaymeShareWidgetExtension */;
+		};
 		59C4EF9D2D9E893C004F85A8 /* Exceptions for "PaymeFituares" folder in "PaymeFituares" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -118,6 +148,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5969E7162DA67F1E00EA6655 /* PaymeShareWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5969E72A2DA67F2000EA6655 /* Exceptions for "PaymeShareWidget" folder in "PaymeShareWidgetExtension" target */,
+			);
+			path = PaymeShareWidget;
+			sourceTree = "<group>";
+		};
 		59C4EF8D2D9E893A004F85A8 /* PaymeFituares */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -129,6 +167,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5969E7102DA67F1E00EA6655 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5969E7152DA67F1E00EA6655 /* SwiftUI.framework in Frameworks */,
+				5969E7142DA67F1E00EA6655 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C4EF882D9E893A004F85A8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -136,6 +183,7 @@
 				59FB1F092D9EEB8700D58B5A /* NetworkManager.framework in Frameworks */,
 				59FB1DFC2D9EBDE700D58B5A /* Core.framework in Frameworks */,
 				5969DDB22DA54FA600EA6655 /* Home.framework in Frameworks */,
+				5969E6F42DA66F6700EA6655 /* NavigationCoordinator.framework in Frameworks */,
 				5969DDC42DA550A200EA6655 /* DesignSystem.framework in Frameworks */,
 				5969DDB62DA54FB100EA6655 /* Services.framework in Frameworks */,
 				5969DDB42DA54FAD00EA6655 /* Payment.framework in Frameworks */,
@@ -145,6 +193,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5969E6CC2DA66D0400EA6655 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5969E6D02DA66D0400EA6655 /* NavigationCoordinator.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		597C28582DA4F179001593DA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +215,7 @@
 				59C4EF8D2D9E893A004F85A8 /* PaymeFituares */,
 				59FB1DDB2D9EBD9900D58B5A /* DataLayer */,
 				59FB1DDC2D9EBD9900D58B5A /* Features */,
+				5969E7162DA67F1E00EA6655 /* PaymeShareWidget */,
 				59FB1DFB2D9EBDE700D58B5A /* Frameworks */,
 				59C4EF8C2D9E893A004F85A8 /* Products */,
 			);
@@ -168,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				59C4EF8B2D9E893A004F85A8 /* PaymeFituares.app */,
+				5969E7132DA67F1E00EA6655 /* PaymeShareWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -175,6 +233,7 @@
 		59FB1DDB2D9EBD9900D58B5A /* DataLayer */ = {
 			isa = PBXGroup;
 			children = (
+				5969E6CB2DA66D0400EA6655 /* NavigationCoordinator.xcodeproj */,
 				59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */,
 				59FB1EFB2D9EE8E900D58B5A /* NetworkManager.xcodeproj */,
 				59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */,
@@ -244,6 +303,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5969E7122DA67F1E00EA6655 /* PaymeShareWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5969E7272DA67F2000EA6655 /* Build configuration list for PBXNativeTarget "PaymeShareWidgetExtension" */;
+			buildPhases = (
+				5969E70F2DA67F1E00EA6655 /* Sources */,
+				5969E7102DA67F1E00EA6655 /* Frameworks */,
+				5969E7112DA67F1E00EA6655 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5969E7162DA67F1E00EA6655 /* PaymeShareWidget */,
+			);
+			name = PaymeShareWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = PaymeShareWidgetExtension;
+			productReference = 5969E7132DA67F1E00EA6655 /* PaymeShareWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		59C4EF8A2D9E893A004F85A8 /* PaymeFituares */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59C4EF9E2D9E893C004F85A8 /* Build configuration list for PBXNativeTarget "PaymeFituares" */;
@@ -257,6 +338,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5969E7252DA67F2000EA6655 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				59C4EF8D2D9E893A004F85A8 /* PaymeFituares */,
@@ -278,6 +360,9 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					5969E7122DA67F1E00EA6655 = {
+						CreatedOnToolsVersion = 16.1;
+					};
 					59C4EF8A2D9E893A004F85A8 = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -309,6 +394,10 @@
 					ProjectRef = 594D97252D9EF7C70045D271 /* HomeDemo.xcodeproj */;
 				},
 				{
+					ProductGroup = 5969E6CC2DA66D0400EA6655 /* Products */;
+					ProjectRef = 5969E6CB2DA66D0400EA6655 /* NavigationCoordinator.xcodeproj */;
+				},
+				{
 					ProductGroup = 59FB1EFC2D9EE8E900D58B5A /* Products */;
 					ProjectRef = 59FB1EFB2D9EE8E900D58B5A /* NetworkManager.xcodeproj */;
 				},
@@ -324,6 +413,7 @@
 			projectRoot = "";
 			targets = (
 				59C4EF8A2D9E893A004F85A8 /* PaymeFituares */,
+				5969E7122DA67F1E00EA6655 /* PaymeShareWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -357,6 +447,13 @@
 			remoteRef = 5969DD9E2DA546B800EA6655 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		5969E6D02DA66D0400EA6655 /* NavigationCoordinator.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = NavigationCoordinator.framework;
+			remoteRef = 5969E6CF2DA66D0400EA6655 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		59FB1DF72D9EBDBA00D58B5A /* Core.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -374,6 +471,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5969E7112DA67F1E00EA6655 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C4EF892D9E893A004F85A8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +488,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5969E70F2DA67F1E00EA6655 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C4EF872D9E893A004F85A8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -393,7 +504,79 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5969E7252DA67F2000EA6655 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5969E7122DA67F1E00EA6655 /* PaymeShareWidgetExtension */;
+			targetProxy = 5969E7242DA67F2000EA6655 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		5969E7282DA67F2000EA6655 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PaymeShareWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PaymeShareWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares.PaymeShareWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5969E7292DA67F2000EA6655 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PaymeShareWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PaymeShareWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares.PaymeShareWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		59C4EF9F2D9E893C004F85A8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -584,6 +767,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5969E7272DA67F2000EA6655 /* Build configuration list for PBXNativeTarget "PaymeShareWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5969E7282DA67F2000EA6655 /* Debug */,
+				5969E7292DA67F2000EA6655 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		59C4EF862D9E893A004F85A8 /* Build configuration list for PBXProject "PaymeFituares" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

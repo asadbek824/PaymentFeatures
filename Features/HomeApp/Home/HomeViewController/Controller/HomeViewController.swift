@@ -7,6 +7,7 @@
 
 import UIKit
 import Core
+import NavigationCoordinator
 
 protocol HomeViewDisplayProtocol: AnyObject {
     func displayUserInitials(_ initials: String)
@@ -279,5 +280,17 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             }
         }
         return UICollectionReusableView()
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        
+        if case .paymeGo(let items) = section {
+            let item = items[indexPath.item]
+            
+            if item.title == "Payme Go" {
+                AppNavigationCoordinator.shared.navigate(to: .payShare)
+            }
+        }
     }
 }

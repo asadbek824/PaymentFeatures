@@ -8,12 +8,14 @@
 import Core
 import SwiftUI
 
-struct PayShareView: View {
+public struct PayShareView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PayShareViewModel()
     
-    var body: some View {
+    public init() {  }
+    
+    public var body: some View {
         VStack {
             GeometryReader {
                 let size = $0.size
