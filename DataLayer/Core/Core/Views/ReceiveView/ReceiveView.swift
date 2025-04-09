@@ -25,7 +25,7 @@ public struct ReceiveView: View {
         if isActive{
             CustomDialog(isActive: .constant(true),
                          title: "New Message",
-                         message: "Hello, you have a new notification!")
+                         amount: 150.0)
         }
     }
 }

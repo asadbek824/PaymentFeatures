@@ -7,9 +7,5 @@
 		<string>_payme-pay-share._tcp</string>
 		<string>_payme-pay-share._udp</string>
 	</array>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>We need access to your local network to enable peer-to-peer connectivity.</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This app uses Bluetooth to discover and connect to nearby devices.</string>
 </dict>
 </plist>
