@@ -12,9 +12,9 @@ class RadarViewVM: ObservableObject {
     
     @Published var circles: [RadarCircle] = []
     private let maxCircles = 5
-    private let maxSize: CGFloat = UIScreen.main.bounds.width * 3
-    private let circleSpawnInterval: TimeInterval = 2.0
-    private let animationDuration: TimeInterval = 4.0
+    private let maxSize: CGFloat = UIScreen.main.bounds.width
+    private let circleSpawnInterval: TimeInterval = 0.7
+    private let animationDuration: TimeInterval = 3.0
     
     func startRadarAnimation() {
         let timer = Timer.scheduledTimer(withTimeInterval: circleSpawnInterval, repeats: true) { [weak self] _ in

@@ -120,6 +120,7 @@ struct PeerWidget: Widget {
 struct PaymeShareWidgetDemoBundle: WidgetBundle {
     var body: some Widget {
         PeerWidget()
+        PaymeLockScreenWidget()
     }
 }
 

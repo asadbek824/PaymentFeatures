@@ -24,6 +24,7 @@
 		59FB1DFD2D9EBDE700D58B5A /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1DF72D9EBDBA00D58B5A /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		59FB1F092D9EEB8700D58B5A /* NetworkManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1F002D9EE8E900D58B5A /* NetworkManager.framework */; };
 		59FB1F0A2D9EEB8700D58B5A /* NetworkManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1F002D9EE8E900D58B5A /* NetworkManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD526DE82DA687950026C03A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1DF72D9EBDBA00D58B5A /* Core.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5969E7152DA67F1E00EA6655 /* SwiftUI.framework in Frameworks */,
+				AD526DE82DA687950026C03A /* Core.framework in Frameworks */,
 				5969E7142DA67F1E00EA6655 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +590,8 @@
 				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "We need access to your local network to enable peer-to-peer connectivity.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -622,6 +626,8 @@
 				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices.";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "We need access to your local network to enable peer-to-peer connectivity.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

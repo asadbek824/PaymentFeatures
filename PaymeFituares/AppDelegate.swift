@@ -72,4 +72,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return navVC
         }
     }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if url.scheme == "payme", url.host == "pay-share" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                AppNavigationCoordinator.shared.navigate(to: .payShare)
+            }
+            return true
+        }
+        return false
+    }
 }
