@@ -7,85 +7,99 @@
 
 import SwiftUI
 
-/// A SwiftUI View representing the Payment Success screen
 struct ReceiptView: View {
     
-    @ObservedObject var viewModel: ReceiptViewModel
+    @StateObject private var viewModel: ReceiptViewModel
+    
+    init(model: ReceiptModel) {
+        _viewModel = StateObject(wrappedValue: ReceiptViewModel(model: model))
+    }
     
     var body: some View {
+        VStack(spacing: 50) {
+            paymentStatusStack()
+            BottomButtons()
+        }
+        .background(Color(UIColor.secondarySystemBackground))
+    }
+    
+    @ViewBuilder
+    private func paymentStatusStack() -> some View {
         VStack {
-            
-            Spacer()
-
-            // Top checkmark icon (change the image/foregroundColor as desired)
             Image(systemName: "checkmark.circle.fill")
                 .resizable()
+                .scaledToFit()
                 .frame(width: 70, height: 70)
-                .foregroundColor(.cyan)
+                .foregroundColor(.appPrimary)
             
-            // Title
             Text(viewModel.model.title)
                 .font(.headline)
                 .fontWeight(.bold)
                 .padding(.top, 16)
             
-            // Description or instructions
             Text(viewModel.model.description)
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
                 .padding(.top, 8)
-            
-
-            
-            Spacer()
-            
-            // Bottom horizontal list of actions/icons
-            HStack {
-                ForEach(viewModel.model.bottomActions) { action in
-                    Button(action: {
-                        viewModel.onBottomActionTap(action)
-                    }) {
-                        VStack(spacing: 4) {
-                            Image(systemName: action.iconName)
-                                .font(.system(size: 20))
-                            Text(action.text)
-                                .font(.caption)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                }
+        }
+        .fillSuperview()
+        
+        
+    }
+    
+    @ViewBuilder
+    private func BottomButtons() -> some View {
+        HStack(spacing: 16) {
+            NavigationLink {
+                Text("Phone Transfer") // Replace with actual view
+            } label: {
+                CustomButton(
+                    image: "arrow.left",
+                    title: "Назад"
+                )
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
+            NavigationLink {
+                Text("My Card Transfer") // Replace with actual view
+            } label: {
+                CustomButton(
+                    image: "receipt",
+                    title: "Чек"
+                )
+            }
+            NavigationLink {
+                Text("Store") // Replace with actual view
+            } label: {
+                CustomButton(
+                    image: "star",
+                    title: "Сохранить"
+                )
+            }
         }
     }
+    
+    @ViewBuilder
+    private func CustomButton(image: String, title: String) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: image)
+                .foregroundColor(.secondary)
+            Text(title)
+                .foregroundColor(.secondary)
+                .frame(maxWidth: .infinity, alignment: .center)
+        }
+        .border(.red)
+
+    }
 }
+
+// MARK: - PREVIEW
 
 struct ReceiptView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        // Example bottom actions
-        let bottomActions = [
-            BottomAction(iconName: "arrow.left", text: "В приложении"),
-            BottomAction(iconName: "doc.text.fill", text: "Чек"),
-            BottomAction(iconName: "star", text: "Сохранить")
-        ]
-        
-        // Example model
-        let model = ReceiptModel(
-            title: "Оплата успешно проведена",
-            description: "В случае несвоевременного получения товара или услуги обратитесь в службу поддержки поставщика",
-            bottomActions: bottomActions
-        )
-        
-        // Example ViewModel
-        let viewModel = ReceiptViewModel(model: model)
-        
-        // Pass the ViewModel to the PaymentSuccessView
-        return ReceiptView(viewModel: viewModel)
+        NavigationView {
+            ReceiptView(model: ReceiptModel(title: "Успешно переведено", description: "Вы перевели 1 000 ₽ по номеру телефона"))
+        }
     }
 }
-
 

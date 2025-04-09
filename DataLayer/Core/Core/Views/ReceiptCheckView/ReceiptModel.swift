@@ -7,19 +7,13 @@
 
 import Foundation
 
-/// A simple model representing the Payment Success screen data
-struct ReceiptModel {
-    let title: String
-    let description: String
-    
-    /// Actions or buttons displayed at the bottom of the screen
-    let bottomActions: [BottomAction]
+protocol Displayable {
+    var title: String { get }
+    var description: String { get }
 }
 
-/// A sub-model to represent the bottom action items
-struct BottomAction: Identifiable {
-    let id = UUID()
-    let iconName: String
-    let text: String
-}
 
+struct ReceiptModel: Displayable {
+    var title: String
+    var description: String
+}

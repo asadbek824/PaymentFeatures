@@ -7,24 +7,54 @@
 
 import SwiftUI
 
-/// The ViewModel that provides data and handles interactions on the Payment Success screen
-final class ReceiptViewModel: ObservableObject {
-    
-    /// Published property to notify the view about changes
-    @Published var model: ReceiptModel
-    
-    /// You may inject services or other dependencies here, for example:
-    /// private let paymentService: PaymentServiceProtocol
-    
-    init(model: ReceiptModel /*, paymentService: PaymentServiceProtocol */) {
+protocol ReceiptViewModelProtocol: ObservableObject {
+    var model: Displayable { get }
+}
+
+final class ReceiptViewModel: ReceiptViewModelProtocol {
+    @Published var model: Displayable
+
+    init(model: Displayable) {
         self.model = model
-        // self.paymentService = paymentService
-    }
-    
-    
-    /// Called when one of the bottom actions is tapped
-    func onBottomActionTap(_ action: BottomAction) {
-        // Handle the bottom action, e.g. show a receipt, save a file, etc.
-        print("Bottom action tapped: \(action.text)")
     }
 }
+
+enum PaymentStatus {
+    case successPayment
+    case failedPayment
+    case pendingPayment
+
+    // Default initializer
+    init() {
+        self = .pendingPayment
+    }
+
+    // Custom initializer to handle string input
+    init?(statusString: String) {
+        switch statusString.lowercased() {
+        case "success":
+            self = .successPayment
+        case "failed":
+            self = .failedPayment
+        case "pending":
+            self = .pendingPayment
+        default:
+            return nil
+        }
+    }
+
+    // Custom initializer to handle integer input
+    init?(statusCode: Int) {
+        switch statusCode {
+        case 1:
+            self = .successPayment
+        case 2:
+            self = .failedPayment
+        case 3:
+            self = .pendingPayment
+        default:
+            return nil
+        }
+    }
+}
+
