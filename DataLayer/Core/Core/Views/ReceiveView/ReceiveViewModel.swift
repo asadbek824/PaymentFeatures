@@ -5,4 +5,12 @@
 //  Created by Sukhrob on 08/04/25.
 //
 
-import Foundation
+import SwiftUI
+import Combine
+
+public class ReceiveViewModel: ObservableObject {
+    
+    public init() {  }
+    
+}
+

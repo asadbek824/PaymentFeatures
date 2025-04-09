@@ -151,6 +151,34 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		765708912DA40EF600AEB70E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		765708932DA40EF600AEB70E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		765708952DA40EF600AEB70E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		765708972DA40EF600AEB70E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -210,8 +238,24 @@
 					ProjectRef = 59FB1DF22D9EBDB900D58B5A /* Core.xcodeproj */;
 				},
 				{
+					ProductGroup = 765708972DA40EF600AEB70E /* Products */;
+					ProjectRef = 59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */;
+				},
+				{
+					ProductGroup = 765708932DA40EF600AEB70E /* Products */;
+					ProjectRef = 594D97252D9EF7C70045D271 /* HomeDemo.xcodeproj */;
+				},
+				{
 					ProductGroup = 59FB1EFC2D9EE8E900D58B5A /* Products */;
 					ProjectRef = 59FB1EFB2D9EE8E900D58B5A /* NetworkManager.xcodeproj */;
+				},
+				{
+					ProductGroup = 765708952DA40EF600AEB70E /* Products */;
+					ProjectRef = 59FB1E5F2D9EC00700D58B5A /* PaymentDemo.xcodeproj */;
+				},
+				{
+					ProductGroup = 765708912DA40EF600AEB70E /* Products */;
+					ProjectRef = 594D98B52D9FF3FC0045D271 /* ServiceDemo.xcodeproj */;
 				},
 			);
 			projectRoot = "";
