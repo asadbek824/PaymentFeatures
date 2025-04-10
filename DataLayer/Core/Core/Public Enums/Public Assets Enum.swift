@@ -28,6 +28,10 @@ public enum Asset {
         public static var payshareLockscreenLogo: UIImage {
             return UIImage(named: "payshare.lockscreen", in: .assetsKit, compatibleWith: nil)!
         }
+        
+        public static var payshare: UIImage {
+            return UIImage(named: "payshare", in: .assetsKit, compatibleWith: nil)!
+        }
     }
     
     public enum Color {

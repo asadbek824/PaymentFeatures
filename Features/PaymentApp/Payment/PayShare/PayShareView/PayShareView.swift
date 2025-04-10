@@ -6,6 +6,8 @@
 //
 
 import Core
+import AssetsKit
+import NavigationCoordinator
 import SwiftUI
 
 public struct PayShareView: View {
@@ -16,24 +18,22 @@ public struct PayShareView: View {
     public init() {  }
     
     public var body: some View {
-        VStack {
-            GeometryReader {
-                let size = $0.size
-                
-                ZStack {
-                    RadarView()
-                    RadarTargetView(title: "Me")
+        ZStack {
+            RadarView()
+            Image(uiImage: Asset.Image.payshare)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .screenWidth / 4, maxHeight: .screenWidth / 4)
+                .clipShape(.circle)
+                .onTapGesture {
+                    AppNavigationCoordinator.shared.navigate(to: .payments)
                 }
-                .frame(width: size.width, height: size.height)
-            }
-            .overlay(alignment: .top) {
-                DiscoveredTargetsView()
-                    .id(vm.multipeerService?.discoveredPeers.count)
-            }
         }
-        .backButton {
-            dismiss()
+        .overlay(alignment: .top) {
+            DiscoveredTargetsView()
+                .id(vm.multipeerService?.discoveredPeers.count)
         }
+        .backButton { dismiss() }
         .fillSuperview()
         .navigationTitle("Pay Share")
         .navigationBarTitleDisplayMode(.inline)
