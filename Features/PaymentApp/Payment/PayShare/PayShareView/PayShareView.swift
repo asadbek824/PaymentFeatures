@@ -6,6 +6,7 @@
 //
 
 import Core
+import NavigationCoordinator
 import SwiftUI
 
 public struct PayShareView: View {
@@ -23,6 +24,10 @@ public struct PayShareView: View {
                 ZStack {
                     RadarView()
                     RadarTargetView(title: "Me")
+                        .onTapGesture {
+                            let model: ReceiptModel = .successPayment
+                            AppNavigationCoordinator.shared.navigate(to: .receipt(model: model))
+                        }
                 }
                 .frame(width: size.width, height: size.height)
             }

@@ -5,15 +5,12 @@
 //  Created by Sukhrob on 09/04/25.
 //
 
-import Foundation
+import SwiftUI
 
-protocol Displayable {
+// Define a protocol for displayable content.
+public protocol Displayable {
+    var iconDetails: (icon: String, color: Color) {get}
     var title: String { get }
     var description: String { get }
 }
 
-
-struct ReceiptModel: Displayable {
-    var title: String
-    var description: String
-}

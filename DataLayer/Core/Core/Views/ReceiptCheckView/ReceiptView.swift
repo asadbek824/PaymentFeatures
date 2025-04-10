@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct ReceiptView: View {
+public struct ReceiptView: View {
     
     @StateObject private var viewModel: ReceiptViewModel
     
-    init(model: ReceiptModel) {
+    public init(model: ReceiptModel) {
         _viewModel = StateObject(wrappedValue: ReceiptViewModel(model: model))
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 50) {
             paymentStatusStack()
             BottomButtons()
@@ -26,11 +26,11 @@ struct ReceiptView: View {
     @ViewBuilder
     private func paymentStatusStack() -> some View {
         VStack {
-            Image(systemName: "checkmark.circle.fill")
+            Image(systemName: viewModel.model.iconDetails.icon)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 70, height: 70)
-                .foregroundColor(.appPrimary)
+                .foregroundStyle(viewModel.model.iconDetails.color)
             
             Text(viewModel.model.title)
                 .font(.headline)
@@ -88,7 +88,6 @@ struct ReceiptView: View {
                 .foregroundColor(.secondary)
                 .frame(maxWidth: .infinity, alignment: .center)
         }
-        .border(.red)
 
     }
 }
@@ -98,7 +97,7 @@ struct ReceiptView: View {
 struct ReceiptView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ReceiptView(model: ReceiptModel(title: "Успешно переведено", description: "Вы перевели 1 000 ₽ по номеру телефона"))
+            ReceiptView(model: .pendingPayment)
         }
     }
 }

@@ -6,12 +6,17 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7622133B2DA7C69900F2743E /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7622133A2DA7C69900F2743E /* Core.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		5969E6C02DA66D0300EA6655 /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5969E6D52DA66D5200EA6655 /* Home.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Home.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5969E6D92DA66D6000EA6655 /* Payment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Payment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5969E6DD2DA66D6600EA6655 /* Services.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Services.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5969E6FD2DA6708B00EA6655 /* Payment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Payment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7622133A2DA7C69900F2743E /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -40,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7622133B2DA7C69900F2743E /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +72,7 @@
 		5969E6D42DA66D5200EA6655 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7622133A2DA7C69900F2743E /* Core.framework */,
 				5969E6FD2DA6708B00EA6655 /* Payment.framework */,
 				5969E6DD2DA66D6600EA6655 /* Services.framework */,
 				5969E6D92DA66D6000EA6655 /* Payment.framework */,
