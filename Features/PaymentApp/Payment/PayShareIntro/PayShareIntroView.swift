@@ -6,6 +6,7 @@
 //
 
 import Core
+import AssetsKit
 import SwiftUI
 
 struct PayShareIntroView: View {
