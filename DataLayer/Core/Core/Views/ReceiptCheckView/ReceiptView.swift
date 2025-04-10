@@ -10,8 +10,10 @@ import SwiftUI
 public struct ReceiptView: View {
     
     @StateObject private var viewModel: ReceiptViewModel
+    let onBack: () -> Void
     
-    public init(model: ReceiptModel) {
+    public init(model: ReceiptModel, onBack: @escaping () -> Void) {
+        self.onBack = onBack
         _viewModel = StateObject(wrappedValue: ReceiptViewModel(model: model))
     }
     
@@ -52,21 +54,21 @@ public struct ReceiptView: View {
     @ViewBuilder
     private func BottomButtons() -> some View {
         HStack(spacing: 16) {
-            NavigationLink {
-                Text("Phone Transfer") // Replace with actual view
-            } label: {
-                CustomButton(
-                    image: "arrow.left",
-                    title: "Назад"
-                )
-            }
+            CustomButton(
+                image: "arrow.left",
+                title: "Назад",
+                action: onBack
+            )
+            
             NavigationLink {
                 Text("My Card Transfer") // Replace with actual view
             } label: {
                 CustomButton(
                     image: "receipt",
                     title: "Чек"
-                )
+                ) {
+                    
+                }
             }
             NavigationLink {
                 Text("Store") // Replace with actual view
@@ -74,19 +76,24 @@ public struct ReceiptView: View {
                 CustomButton(
                     image: "star",
                     title: "Сохранить"
-                )
+                ) {
+                    
+                }
             }
         }
     }
     
     @ViewBuilder
-    private func CustomButton(image: String, title: String) -> some View {
+    private func CustomButton(image: String, title: String, action: @escaping () -> Void) -> some View {
         VStack(spacing: 16) {
             Image(systemName: image)
                 .foregroundColor(.secondary)
             Text(title)
                 .foregroundColor(.secondary)
                 .frame(maxWidth: .infinity, alignment: .center)
+        }
+        .onTapGesture {
+            action()
         }
 
     }
@@ -97,7 +104,7 @@ public struct ReceiptView: View {
 struct ReceiptView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ReceiptView(model: .failedPayment)
+            ReceiptView(model: .failedPayment) {  }
         }
     }
 }

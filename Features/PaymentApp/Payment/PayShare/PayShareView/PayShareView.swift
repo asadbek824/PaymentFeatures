@@ -13,6 +13,7 @@ public struct PayShareView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PayShareViewModel()
+    @State private var navController: UINavigationController?
     
     public init() {  }
     
@@ -26,7 +27,9 @@ public struct PayShareView: View {
                     RadarTargetView(title: "Me")
                         .onTapGesture {
                             let model: ReceiptModel = .successPayment
-                            AppNavigationCoordinator.shared.navigate(to: .receipt(model: model))
+                            if let nav = navController {
+                                AppNavigationCoordinator.shared.navigate(to: .receipt(model: model), in: nav)
+                            }
                         }
                 }
                 .frame(width: size.width, height: size.height)
@@ -57,6 +60,9 @@ public struct PayShareView: View {
                 title: Text("Received \(message.text) from \(message.sender)"),
                 dismissButton: .cancel(Text("OK"))
             )
+        }
+        .currentNavigationController { nav in
+            self.navController = nav
         }
     }
     

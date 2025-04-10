@@ -47,19 +47,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarVC.selectedIndex = 0
         tabBarVC.tabBar.backgroundColor = .white
         tabBarVC.tabBar.tintColor = .appColor.primary
-
+        
+        AppNavigationCoordinator.shared.setTabBarController(tabBarVC)
+        
         let firstNavVC = tabViewControllers.first as? UINavigationController ?? UINavigationController()
-
+        
         let factory = DefaultNavigationFactory()
         AppNavigationCoordinator.shared.setRoot(
             navigationController: firstNavVC,
             factory: factory
         )
-
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
-
+        
         return true
     }
 

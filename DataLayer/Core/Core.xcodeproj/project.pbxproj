@@ -11,6 +11,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		594C48122DA7F0E000C6E89F /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		594C48162DA7F11300C6E89F /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59619B292DA2A8CA005A674C /* AssetsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AssetsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5969DDAE2DA54F6B00EA6655 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DE72D9EBDB900D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +59,8 @@
 		59619B282DA2A8CA005A674C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				594C48162DA7F11300C6E89F /* NavigationCoordinator.framework */,
+				594C48122DA7F0E000C6E89F /* NavigationCoordinator.framework */,
 				5969DDAE2DA54F6B00EA6655 /* DesignSystem.framework */,
 				59619B292DA2A8CA005A674C /* AssetsKit.framework */,
 			);
@@ -179,7 +183,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = DA7SC56XUA;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -217,7 +221,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = DA7SC56XUA;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
