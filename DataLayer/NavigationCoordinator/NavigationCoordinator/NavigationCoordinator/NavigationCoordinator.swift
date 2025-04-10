@@ -14,12 +14,12 @@ public protocol NavigationFactory {
 public final class AppNavigationCoordinator {
     public static let shared = AppNavigationCoordinator()
 
-    private var defaultNavigationController: UINavigationController?
+    private var rootTabBarController: UITabBarController?
     private var factory: NavigationFactory?
     private var tabBarController: UITabBarController?
 
     public func setRoot(navigationController: UINavigationController, factory: NavigationFactory) {
-        self.defaultNavigationController = navigationController
+        self.rootTabBarController = navigationController.tabBarController
         self.factory = factory
     }
     
@@ -27,26 +27,28 @@ public final class AppNavigationCoordinator {
         self.tabBarController = tabBarController
     }
 
-    public func navigate(to route: AppRoute, in navigationController: UINavigationController? = nil, animated: Bool = true) {
-        guard let vc = factory?.viewController(for: route) else { return }
-        (navigationController ?? defaultNavigationController)?.pushViewController(vc, animated: animated)
-    }
-
-    public func present(_ route: AppRoute, in navigationController: UINavigationController? = nil, animated: Bool = true) {
-        guard let vc = factory?.viewController(for: route) else { return }
-        (navigationController ?? defaultNavigationController)?.present(vc, animated: animated)
-    }
-    
-    public func tabTo(index: Int) {
-        tabBarController?.selectedIndex = index
-    }
-    
-    public func popToRootAndShowTab(index: Int) {
-        guard let tabBar = tabBarController else { return }
-        tabBar.selectedIndex = index
-
-        if let nav = (tabBar.viewControllers?[index] as? UINavigationController) {
-            nav.popToRootViewController(animated: true)
+    private var currentNavigationController: UINavigationController? {
+        guard let selectedViewController = rootTabBarController?.selectedViewController as? UINavigationController else {
+            return nil
         }
+        return selectedViewController
+    }
+
+    public func navigate(to route: AppRoute) {
+        guard let vc = factory?.viewController(for: route) else { return }
+        vc.hidesBottomBarWhenPushed = true
+        currentNavigationController?.pushViewController(vc, animated: true)
+    }
+    
+    public func pop(animated: Bool = true) {
+        currentNavigationController?.popViewController(animated: animated)
+    }
+    
+    public func popToRoot(animated: Bool = true) {
+        currentNavigationController?.popToRootViewController(animated: animated)
+    }
+    
+    public func pop(to viewController: UIViewController, animated: Bool = true) {
+        currentNavigationController?.popToViewController(viewController, animated: animated)
     }
 }

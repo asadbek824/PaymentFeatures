@@ -124,3 +124,11 @@ struct PaymeShareWidgetDemoBundle: WidgetBundle {
     }
 }
 
+// Preview for the circular widget.
+#Preview(as: .accessoryCircular) {
+    PeerWidget()
+} timeline: {
+    SimpleEntry(date: .now)
+}
+
+

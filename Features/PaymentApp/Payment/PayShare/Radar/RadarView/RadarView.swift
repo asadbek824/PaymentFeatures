@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RadarView: View {
-    
     @StateObject private var vm = RadarViewVM()
     
     var body: some View {
@@ -19,9 +18,9 @@ struct RadarView: View {
                     .frame(width: circle.size, height: circle.size)
             }
         }
-        .frame(maxWidth: UIScreen.main.bounds.width,
-               maxHeight: UIScreen.main.bounds.height)
+        .frame(maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height)
         .onAppear(perform: vm.startRadarAnimation)
+        .onDisappear(perform: vm.stopRadarAnimation)
     }
 }
 
