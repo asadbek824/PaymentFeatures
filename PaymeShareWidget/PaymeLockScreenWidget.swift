@@ -45,7 +45,7 @@ struct LockScreen_WidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
-        Link(destination: URL(string: "payme://pay-share")!) {
+        Link(destination: URL(string: "paymeFeature2://pay-share")!) {
             ZStack {
                 Image(systemName: "circle")
                     .resizable()
@@ -65,20 +65,14 @@ struct PaymeLockScreenWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            LockScreen_WidgetEntryView(entry: entry)
-//                .padding()
-//                .background(Material.ultraThin)
-//                .clipShape(.circle)
-            
-//            if #available(iOS 17.0, *) {
-//                LockScreen_WidgetEntryView(entry: entry)
-//                    // Using containerBackground for iOS 17+ styling.
-//                    .containerBackground(.fill.tertiary, for: .widget)
-//            } else {
-//                LockScreen_WidgetEntryView(entry: entry)
-//                    .padding()
-//                    .background(Material.ultraThin)
-//            }
+            if #available(iOS 17.0, *) {
+                LockScreen_WidgetEntryView(entry: entry)
+                    .containerBackground(.fill.tertiary, for: .widget)
+            } else {
+                LockScreen_WidgetEntryView(entry: entry)
+                    .padding()
+                    .background(Material.ultraThin)
+            }
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget showing images only.")
