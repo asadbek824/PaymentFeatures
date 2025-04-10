@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
  
 public enum AppRoute: Hashable {
     case home
@@ -13,4 +14,5 @@ public enum AppRoute: Hashable {
     case services
     case payShare
     case detail(title: String)
+    case receipt(model: ReceiptModel)
 }

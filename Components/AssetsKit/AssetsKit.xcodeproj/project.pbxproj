@@ -7,26 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		59619A6E2DA2A0A9005A674C /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59619A6E2DA2A0A9005A674C /* AssetsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AssetsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59619B362DA2AD55005A674C /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		59619A732DA2A0A9005A674C /* Exceptions for "AssetsKit" folder in "DesignSystem" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			publicHeaders = (
-				AssetsKit.h,
-			);
-			target = 59619A6D2DA2A0A9005A674C /* DesignSystem */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		59619A702DA2A0A9005A674C /* AssetsKit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				59619A732DA2A0A9005A674C /* Exceptions for "AssetsKit" folder in "DesignSystem" target */,
-			);
 			path = AssetsKit;
 			sourceTree = "<group>";
 		};
@@ -55,7 +42,7 @@
 		59619A6F2DA2A0A9005A674C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				59619A6E2DA2A0A9005A674C /* DesignSystem.framework */,
+				59619A6E2DA2A0A9005A674C /* AssetsKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,9 +68,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		59619A6D2DA2A0A9005A674C /* DesignSystem */ = {
+		59619A6D2DA2A0A9005A674C /* AssetsKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 59619A742DA2A0A9005A674C /* Build configuration list for PBXNativeTarget "DesignSystem" */;
+			buildConfigurationList = 59619A742DA2A0A9005A674C /* Build configuration list for PBXNativeTarget "AssetsKit" */;
 			buildPhases = (
 				59619A692DA2A0A9005A674C /* Headers */,
 				59619A6A2DA2A0A9005A674C /* Sources */,
@@ -97,11 +84,11 @@
 			fileSystemSynchronizedGroups = (
 				59619A702DA2A0A9005A674C /* AssetsKit */,
 			);
-			name = DesignSystem;
+			name = AssetsKit;
 			packageProductDependencies = (
 			);
 			productName = AssetsKit;
-			productReference = 59619A6E2DA2A0A9005A674C /* DesignSystem.framework */;
+			productReference = 59619A6E2DA2A0A9005A674C /* AssetsKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -119,7 +106,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 59619A682DA2A0A9005A674C /* Build configuration list for PBXProject "DesignSystem" */;
+			buildConfigurationList = 59619A682DA2A0A9005A674C /* Build configuration list for PBXProject "AssetsKit" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -133,7 +120,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				59619A6D2DA2A0A9005A674C /* DesignSystem */,
+				59619A6D2DA2A0A9005A674C /* AssetsKit */,
 			);
 		};
 /* End PBXProject section */
@@ -167,7 +154,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = DA7SC56XUA;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -207,7 +194,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = DA7SC56XUA;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -366,7 +353,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		59619A682DA2A0A9005A674C /* Build configuration list for PBXProject "DesignSystem" */ = {
+		59619A682DA2A0A9005A674C /* Build configuration list for PBXProject "AssetsKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59619A772DA2A0A9005A674C /* Debug */,
@@ -375,7 +362,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		59619A742DA2A0A9005A674C /* Build configuration list for PBXNativeTarget "DesignSystem" */ = {
+		59619A742DA2A0A9005A674C /* Build configuration list for PBXNativeTarget "AssetsKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				59619A752DA2A0A9005A674C /* Debug */,

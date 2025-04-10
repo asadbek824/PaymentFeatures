@@ -587,7 +587,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3DJM2CZRX2;
+				DEVELOPMENT_TEAM = DA7SC56XUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices.";
@@ -623,7 +623,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3DJM2CZRX2;
+				DEVELOPMENT_TEAM = DA7SC56XUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices.";
