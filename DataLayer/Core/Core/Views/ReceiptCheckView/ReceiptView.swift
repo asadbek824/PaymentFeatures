@@ -97,7 +97,7 @@ public struct ReceiptView: View {
 struct ReceiptView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ReceiptView(model: .pendingPayment)
+            ReceiptView(model: .failedPayment)
         }
     }
 }
