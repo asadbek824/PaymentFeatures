@@ -522,7 +522,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = DA7SC56XUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeShareWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PaymeShareWidget;
@@ -534,7 +534,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "AssA.PaymeFituares.PaymeShareWidget-";
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares.PaymeShareWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -554,7 +554,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = DA7SC56XUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeShareWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PaymeShareWidget;
@@ -566,7 +566,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "AssA.PaymeFituares.PaymeShareWidget-";
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares.PaymeShareWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -587,9 +587,11 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = DA7SC56XUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PayMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "We need access to your local network to enable peer-to-peer connectivity.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -623,9 +625,11 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = DA7SC56XUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PayMe;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "This app uses Bluetooth to discover and connect to nearby devices.";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "We need access to your local network to enable peer-to-peer connectivity.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

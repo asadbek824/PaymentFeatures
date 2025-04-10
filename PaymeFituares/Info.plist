@@ -9,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>payme</string>
+				<string>paymeFeature2</string>
 			</array>
 		</dict>
 	</array>

@@ -10,6 +10,7 @@ import Payment
 import SwiftUI
 import Services
 import NavigationCoordinator
+import Core
 
 final class DefaultNavigationFactory: NavigationFactory {
     func viewController(for route: AppRoute) -> UIViewController {
@@ -18,6 +19,7 @@ final class DefaultNavigationFactory: NavigationFactory {
         case .payments: return UIHostingController(rootView: PaymentsView())
         case .services: return UIHostingController(rootView: ServicesView())
         case .payShare: return UIHostingController(rootView: PayShareView())
+        case .receipt(let model): return UIHostingController(rootView: ReceiptView(model: model))
         case .detail(let title):
             let vc = UIViewController()
             vc.view.backgroundColor = .white
