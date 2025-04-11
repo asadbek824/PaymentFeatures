@@ -45,8 +45,6 @@ public struct ReceiptView: View {
                 .padding(.top, 8)
         }
         .fillSuperview()
-        
-        
     }
     
     @ViewBuilder

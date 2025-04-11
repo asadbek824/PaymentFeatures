@@ -7,6 +7,7 @@
 import SwiftUI
 
 public enum ReceiptModel: Hashable, Equatable, Displayable {
+    
     case successPayment
     case failedPayment
     case pendingPayment

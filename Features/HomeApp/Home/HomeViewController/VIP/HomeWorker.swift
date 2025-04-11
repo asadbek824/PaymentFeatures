@@ -34,7 +34,7 @@ extension HomeWorker: HomeWorkeringProtocol {
         //            decode: UserModel.self,
         //            method: .get
         //        )
-        return UserModel(id: 1, fullName: "Asadbek Yoldoshev")
+        return UserModel(id: 1, fullName: "Asadbek Yoldoshev" )
     }
     
     func fetchUserBalanceAndExpenses() async throws -> [UserBalanceAndExpensesModel] {
@@ -56,7 +56,7 @@ extension HomeWorker: HomeWorkeringProtocol {
                         expenses: 1200210.24,
                         cartNumber: "8600060905809696",
                         cartName: "Xalq Bank",
-                        currency: "сум"
+                        currency: "сум", cardImage: nil
                     )
             ),
             UserBalanceAndExpensesModel(
@@ -67,7 +67,7 @@ extension HomeWorker: HomeWorkeringProtocol {
                         expenses: 200210.24,
                         cartNumber: "8600060905809999",
                         cartName: "Asadbek Yo'ldoshev",
-                        currency: "сум"
+                        currency: "сум", cardImage: nil
                     )
             ),
             UserBalanceAndExpensesModel(
@@ -78,7 +78,7 @@ extension HomeWorker: HomeWorkeringProtocol {
                         expenses: 100210.24,
                         cartNumber: "8600060905807777",
                         cartName: "Asadbek Yo'ldoshev",
-                        currency: "сум"
+                        currency: "сум", cardImage: nil
                     )
             ),
         ]

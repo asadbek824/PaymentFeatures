@@ -60,6 +60,7 @@ public struct PayShareView: View {
         }
     }
     
+    
     @ViewBuilder
     private func DiscoveredTargetsView() -> some View {
         if let peers = vm.multipeerService?.discoveredPeers, peers.count > 0 {
@@ -159,6 +160,7 @@ struct PayShareSheet: View {
         }
         .padding()
     }
+    
 }
 
 #Preview {

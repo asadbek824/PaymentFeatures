@@ -22,6 +22,7 @@ public struct UserCarts: Codable {
     public let cartNumber: String
     public let cartName: String
     public let currency: String
+    public let cardImage: String?
     
     public init(
         cartId: Int,
@@ -29,7 +30,8 @@ public struct UserCarts: Codable {
         expenses: Double,
         cartNumber: String,
         cartName: String,
-        currency: String
+        currency: String,
+        cardImage: String?
     ) {
         self.cartId = cartId
         self.balance = balance
@@ -37,5 +39,6 @@ public struct UserCarts: Codable {
         self.cartNumber = cartNumber
         self.cartName = cartName
         self.currency = currency
+        self.cardImage = cardImage
     }
 }
