@@ -8,11 +8,13 @@
 import Foundation
 import UserNotifications
 
-final class NotificationManager {
+public final class NotificationService {
     
-    static let shared = NotificationManager()
+    public static let shared = NotificationService()
 
-    private init() {}
+    private init() {
+        requestAuthorization()
+    }
 
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
@@ -20,23 +22,17 @@ final class NotificationManager {
                 print("🛑 Notification permission error: \(error)")
                 return
             }
-
-            print(granted ? "✅ Notifications granted" : "🚫 Notifications denied")
         }
     }
 
-    func scheduleNotification(title: String, body: String, at date: Date) {
+    public func scheduleNotification(title: String, body: String, at date: Date) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
         content.sound = .default
 
-        let triggerDate = Calendar.current.dateComponents(
-            [.year, .month, .day, .hour, .minute, .second],
-            from: date
-        )
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        let timeInterval = max(date.timeIntervalSinceNow, 1) // must be at least 1 sec
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: timeInterval, repeats: false)
 
         let request = UNNotificationRequest(
             identifier: UUID().uuidString,
@@ -47,8 +43,6 @@ final class NotificationManager {
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("🛑 Failed to schedule notification: \(error)")
-            } else {
-                print("📬 Notification scheduled for \(date)")
             }
         }
     }

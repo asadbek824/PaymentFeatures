@@ -46,12 +46,6 @@ public struct PayShareView: View {
             PayShareSheet(vm: vm)
                 .presentationDetents([.medium])
         }
-        .alert(item: $vm.receivedMessage) { message in
-            Alert(
-                title: Text("Received \(message.text) from \(message.sender)"),
-                dismissButton: .cancel(Text("OK"))
-            )
-        }
     }
     
     @ViewBuilder
