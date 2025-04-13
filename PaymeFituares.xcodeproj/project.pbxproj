@@ -136,6 +136,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				Widgets/PaymeLockScreenWidget.swift,
 			);
 			target = 5969E7122DA67F1E00EA6655 /* PaymeShareWidgetExtension */;
 		};
@@ -522,7 +523,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeShareWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PaymeShareWidget;
@@ -554,7 +555,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeShareWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PaymeShareWidget;
@@ -587,7 +588,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PayMe;
@@ -625,7 +626,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 92M23D65YY;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PaymeFituares/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PayMe;
