@@ -13,9 +13,7 @@ class PayShareViewModel: ObservableObject {
     
     @Published var showSheet: Bool = false
     @Published var connectedPeer: PeerDevice?
-    @Published private(set) var multipeerService: MultipeerService?
-    @Published var receivedMessage: PeerMessage?
-    
+    @Published private(set) var multipeerService: MultipeerService?    
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -41,13 +39,6 @@ class PayShareViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        multipeerService?.$connectionStatus
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] status in
-                self?.handleConnectionStatus(status)
-            }
-            .store(in: &cancellables)
-        
         multipeerService?.$messages
              .receive(on: DispatchQueue.main)
              .compactMap { messages -> [PeerMessage] in
@@ -56,29 +47,17 @@ class PayShareViewModel: ObservableObject {
              .filter { !$0.isEmpty }
              .compactMap { $0.last }
              .sink { [weak self] message in
-                 self?.receivedMessage = message
+                 
+                 let futureDate = Date().addingTimeInterval(2)
+                 NotificationService.shared.scheduleNotification(
+                    title: "Входящий перевод от \(message.sender)",
+                    body: "\(message.text) сумов",
+                    at: futureDate
+                 )
+                 
                  self?.multipeerService?.clearMessages()
              }
              .store(in: &cancellables)
-    }
-    
-    private func handleConnectionStatus(_ status: ConnectionStatus) {
-        switch status {
-        case .notConnected:
-            print("notConnected")
-        case .searching:
-            print("searching")
-        case .connecting(let to):
-            print("connecting")
-        case .connected(let to):
-            print("connected")
-        case .failed(let error):
-            print("failed")
-        case .stopped:
-            print("stopped")
-        @unknown default:
-            print("unknown default")
-        }
     }
     
     func stopSearching() {
