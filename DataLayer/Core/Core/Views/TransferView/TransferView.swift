@@ -7,35 +7,14 @@
 
 import SwiftUI
 
-
-
-// MARK: - TransferView
-
 public struct TransferView: View {
     // MARK: - View Model
     @StateObject private var viewModel = TransferViewModel()
     
-    // Navigation flag for the NavigationLink.
-    @State private var showReceipt = false
-    
     public init() {}
     
     public var body: some View {
-        ZStack {
-            mainContent()
-            
-            // Hidden NavigationLink that activates when showReceipt becomes true.
-            NavigationLink(
-                destination: ReceiptView(model: .successPayment),
-                isActive: $showReceipt,
-                label: {
-                    EmptyView()
-                }
-            )
-        }
-        .fillSuperview() // Ensure your custom modifier is defined, or remove if not needed.
-        .navigationTitle("Перевод")
-        .navigationBarTitleDisplayMode(.inline)
+        mainContent()
     }
     
     @ViewBuilder
@@ -85,25 +64,17 @@ public struct TransferView: View {
             
             Spacer()
             
-            // Submit Button as a standard Button.
-            Button(action: {
-                // Optionally call your viewModel.transfer logic here.
-                viewModel.submitTransfer()
-                // Set the flag to true to activate the NavigationLink.
-                showReceipt = true
-            }) {
-                Text("Продолжить")
-                    .foregroundColor(.white)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.appPrimary)
-                    .cornerRadius(8)
+            // Submit Button.
+            SubmitButton {
+                let model = ReceiptModel.successPayment
             }
             .disabled(!viewModel.isValid)
         }
+        .fillSuperview()
         .padding()
         .background(Color.white)
+        .navigationTitle("Перевод")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -156,7 +127,6 @@ struct CardNumberField: View {
 }
 
 /// A text field for entering the amount to transfer.
-/// Uses a NumberFormatter so that manual input is formatted.
 struct AmountField: View {
     @Binding var amount: Double?
     let formatter: NumberFormatter
@@ -167,11 +137,30 @@ struct AmountField: View {
             .padding()
             .background(Color.white)
             .cornerRadius(8)
-            .setStroke(color: .appPrimary) // Custom modifier; remove if undefined.
+            .setStroke(color: .appPrimary)
             .foregroundStyle(.label)
             .fontWeight(.medium)
     }
 }
+
+/// A button to submit the transfer.
+struct SubmitButton: View {
+    var action: () -> Void
+    var body: some View {
+        Button(action: {
+            action()
+        }) {
+            Text("Продолжить")
+                .foregroundColor(.white)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.appPrimary)
+                .cornerRadius(8)
+        }
+    }
+}
+
 
 // MARK: - Preview
 
