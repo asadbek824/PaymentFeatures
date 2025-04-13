@@ -15,4 +15,5 @@ public enum AppRoute: Hashable {
     case payShare
     case detail(title: String)
     case receipt(model: ReceiptModel)
+    case transfer
 }

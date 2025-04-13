@@ -25,8 +25,8 @@ public struct PayShareView: View {
                     RadarView()
                     RadarTargetView(title: "Me")
                         .onTapGesture {
-                            let model: ReceiptModel = .successPayment
-                            AppNavigationCoordinator.shared.navigate(to: .receipt(model: model))
+
+                            AppNavigationCoordinator.shared.navigate(to: .transfer)
                         }
                 }
                 .frame(width: size.width, height: size.height)

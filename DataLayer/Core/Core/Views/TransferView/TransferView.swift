@@ -7,84 +7,109 @@
 
 import SwiftUI
 
+
+
+// MARK: - TransferView
+
 public struct TransferView: View {
-    // MARK: - State
-    @State private var selectedCard: UserBalanceAndExpensesModel?
-    @State private var isCardSheetPresented = false
-    @State private var amount: String = ""
+    // MARK: - View Model
+    @StateObject private var viewModel = TransferViewModel()
     
-    // In a real app, you’d fetch these cards from a ViewModel, but here we’re providing them directly.
-    private let availableCards: [UserBalanceAndExpensesModel] = [
-        UserBalanceAndExpensesModel(
-            cartId: UserCarts(
-                cartId: 101,
-                balance: 10000,
-                expenses: 5000,
-                cartNumber: "8600064296969696",
-                cartName: "UzCard",
-                currency: "UZS",
-                cardImage: nil
-            )
-        ),
-        UserBalanceAndExpensesModel(
-            cartId: UserCarts(
-                cartId: 202,
-                balance: 800,
-                expenses: 300,
-                cartNumber: "1234567890123456",
-                cartName: "Humo Card",
-                currency: "UZS",
-                cardImage: nil
-            )
-        )
-    ]
-
-    public init() {
-        _selectedCard = State(initialValue: availableCards.first)
-    }
-
+    // Navigation flag for the NavigationLink.
+    @State private var showReceipt = false
+    
+    public init() {}
+    
     public var body: some View {
-        VStack(spacing: 40) {
-            // 1. CardNumberField
-            CardNumberField(
-                card: selectedCard,
-                action: {
-                    // Tap this button to show bottom sheet of cards
-                    isCardSheetPresented = true
+        ZStack {
+            mainContent()
+            
+            // Hidden NavigationLink that activates when showReceipt becomes true.
+            NavigationLink(
+                destination: ReceiptView(model: .successPayment),
+                isActive: $showReceipt,
+                label: {
+                    EmptyView()
                 }
             )
-
-            // 2. AmountField
-            AmountField(amount: $amount)
-
-            // 3. SubmitButton
-            SubmitButton {
-                // Handle the transfer action here (e.g., call your ViewModel)
-                print("Transferring amount: \(amount) to card: \(selectedCard?.cartId.cartNumber ?? "No Card Selected")")
+        }
+        .fillSuperview() // Ensure your custom modifier is defined, or remove if not needed.
+        .navigationTitle("Перевод")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    @ViewBuilder
+    private func mainContent() -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            // Header Section with card info.
+            CardNumberField(card: viewModel.fixedCard) { }
+                .padding(.bottom, 100)
+            
+            // Amount Input Section.
+            HStack {
+                Text("Сумма перевода")
+                    .font(.callout)
+                    .foregroundStyle(.appPrimary)
             }
-        }
-        
-        .padding()
-        .background(Color(UIColor.secondarySystemBackground))
-        .sheet(isPresented: $isCardSheetPresented) {
-            // Show the bottom sheet with all cards
-            CardsBottomSheet(
-                cards: availableCards,
-                onCardSelected: { selected in
-                    // Update the selected card & dismiss the sheet
-                    selectedCard = selected
-                    isCardSheetPresented = false
+            AmountField(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
+                .padding(.bottom, 15)
+            
+            // Display Validation Error if needed.
+            if let error = viewModel.validationError, viewModel.showValidationError {
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.caption)
+            }
+            
+            // Chips Section for preset amounts.
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(viewModel.presetAmounts, id: \.self) { value in
+                        Button {
+                            viewModel.amount = Double(value)
+                            // Hide error message when a preset is selected.
+                            viewModel.showValidationError = false
+                        } label: {
+                            Text("\(value.formattedWithSeparator())")
+                                .foregroundColor(.secondary)
+                                .font(.subheadline)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 16)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(16)
+                        }
+                    }
                 }
-            )
-            .presentationDetents([.fraction(0.5)])
+            }
+            .padding(.top, 4)
+            
+            Spacer()
+            
+            // Submit Button as a standard Button.
+            Button(action: {
+                // Optionally call your viewModel.transfer logic here.
+                viewModel.submitTransfer()
+                // Set the flag to true to activate the NavigationLink.
+                showReceipt = true
+            }) {
+                Text("Продолжить")
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.appPrimary)
+                    .cornerRadius(8)
+            }
+            .disabled(!viewModel.isValid)
         }
+        .padding()
+        .background(Color.white)
     }
 }
 
 // MARK: - Subviews
 
-/// A button that shows the currently selected card’s info
-/// and triggers opening the CardsBottomSheet when tapped.
+/// A button-like view to show the current (and only) card’s info.
 struct CardNumberField: View {
     let card: UserBalanceAndExpensesModel?
     let action: () -> Void
@@ -92,104 +117,59 @@ struct CardNumberField: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 16) {
-                if let card = card {
-                    // If there's a custom image, show it; otherwise use a default icon
-                    if let cardImage = card.cartId.cardImage, !cardImage.isEmpty {
-                        Image(cardImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 40, height: 40)
-                    } else {
-                        Image(systemName: "creditcard.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 40, height: 40)
-                    }
-
-                    HStack{
-                        Text("\(card.cartId.cartNumber.prefix(6)) **** \(card.cartId.cartNumber.suffix(4))")
+                if let card = card,
+                   let cardImage = card.cartId.cardImage,
+                   !cardImage.isEmpty {
+                    Image(cardImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                } else {
+                    Image(systemName: "creditcard.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.blue)
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    if let card = card {
+                        Text(card.cartId.cartName)
                             .font(.headline)
+                            .foregroundColor(.primary)
+                        let visibleSuffix = card.cartId.cartNumber.suffix(4)
+                        Text("** \(visibleSuffix)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    } else {
+                        Text("Нет карты")
                             .foregroundColor(.white)
                     }
-                } else {
-                    // No card selected yet
-                    Text("Номер карты или телефона")
-                        .foregroundColor(.white)
                 }
             }
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.blue)
+            .background(Color(UIColor.secondarySystemBackground))
             .cornerRadius(8)
         }
-        .fillSuperview()
     }
 }
 
 /// A text field for entering the amount to transfer.
+/// Uses a NumberFormatter so that manual input is formatted.
 struct AmountField: View {
-    @Binding var amount: String
-
+    @Binding var amount: Double?
+    let formatter: NumberFormatter
+    
     var body: some View {
-        TextField("Сумма перевода", text: $amount)
+        TextField("от 1 000 до 15 000 000 сум", value: $amount, formatter: formatter)
             .keyboardType(.decimalPad)
             .padding()
             .background(Color.white)
             .cornerRadius(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-            )
-    }
-}
-
-/// A button to submit the transfer.
-struct SubmitButton: View {
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text("Продолжить")
-                .foregroundColor(.white)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.green)
-                .cornerRadius(8)
-        }
-    }
-}
-
-/// A bottom sheet that lists all available cards. Tapping one
-/// triggers the onCardSelected callback to inform the parent view.
-struct CardsBottomSheet: View {
-    let cards: [UserBalanceAndExpensesModel]
-    let onCardSelected: (UserBalanceAndExpensesModel) -> Void
-
-    var body: some View {
-        NavigationView {
-            List(cards, id: \.cartId.cartId) { card in
-                Button {
-                    onCardSelected(card)
-                } label: {
-                    HStack {
-                        Image(systemName: "creditcard.fill")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foregroundColor(.blue)
-                        VStack(alignment: .leading) {
-                            Text(card.cartId.cartName)
-                                .font(.headline)
-                            Text("**** \(card.cartId.cartNumber.suffix(4))")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 8)
-                }
-            }
-            .navigationTitle("Выберите карту")
-        }
+            .setStroke(color: .appPrimary) // Custom modifier; remove if undefined.
+            .foregroundStyle(.label)
+            .fontWeight(.medium)
     }
 }
 
@@ -197,6 +177,20 @@ struct CardsBottomSheet: View {
 
 struct TransferView_Previews: PreviewProvider {
     static var previews: some View {
-        TransferView()
+        NavigationView {
+            TransferView()
+        }
+    }
+}
+
+// MARK: - Helpers
+
+fileprivate extension Int {
+    /// Formats an integer with thousand separators (e.g., “10000” → “10 000”).
+    func formattedWithSeparator() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = " "
+        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
     }
 }

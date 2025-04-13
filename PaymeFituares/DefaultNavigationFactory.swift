@@ -20,6 +20,7 @@ final class DefaultNavigationFactory: NavigationFactory {
         case .services: return UIHostingController(rootView: ServicesView())
         case .payShare: return UIHostingController(rootView: PayShareView())
         case .receipt(let model): return UIHostingController(rootView: ReceiptView(model: model))
+        case .transfer: return UIHostingController(rootView: TransferView())
         case .detail(let title):
             let vc = UIViewController()
             vc.view.backgroundColor = .white
