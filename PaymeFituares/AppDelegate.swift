@@ -40,7 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
+        UNUserNotificationCenter.current().delegate = self
+
         let tabBarVC = UITabBarController()
         let tabViewControllers = createTabBarItems(tabBarItems: tabBarItemsData)
         tabBarVC.viewControllers = tabViewControllers
@@ -81,5 +82,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
         return false
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    public func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                       willPresent notification: UNNotification,
+                                       withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound])
     }
 }

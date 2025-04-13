@@ -17,24 +17,18 @@ public struct PayShareView: View {
     public init() {  }
     
     public var body: some View {
-        VStack {
-            GeometryReader {
-                let size = $0.size
-                
-                ZStack {
-                    RadarView()
-                    RadarTargetView(title: "Me")
-                        .onTapGesture {
-
-                            AppNavigationCoordinator.shared.navigate(to: .transfer)
-                        }
-                }
-                .frame(width: size.width, height: size.height)
-            }
-            .overlay(alignment: .top) {
-                DiscoveredTargetsView()
-                    .id(vm.multipeerService?.discoveredPeers.count)
-            }
+        ZStack {
+            RadarView()
+            
+            Image(uiImage: Asset.Image.payshare)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .screenWidth / 4, maxHeight: .screenWidth / 4)
+                .clipShape(.circle)
+        }
+        .overlay(alignment: .top) {
+            DiscoveredTargetsView()
+                .id(vm.multipeerService?.discoveredPeers.count)
         }
         .backButton {
             dismiss()
@@ -52,14 +46,7 @@ public struct PayShareView: View {
             PayShareSheet(vm: vm)
                 .presentationDetents([.medium])
         }
-        .alert(item: $vm.receivedMessage) { message in
-            Alert(
-                title: Text("Received \(message.text) from \(message.sender)"),
-                dismissButton: .cancel(Text("OK"))
-            )
-        }
     }
-    
     
     @ViewBuilder
     private func DiscoveredTargetsView() -> some View {
@@ -160,7 +147,6 @@ struct PayShareSheet: View {
         }
         .padding()
     }
-    
 }
 
 #Preview {

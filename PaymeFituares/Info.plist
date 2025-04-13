@@ -18,5 +18,7 @@
 		<string>_payme-pay-share._tcp</string>
 		<string>_payme-pay-share._udp</string>
 	</array>
+    <key>NSUserNotificationUsageDescription</key>
+    <string>We use notifications to remind you of important events.</string>
 </dict>
 </plist>
