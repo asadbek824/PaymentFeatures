@@ -19,16 +19,18 @@ final class DefaultNavigationFactory: NavigationFactory {
         case .payments: return UIHostingController(rootView: PaymentsView())
         case .services: return UIHostingController(rootView: ServicesView())
         case .payShare:
-            let vc = UIHostingController(rootView: PayShareView())
+            let payShareView = PayShareView()
+            let vc = UIHostingController(rootView: payShareView)
             vc.hidesBottomBarWhenPushed = true
-            return vc 
+            return vc
         case .receipt(let model):
-            let vc = UIHostingController(
-                rootView: ReceiptView(model: model) {
-                    AppNavigationCoordinator.shared.popToRootAndShowTab(index: 0)
-                }
-            )
+            let view = ReceiptView(model: model) {
+                AppNavigationCoordinator.shared.popToRoot()
+                AppNavigationCoordinator.shared.popToRoot(animated: true)
+            }
+            let vc = UIHostingController(rootView: view)
             vc.hidesBottomBarWhenPushed = true
+            vc.navigationController?.setNavigationBarHidden(true, animated: false)
             return vc
         case .detail(let title):
             let vc = UIViewController()

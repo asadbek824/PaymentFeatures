@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 public protocol NavigationFactory {
     func viewController(for route: AppRoute) -> UIViewController
@@ -17,6 +18,7 @@ public final class AppNavigationCoordinator {
     private var rootTabBarController: UITabBarController?
     private var factory: NavigationFactory?
     private var tabBarController: UITabBarController?
+    private var defaultNavigationController: UINavigationController?
 
     public func setRoot(navigationController: UINavigationController, factory: NavigationFactory) {
         self.rootTabBarController = navigationController.tabBarController
@@ -50,5 +52,26 @@ public final class AppNavigationCoordinator {
     
     public func pop(to viewController: UIViewController, animated: Bool = true) {
         currentNavigationController?.popToViewController(viewController, animated: animated)
+    }
+    
+    public func pushFullScreen(
+        view: some View,
+        in navigationController: UINavigationController? = nil,
+        animated: Bool = true
+    ) {
+        let vc = UIHostingController(rootView: view)
+        vc.hidesBottomBarWhenPushed = true
+        (navigationController ?? defaultNavigationController)?.pushViewController(vc, animated: animated)
+    }
+    
+    public func push<V: View>(
+        view: V,
+        in navigationController: UINavigationController? = nil,
+        hidesBottomBar: Bool = true,
+        animated: Bool = true
+    ) {
+        let vc = UIHostingController(rootView: view)
+        vc.hidesBottomBarWhenPushed = hidesBottomBar
+        (navigationController ?? currentNavigationController)?.pushViewController(vc, animated: animated)
     }
 }

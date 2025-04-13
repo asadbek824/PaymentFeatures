@@ -12,6 +12,7 @@ import SwiftUI
 import Payment
 import Services
 import NavigationCoordinator
+import WidgetKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -47,9 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarVC.selectedIndex = 0
         tabBarVC.tabBar.backgroundColor = .white
         tabBarVC.tabBar.tintColor = .appColor.primary
-
+        
         let selectedNavVC = tabViewControllers[tabBarVC.selectedIndex] as? UINavigationController ?? UINavigationController()
-
+        
         let factory = DefaultNavigationFactory()
         AppNavigationCoordinator.shared.setRoot(
             navigationController: selectedNavVC,
@@ -80,6 +81,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             return true
         }
+        
         return false
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        let defaults = UserDefaults(suiteName: "group.AssA.PaymeFituaresApp.PaymeShareWidget")
+        if let status = defaults?.string(forKey: "connectionStatus"),
+           status == "Searching..." {
+
+            print("🟢 MultipeerService запускается фоново")
+
+            MultipeerService.shared.start()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                MultipeerService.shared.syncStateToWidget()
+                MultipeerService.shared.stop()
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
     }
 }

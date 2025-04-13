@@ -118,6 +118,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		594C48672DA9224E00C6E89F /* PaymeShareWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PaymeShareWidgetExtension.entitlements; sourceTree = "<group>"; };
 		594D97252D9EF7C70045D271 /* HomeDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HomeDemo.xcodeproj; path = HomeApp/HomeDemo.xcodeproj; sourceTree = "<group>"; };
 		594D98B52D9FF3FC0045D271 /* ServiceDemo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ServiceDemo.xcodeproj; path = ServiceApp/ServiceDemo.xcodeproj; sourceTree = "<group>"; };
 		59619A792DA2A0A9005A674C /* DesignSystem.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DesignSystem.xcodeproj; path = AssetsKit/DesignSystem.xcodeproj; sourceTree = "<group>"; };
@@ -146,12 +147,29 @@
 			);
 			target = 59C4EF8A2D9E893A004F85A8 /* PaymeFituares */;
 		};
+		59E5025C2DA95C3D00C5DC6E /* Exceptions for "PaymeShareWidget" folder in "PaymeFituares" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Entries/LockScreenEntry.swift,
+				Entries/PeerWidgetEntry.swift,
+				Intents/ConfigurationIntent.swift,
+				Intents/RefreshPeersIntent.swift,
+				Providers/LockScreenProvider.swift,
+				Providers/PeerWidgetProvider.swift,
+				Views/LockScreenWidgetView.swift,
+				Views/PeerWidgetView.swift,
+				Widgets/PaymeLockScreenWidget.swift,
+				Widgets/PeerWidget.swift,
+			);
+			target = 59C4EF8A2D9E893A004F85A8 /* PaymeFituares */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5969E7162DA67F1E00EA6655 /* PaymeShareWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				59E5025C2DA95C3D00C5DC6E /* Exceptions for "PaymeShareWidget" folder in "PaymeFituares" target */,
 				5969E72A2DA67F2000EA6655 /* Exceptions for "PaymeShareWidget" folder in "PaymeShareWidgetExtension" target */,
 			);
 			path = PaymeShareWidget;
@@ -214,6 +232,7 @@
 		59C4EF822D9E893A004F85A8 = {
 			isa = PBXGroup;
 			children = (
+				594C48672DA9224E00C6E89F /* PaymeShareWidgetExtension.entitlements */,
 				59C4EF8D2D9E893A004F85A8 /* PaymeFituares */,
 				59FB1DDB2D9EBD9900D58B5A /* DataLayer */,
 				59FB1DDC2D9EBD9900D58B5A /* Features */,
@@ -520,6 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PaymeShareWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3DJM2CZRX2;
@@ -534,7 +554,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares.PaymeShareWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituaresApp.PaymeShareWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -552,6 +572,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = PaymeShareWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3DJM2CZRX2;
@@ -566,7 +587,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares.PaymeShareWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituaresApp.PaymeShareWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -584,7 +605,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = PaymeFituares/PaymeFituares.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3DJM2CZRX2;
@@ -599,14 +621,15 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares;
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituaresApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -622,7 +645,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = PaymeFituares/PaymeFituares.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3DJM2CZRX2;
@@ -637,14 +661,15 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituares;
+				PRODUCT_BUNDLE_IDENTIFIER = AssA.PaymeFituaresApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

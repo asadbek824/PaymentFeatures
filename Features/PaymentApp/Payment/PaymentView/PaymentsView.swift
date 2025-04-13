@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Core
+import NavigationCoordinator
 
 public struct PaymentsView: View {
     
@@ -135,8 +136,8 @@ public struct PaymentsView: View {
                 Divider()
                     .padding(.leading, 50)
                 
-                NavigationLink {
-                    PayShareView()
+                Button {
+                    AppNavigationCoordinator.shared.navigate(to: .payShare)
                 } label: {
                     CustomButton(
                         image: "target",

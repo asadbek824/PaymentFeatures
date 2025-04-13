@@ -28,7 +28,7 @@ public struct PayShareView: View {
                         .onTapGesture {
                             let model: ReceiptModel = .successPayment
                             if let nav = navController {
-                                AppNavigationCoordinator.shared.navigate(to: .receipt(model: model), in: nav)
+                                AppNavigationCoordinator.shared.navigate(to: .receipt(model: model))
                             }
                         }
                 }

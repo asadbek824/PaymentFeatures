@@ -24,13 +24,14 @@ public enum Asset {
         public static var tbsbank: UIImage {
             return UIImage(named: "tbsbank", in: .assetsKit, compatibleWith: nil)!
         }
-        
-        public static var payshareLockscreenLogo: UIImage {
-            return UIImage(named: "payshare.lockscreen", in: .assetsKit, compatibleWith: nil)!
+        public static var payshareLockscreenLogo: UIImage? {
+            return UIImage(named: "payshare.lockscreen", in: .assetsKit, compatibleWith: nil)
         }
-        
         public static var payshare: UIImage {
             return UIImage(named: "payshare", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var paysharegray: UIImage {
+            return UIImage(named: "paysharegray", in: .assetsKit, compatibleWith: nil)!
         }
     }
     

@@ -29,7 +29,7 @@ enum LayoutFactory {
 
     static func paymeGoLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0 / 3.0),
+            widthDimension: .fractionalWidth(1.0 / 4.0),
             heightDimension: .estimated(120)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -40,7 +40,7 @@ enum LayoutFactory {
             heightDimension: .absolute(160)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 32, bottom: 0, trailing: 32)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 0, trailing: 16)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
