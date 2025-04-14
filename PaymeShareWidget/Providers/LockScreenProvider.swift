@@ -7,21 +7,27 @@
 
 import WidgetKit
 
-struct LockScreenProvider: TimelineProvider {
-    func placeholder(in context: Context) -> LockScreenEntry {
-        LockScreenEntry(date: Date())
+struct Provider: TimelineProvider {
+    func placeholder(in context: Context) -> SimpleEntry {
+        SimpleEntry(date: Date())
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (LockScreenEntry) -> Void) {
-        completion(LockScreenEntry(date: Date()))
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
+        let entry = SimpleEntry(date: Date())
+        completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<LockScreenEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
+        var entries: [SimpleEntry] = []
         let currentDate = Date()
-        let entries = (0..<5).compactMap { offset in
-            Calendar.current.date(byAdding: .hour, value: offset, to: currentDate)
-        }.map { LockScreenEntry(date: $0) }
 
-        completion(Timeline(entries: entries, policy: .atEnd))
+        for hourOffset in 0 ..< 5 {
+            if let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate) {
+                let entry = SimpleEntry(date: entryDate)
+                entries.append(entry)
+            }
+        }
+        let timeline = Timeline(entries: entries, policy: .atEnd)
+        completion(timeline)
     }
 }

@@ -136,7 +136,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Widgets/PaymeLockScreenWidget.swift,
 			);
 			target = 5969E7122DA67F1E00EA6655 /* PaymeShareWidgetExtension */;
 		};

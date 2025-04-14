@@ -37,6 +37,7 @@ final class DefaultNavigationFactory: NavigationFactory {
             vc.view.backgroundColor = .white
             vc.title = title
             return vc
+        case .transfer: return UIHostingController(rootView: TransferView())
         @unknown default: return UIViewController()
         }
     }

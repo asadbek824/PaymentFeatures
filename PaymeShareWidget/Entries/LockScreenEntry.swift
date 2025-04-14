@@ -7,6 +7,6 @@
 
 import WidgetKit
 
-struct LockScreenEntry: TimelineEntry {
+struct SimpleEntry: TimelineEntry {
     let date: Date
 }

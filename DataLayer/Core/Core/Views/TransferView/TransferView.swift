@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 // MARK: - TransferView
 
 public struct TransferView: View {
@@ -23,19 +21,13 @@ public struct TransferView: View {
     public var body: some View {
         ZStack {
             mainContent()
-            
-            // Hidden NavigationLink that activates when showReceipt becomes true.
-            NavigationLink(
-                destination: ReceiptView(model: .successPayment),
-                isActive: $showReceipt,
-                label: {
-                    EmptyView()
-                }
-            )
         }
-        .fillSuperview() // Ensure your custom modifier is defined, or remove if not needed.
+        .fillSuperview()
         .navigationTitle("Перевод")
         .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showReceipt) {
+            ReceiptView(model: .successPayment, onBack: {  })
+        }
     }
     
     @ViewBuilder
@@ -87,9 +79,7 @@ public struct TransferView: View {
             
             // Submit Button as a standard Button.
             Button(action: {
-                // Optionally call your viewModel.transfer logic here.
                 viewModel.submitTransfer()
-                // Set the flag to true to activate the NavigationLink.
                 showReceipt = true
             }) {
                 Text("Продолжить")
@@ -100,7 +90,7 @@ public struct TransferView: View {
                     .background(Color.appPrimary)
                     .cornerRadius(8)
             }
-            .disabled(!viewModel.isValid)
+//            .disabled(!viewModel.isValid)
         }
         .padding()
         .background(Color.white)
