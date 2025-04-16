@@ -8,15 +8,15 @@
 import Foundation
 
 public struct UserBalanceAndExpensesModel: Codable {
-    public let cartId: UserCarts
+    public let cartId: UserCard
     
-    public init(cartId: UserCarts) {
+    public init(cartId: UserCard) {
         self.cartId = cartId
     }
 }
 
-public struct UserCarts: Codable {
-    public let cartId: Int
+public struct UserCard: Identifiable, Hashable,Codable {
+    public let id: Int
     public let balance: Double
     public let expenses: Double
     public let cartNumber: String
@@ -33,7 +33,7 @@ public struct UserCarts: Codable {
         currency: String,
         cardImage: String?
     ) {
-        self.cartId = cartId
+        self.id = cartId
         self.balance = balance
         self.expenses = expenses
         self.cartNumber = cartNumber

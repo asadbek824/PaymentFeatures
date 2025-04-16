@@ -15,6 +15,7 @@ class PayShareViewModel: ObservableObject {
     @Published var connectedPeer: PeerDevice?
     @Published private(set) var multipeerService: MultipeerService?    
     private var cancellables = Set<AnyCancellable>()
+    @Published var selectedCard: UserCard = PreviewData.cards.first!
     
     init() {
         print("Initializing and starting peer discovery...")

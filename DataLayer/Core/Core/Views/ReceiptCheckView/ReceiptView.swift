@@ -62,7 +62,7 @@ public struct ReceiptView: View {
                 Text("My Card Transfer") // Replace with actual view
             } label: {
                 CustomButton(
-                    image: "receipt",
+                    image: "scroll",
                     title: "Чек"
                 ) {
                     

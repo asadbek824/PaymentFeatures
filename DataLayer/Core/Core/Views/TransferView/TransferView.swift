@@ -4,29 +4,39 @@
 //
 //  Created by Sukhrob on 10/04/25.
 //
-
 import SwiftUI
-
-// MARK: - TransferView
 
 public struct TransferView: View {
     // MARK: - View Model
-    @StateObject private var viewModel = TransferViewModel()
+    @Environment(\.dismiss) var dismiss
+    @StateObject private var viewModel: TransferViewModel
     
-    // Navigation flag for the NavigationLink.
-    @State private var showReceipt = false
+    // Navigation flag for the CheckOutView.
+    @State private var showCheckOut = false
     
-    public init() {}
+    public init(card: UserCard) {
+        _viewModel = StateObject(wrappedValue: TransferViewModel(card: card))
+    }
     
     public var body: some View {
-        ZStack {
-            mainContent()
-        }
-        .fillSuperview()
-        .navigationTitle("Перевод")
-        .navigationBarTitleDisplayMode(.inline)
-        .fullScreenCover(isPresented: $showReceipt) {
-            ReceiptView(model: .successPayment, onBack: {  })
+        NavigationView {
+            ZStack {
+                mainContent()
+            }
+            .fillSuperview()
+            .navigationTitle("Перевод")
+            .navigationBarTitleDisplayMode(.inline)
+            .fullScreenCover(isPresented: $showCheckOut) {
+                // Pass the computed checkOutModel to the CheckOutView.
+    //            CheckOutView(model: viewModel.checkOutModel)
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Отмена") {
+                        dismiss()
+                    }
+                }
+            }
         }
     }
     
@@ -34,7 +44,7 @@ public struct TransferView: View {
     private func mainContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             // Header Section with card info.
-            CardNumberField(card: viewModel.fixedCard) { }
+            CardNumberField(card: viewModel.card) { }
                 .padding(.bottom, 100)
             
             // Amount Input Section.
@@ -77,10 +87,11 @@ public struct TransferView: View {
             
             Spacer()
             
-            // Submit Button as a standard Button.
+            // Submit Button.
             Button(action: {
                 viewModel.submitTransfer()
-                showReceipt = true
+                // Navigate to CheckOutView by toggling the flag.
+                showCheckOut = true
             }) {
                 Text("Продолжить")
                     .foregroundColor(.white)
@@ -90,25 +101,21 @@ public struct TransferView: View {
                     .background(Color.appPrimary)
                     .cornerRadius(8)
             }
-//            .disabled(!viewModel.isValid)
         }
         .padding()
         .background(Color.white)
     }
 }
 
-// MARK: - Subviews
-
-/// A button-like view to show the current (and only) card’s info.
 struct CardNumberField: View {
-    let card: UserBalanceAndExpensesModel?
+    let card: UserCard?
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             HStack(spacing: 16) {
                 if let card = card,
-                   let cardImage = card.cartId.cardImage,
+                   let cardImage = card.cardImage,
                    !cardImage.isEmpty {
                     Image(cardImage)
                         .resizable()
@@ -124,10 +131,10 @@ struct CardNumberField: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     if let card = card {
-                        Text(card.cartId.cartName)
+                        Text(card.cartName)
                             .font(.headline)
                             .foregroundColor(.primary)
-                        let visibleSuffix = card.cartId.cartNumber.suffix(4)
+                        let visibleSuffix = card.cartNumber.suffix(4)
                         Text("** \(visibleSuffix)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -145,8 +152,6 @@ struct CardNumberField: View {
     }
 }
 
-/// A text field for entering the amount to transfer.
-/// Uses a NumberFormatter so that manual input is formatted.
 struct AmountField: View {
     @Binding var amount: Double?
     let formatter: NumberFormatter
@@ -163,20 +168,8 @@ struct AmountField: View {
     }
 }
 
-// MARK: - Preview
-
-struct TransferView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            TransferView()
-        }
-    }
-}
-
-// MARK: - Helpers
-
 fileprivate extension Int {
-    /// Formats an integer with thousand separators (e.g., “10000” → “10 000”).
+    /// Formats an integer with thousand separators (e.g., "10000" → "10 000").
     func formattedWithSeparator() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

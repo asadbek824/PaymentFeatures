@@ -44,9 +44,9 @@ public struct PayShareView: View {
         .fullScreenCover(isPresented: $vm.showSheet) {
             vm.disconnect()
         } content: {
-            TransferView()
+            TransferView(card: vm.selectedCard)
         }
-
+        .safeAreaInset(edge: .bottom, content: CardSelectView)
     }
     
     @ViewBuilder
@@ -65,88 +65,24 @@ public struct PayShareView: View {
             .frame(maxWidth: .infinity)
         }
     }
-}
-
-struct PayShareSheet: View {
-    
-    @Environment(\.dismiss) private var dismiss
-    @State private var amount = ""
-    @ObservedObject var vm: PayShareViewModel
-    
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 12) {
-                VStack {
-                    Text("Получатель:")
-                        .padding(.leading)
-                        .font(.caption2)
-                        .foregroundStyle(.secondaryLabel)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    HStack(spacing: 16) {
-                        Image(systemName: "person")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                            .frame(width: 60, height: 60)
-                            .foregroundStyle(.secondaryLabel)
-                            .background(.secondarySystemBackground)
-                            .clipShape(.circle)
-                        
-                        Text(vm.connectedPeer?.name ?? "Неизвестный")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(.systemBackground)
-                    .clipShape(.rect(cornerRadius: 12))
-                }
-                
-                HStack {
-                    TextField("Введите сумму", text: $amount)
-                        .keyboardType(.numberPad)
-                    
-                    Image(systemName: "creditcard")
-                }
-                .padding()
-                .background(.systemBackground)
-                .clipShape(.rect(cornerRadius: 12))
-                
-                Spacer()
-            }
-            .padding()
-            .navigationTitle("Детали трансфера")
-            .navigationBarTitleDisplayMode(.inline)
-            .fillSuperview()
-            .background(.secondarySystemBackground)
-            .safeAreaInset(edge: .bottom, content: BottomInset)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Отмена") {
-                        vm.disconnect()
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
     
     @ViewBuilder
-    func BottomInset() -> some View {
-        Button {
-            if vm.sendMessage(amount) == true {
-                dismiss()
+    private func CardSelectView() -> some View {
+        TabView(selection: $vm.selectedCard) {
+            ForEach(PreviewData.cards) { card in
+                Text(card.cartName)
+                    .tag(card)
+                    .fillSuperview()
+                    .background(Color.red)
+                    .clipShape(.rect(cornerRadius: 12))
+                    .border(.green)
+                    .padding()
+                    .padding(.bottom)
             }
-        } label: {
-            Text("Отправить")
-                .padding()
-                .frame(maxWidth: .infinity)
-                .foregroundStyle(.white)
-                .fontWeight(.medium)
-                .background(.appPrimary)
-                .clipShape(.rect(cornerRadius: 12))
         }
-        .padding()
+        .tabViewStyle(.page(indexDisplayMode: .always))
+        .frame(height: 100)
+        .border(.red)
     }
 }
 

@@ -5,30 +5,20 @@
 //  Created by Sukhrob on 10/04/25.
 //
 
-import SwiftUI
-
 final class TransferViewModel: ObservableObject {
-    // MARK: - Published Properties
+    
+    let card: UserCard
+    
+    init(card: UserCard) {
+        self.card = card
+    }
+    
     @Published var amount: Double? = nil
     @Published var showValidationError: Bool = false
     
-    // A hard-coded card (in a real app, this might be injected or loaded from a service).
-    let fixedCard: UserBalanceAndExpensesModel = UserBalanceAndExpensesModel(
-        cartId: UserCarts(
-            cartId: 999,
-            balance: 10000,
-            expenses: 5000,
-            cartNumber: "8600064296969696",
-            cartName: "YULDOSHEV A.",
-            currency: "UZS",
-            cardImage: nil
-        )
-    )
-    
-    // Preset amounts for the horizontal "chips" view.
+    // Preset amounts and formatter remain the same.
     let presetAmounts: [Int] = [1000, 50000, 100000, 200000, 500000]
     
-    // Formatter for the amount.
     var amountFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -36,9 +26,16 @@ final class TransferViewModel: ObservableObject {
         return formatter
     }
     
-    // MARK: - Validation Logic
+    // Define the transaction fee.
+    let transactionFee: Double = 5.0
     
-    /// Returns an error message if validation fails; nil otherwise.
+//    // The composed checkout model
+//    var checkOutModel: CheckOutModel {
+//        CheckOutModel(cardInfo: card,
+//                      transactionFee: transactionFee,
+//                      amount: amount)
+//    }
+    
     var validationError: String? {
         guard let amount = amount else {
             return "Пожалуйста, введите сумму перевода"
@@ -49,34 +46,25 @@ final class TransferViewModel: ObservableObject {
         if amount > 15_000_000 {
             return "Сумма перевода не может превышать 15 000 000 сум"
         }
-        // Calculate total required amount including 1% fee.
-        let totalRequired = amount * 1.01
-        if fixedCard.cartId.balance < totalRequired {
-            return "На карте недостаточно средств для совершения перевода с комиссией 1%"
+        if card.balance < (amount + transactionFee) {
+            return "На карте недостаточно средств для совершения перевода с комиссией \(transactionFee)"
         }
         return nil
     }
     
-    /// Indicates if all validations pass.
     var isValid: Bool {
         validationError == nil
     }
     
-    // MARK: - Transfer Action
-    
-    /// Call this function on submit. It handles transfer logic and logs the result.
     func submitTransfer() {
-        if let error = validationError {
-            print("Validation Error: \(error)")
-            showValidationError = true
-        } else {
-            showValidationError = false
-            
-            let amountValue = amount.flatMap { amountFormatter.string(from: NSNumber(value: $0)) } ?? "0"
-            print("Transferring amount: \(amountValue) to card: \(fixedCard.cartId.cartNumber)")
-            // Place your transfer logic here, for example, calling an API or updating the app state.
-        }
+//        if let error = validationError {
+//            print("Validation Error: \(error)")
+//            showValidationError = true
+//        } else {
+//            showValidationError = false
+//            let amountValue = amount.flatMap { amountFormatter.string(from: NSNumber(value: $0)) } ?? "0"
+//            print("Transferring \(amountValue) with a fee of \(transactionFee) using card: \(fixedCard.cartId.cartNumber)")
+//            // Use checkOutModel.totalAmount if you need the computed total.
+//        }
     }
 }
-
-
