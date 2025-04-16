@@ -7,14 +7,27 @@
 
 import SwiftUI
 
+// MARK: - TransferView
+
 public struct TransferView: View {
     // MARK: - View Model
     @StateObject private var viewModel = TransferViewModel()
     
+    // Navigation flag for the NavigationLink.
+    @State private var showReceipt = false
+    
     public init() {}
     
     public var body: some View {
-        mainContent()
+        ZStack {
+            mainContent()
+        }
+        .fillSuperview()
+        .navigationTitle("Перевод")
+        .navigationBarTitleDisplayMode(.inline)
+        .fullScreenCover(isPresented: $showReceipt) {
+            ReceiptView(model: .successPayment, onBack: {  })
+        }
     }
     
     @ViewBuilder
@@ -64,17 +77,23 @@ public struct TransferView: View {
             
             Spacer()
             
-            // Submit Button.
-            SubmitButton {
-                let model = ReceiptModel.successPayment
+            // Submit Button as a standard Button.
+            Button(action: {
+                viewModel.submitTransfer()
+                showReceipt = true
+            }) {
+                Text("Продолжить")
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.appPrimary)
+                    .cornerRadius(8)
             }
-            .disabled(!viewModel.isValid)
+//            .disabled(!viewModel.isValid)
         }
-        .fillSuperview()
         .padding()
         .background(Color.white)
-        .navigationTitle("Перевод")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -127,6 +146,7 @@ struct CardNumberField: View {
 }
 
 /// A text field for entering the amount to transfer.
+/// Uses a NumberFormatter so that manual input is formatted.
 struct AmountField: View {
     @Binding var amount: Double?
     let formatter: NumberFormatter
@@ -137,30 +157,11 @@ struct AmountField: View {
             .padding()
             .background(Color.white)
             .cornerRadius(8)
-            .setStroke(color: .appPrimary)
+            .setStroke(color: .appPrimary) // Custom modifier; remove if undefined.
             .foregroundStyle(.label)
             .fontWeight(.medium)
     }
 }
-
-/// A button to submit the transfer.
-struct SubmitButton: View {
-    var action: () -> Void
-    var body: some View {
-        Button(action: {
-            action()
-        }) {
-            Text("Продолжить")
-                .foregroundColor(.white)
-                .fontWeight(.bold)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.appPrimary)
-                .cornerRadius(8)
-        }
-    }
-}
-
 
 // MARK: - Preview
 

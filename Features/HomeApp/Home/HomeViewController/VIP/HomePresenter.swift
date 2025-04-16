@@ -52,6 +52,7 @@ extension HomePresenter: HomePresentetionProtocol {
             .paymeGo([
                 PaymeGoItemViewModel(image: Asset.Image.cartholder, title: "Мои карты"),
                 PaymeGoItemViewModel(image: Asset.Image.paymego, title: "Payme Go"),
+                PaymeGoItemViewModel(image: Asset.Image.paysharegray, title: "Payme Share"),
                 PaymeGoItemViewModel(image: Asset.Image.scaner, title: "QR оплата")
             ]),
             .banner(BannerViewModel(

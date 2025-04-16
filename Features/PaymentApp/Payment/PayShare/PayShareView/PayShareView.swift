@@ -39,13 +39,14 @@ public struct PayShareView: View {
         .background(.secondarySystemBackground)
         .onDisappear {
             vm.stopSearching()
+            vm.disconnect()
         }
-        .sheet(isPresented: $vm.showSheet) {
+        .fullScreenCover(isPresented: $vm.showSheet) {
             vm.disconnect()
         } content: {
-            PayShareSheet(vm: vm)
-                .presentationDetents([.medium])
+            TransferView()
         }
+
     }
     
     @ViewBuilder

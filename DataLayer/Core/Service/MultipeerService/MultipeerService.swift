@@ -11,6 +11,8 @@ import MultipeerConnectivity
 
 public class MultipeerService: NSObject, ObservableObject {
     
+    public static let shared = MultipeerService()
+    
     private let serviceType = "payme-pay-share"
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     private var session: MCSession
@@ -47,6 +49,17 @@ public class MultipeerService: NSObject, ObservableObject {
         print("MultipeerService: Started browsing")
         
         connectionStatus = .searching
+    }
+    
+    public func syncStateToWidget() {
+        let names = discoveredPeers.map { $0.name }
+        let status = connectionStatus.description
+        
+        let defaults = UserDefaults(suiteName: "group.AssA.PaymeFituaresApp.PaymeShareWidget")
+        defaults?.set(names, forKey: "peerNames")
+        defaults?.set(status, forKey: "connectionStatus")
+        
+        print("💾 Сохранили peers: \(names)")
     }
     
     public func stop() {

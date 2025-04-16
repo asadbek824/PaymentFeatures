@@ -27,9 +27,8 @@ final class PaymeGoCell: UICollectionViewCell {
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .appColor.secondary
-        imageView.contentMode = .scaleAspectFill
-        imageView.tintColor = .black
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .rgb(116, 117, 127)
         return imageView
     }()
 

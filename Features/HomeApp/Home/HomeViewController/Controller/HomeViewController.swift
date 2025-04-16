@@ -288,7 +288,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         if case .paymeGo(let items) = section {
             let item = items[indexPath.item]
             
-            if item.title == "Payme Go" {
+            if item.title == "Payme Share" {
                 AppNavigationCoordinator.shared.navigate(to: .payShare)
             }
         }

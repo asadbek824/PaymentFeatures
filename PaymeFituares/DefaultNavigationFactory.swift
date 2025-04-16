@@ -18,14 +18,26 @@ final class DefaultNavigationFactory: NavigationFactory {
         case .home: return HomeAssemblyImpl.assemble()
         case .payments: return UIHostingController(rootView: PaymentsView())
         case .services: return UIHostingController(rootView: ServicesView())
-        case .payShare: return UIHostingController(rootView: PayShareView())
-        case .receipt(let model): return UIHostingController(rootView: ReceiptView(model: model))
-        case .transfer: return UIHostingController(rootView: TransferView())
+        case .payShare:
+            let payShareView = PayShareView()
+            let vc = UIHostingController(rootView: payShareView)
+            vc.hidesBottomBarWhenPushed = true
+            return vc
+        case .receipt(let model):
+            let view = ReceiptView(model: model) {
+                AppNavigationCoordinator.shared.popToRoot()
+                AppNavigationCoordinator.shared.popToRoot(animated: true)
+            }
+            let vc = UIHostingController(rootView: view)
+            vc.hidesBottomBarWhenPushed = true
+            vc.navigationController?.setNavigationBarHidden(true, animated: false)
+            return vc
         case .detail(let title):
             let vc = UIViewController()
             vc.view.backgroundColor = .white
             vc.title = title
             return vc
+        case .transfer: return UIHostingController(rootView: TransferView())
         @unknown default: return UIViewController()
         }
     }
