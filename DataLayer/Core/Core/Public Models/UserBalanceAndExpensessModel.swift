@@ -15,7 +15,7 @@ public struct UserBalanceAndExpensesModel: Codable {
     }
 }
 
-public struct UserCard: Identifiable, Hashable,Codable {
+public struct UserCard: Identifiable, Hashable, Codable {
     public let id: Int
     public let balance: Double
     public let expenses: Double

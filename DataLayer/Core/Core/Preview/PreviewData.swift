@@ -5,7 +5,7 @@
 //  Created by Sukhrob on 16/04/25.
 //
 
-import Foundation
+import SwiftUI
 
 public enum PreviewData {
     
@@ -44,4 +44,14 @@ public enum PreviewData {
             currency: "сум", cardImage: nil
         )
     ]
+    private static let cardColorMapping: [Int: Color] = [
+            1: .red,
+            2: .blue,
+            3: .appPrimary
+        ]
+        
+        // Helper function to get color for a given UserCard
+    public static func color(for card: UserCard) -> Color {
+        return cardColorMapping[card.id] ?? .gray
+        }
 }

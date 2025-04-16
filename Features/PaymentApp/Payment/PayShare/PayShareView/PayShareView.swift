@@ -46,7 +46,9 @@ public struct PayShareView: View {
         } content: {
             TransferView(card: vm.selectedCard)
         }
-        .safeAreaInset(edge: .bottom, content: CardSelectView)
+        .overlay(alignment: .bottom, content: {
+            CardSelectView()
+        })
     }
     
     @ViewBuilder
@@ -70,19 +72,53 @@ public struct PayShareView: View {
     private func CardSelectView() -> some View {
         TabView(selection: $vm.selectedCard) {
             ForEach(PreviewData.cards) { card in
-                Text(card.cartName)
+                CardItemView(card: card)
                     .tag(card)
-                    .fillSuperview()
-                    .background(Color.red)
-                    .clipShape(.rect(cornerRadius: 12))
-                    .border(.green)
-                    .padding()
-                    .padding(.bottom)
             }
         }
-        .tabViewStyle(.page(indexDisplayMode: .always))
-        .frame(height: 100)
-        .border(.red)
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+        .frame(height: 145)
+    }
+    
+    private struct CardItemView: View {
+        let card: UserCard
+        
+        var body: some View {
+            HStack {
+                // Left column: Card info text
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(card.cartName)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Text("Баланс: \(card.balance, specifier: "%.0f") \(card.currency)")
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                }
+                Spacer()
+                // Right column: Masked card number
+                VStack(alignment: .trailing) {
+                    Text("**** \(card.cartNumber.suffix(4))")
+                        .font(.system(.callout, design: .monospaced))
+                        .foregroundColor(.white)
+                }
+            }
+            .padding()
+            .frame(maxWidth: .infinity, minHeight: 100)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        PreviewData.color(for: card).opacity(0.7),
+                        PreviewData.color(for: card)
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .cornerRadius(12)
+            )
+            .padding(.horizontal)
+            .padding(.bottom, 40)
+        }
     }
 }
 

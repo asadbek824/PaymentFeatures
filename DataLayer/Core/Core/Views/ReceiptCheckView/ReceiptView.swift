@@ -10,10 +10,9 @@ import SwiftUI
 public struct ReceiptView: View {
     
     @StateObject private var viewModel: ReceiptViewModel
-    let onBack: () -> Void
+    @Environment(\.dismiss) private var dismiss
     
     public init(model: ReceiptModel, onBack: @escaping () -> Void) {
-        self.onBack = onBack
         _viewModel = StateObject(wrappedValue: ReceiptViewModel(model: model))
     }
     
@@ -52,11 +51,10 @@ public struct ReceiptView: View {
     @ViewBuilder
     private func BottomButtons() -> some View {
         HStack(spacing: 16) {
-            CustomButton(
-                image: "arrow.left",
-                title: "Назад",
-                action: onBack
-            )
+            CustomButton(image: "arrow.left", title: "Назад") {
+                            // Use the environment dismiss action.
+                            dismiss()
+                        }
             
             NavigationLink {
                 Text("My Card Transfer") // Replace with actual view

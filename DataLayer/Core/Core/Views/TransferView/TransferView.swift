@@ -12,7 +12,7 @@ public struct TransferView: View {
     @StateObject private var viewModel: TransferViewModel
     
     // Navigation flag for the CheckOutView.
-    @State private var showCheckOut = false
+    @State private var showReceipt = false
     
     public init(card: UserCard) {
         _viewModel = StateObject(wrappedValue: TransferViewModel(card: card))
@@ -26,9 +26,8 @@ public struct TransferView: View {
             .fillSuperview()
             .navigationTitle("Перевод")
             .navigationBarTitleDisplayMode(.inline)
-            .fullScreenCover(isPresented: $showCheckOut) {
-                // Pass the computed checkOutModel to the CheckOutView.
-    //            CheckOutView(model: viewModel.checkOutModel)
+            .fullScreenCover(isPresented: $showReceipt) {
+                ReceiptView(model: .successPayment, onBack: {  })
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -56,6 +55,8 @@ public struct TransferView: View {
             AmountField(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
                 .padding(.bottom, 15)
             
+            TransactionFee(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
+                .padding(.bottom, 15)
             // Display Validation Error if needed.
             if let error = viewModel.validationError, viewModel.showValidationError {
                 Text(error)
@@ -91,7 +92,7 @@ public struct TransferView: View {
             Button(action: {
                 viewModel.submitTransfer()
                 // Navigate to CheckOutView by toggling the flag.
-                showCheckOut = true
+                showReceipt = true
             }) {
                 Text("Продолжить")
                     .foregroundColor(.white)
@@ -101,6 +102,8 @@ public struct TransferView: View {
                     .background(Color.appPrimary)
                     .cornerRadius(8)
             }
+            .disabled(!viewModel.isValid)
+            .opacity(viewModel.isValid ? 1 : 0.6)
         }
         .padding()
         .background(Color.white)
@@ -168,6 +171,19 @@ struct AmountField: View {
     }
 }
 
+struct TransactionFee: View {
+    @Binding var amount: Double?
+    let formatter: NumberFormatter
+
+    var body: some View {
+        let fee = (amount ?? 0) * 0.01
+        let formattedFee = formatter.string(from: NSNumber(value: fee)) ?? "0"
+        return Text("Комиссия: \(formattedFee) сум")
+            .font(.caption)
+            .foregroundColor(.secondary)
+    }
+}
+
 fileprivate extension Int {
     /// Formats an integer with thousand separators (e.g., "10000" → "10 000").
     func formattedWithSeparator() -> String {
@@ -177,3 +193,5 @@ fileprivate extension Int {
         return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
     }
 }
+
+

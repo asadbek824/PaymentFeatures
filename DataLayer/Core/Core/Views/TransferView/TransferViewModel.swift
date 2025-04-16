@@ -22,19 +22,13 @@ final class TransferViewModel: ObservableObject {
     var amountFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
         return formatter
     }
     
     // Define the transaction fee.
     let transactionFee: Double = 5.0
-    
-//    // The composed checkout model
-//    var checkOutModel: CheckOutModel {
-//        CheckOutModel(cardInfo: card,
-//                      transactionFee: transactionFee,
-//                      amount: amount)
-//    }
     
     var validationError: String? {
         guard let amount = amount else {
@@ -57,14 +51,7 @@ final class TransferViewModel: ObservableObject {
     }
     
     func submitTransfer() {
-//        if let error = validationError {
-//            print("Validation Error: \(error)")
-//            showValidationError = true
-//        } else {
-//            showValidationError = false
-//            let amountValue = amount.flatMap { amountFormatter.string(from: NSNumber(value: $0)) } ?? "0"
-//            print("Transferring \(amountValue) with a fee of \(transactionFee) using card: \(fixedCard.cartId.cartNumber)")
-//            // Use checkOutModel.totalAmount if you need the computed total.
-//        }
+        // Transfer submission logic here.
+        // You might also want to update 'showValidationError' if needed.
     }
 }
