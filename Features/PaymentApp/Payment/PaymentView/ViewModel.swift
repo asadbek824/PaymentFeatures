@@ -23,7 +23,7 @@ final class ViewModel: ObservableObject {
         senderModel = SenderModel(
             user: UserModel(id: 1, fullName: "AssA"),
             senderCards: [
-                UserCarts(
+                UserCard(
                     cartId: 1,
                     balance: 820360.48,
                     expenses: 1200210.24,
@@ -31,7 +31,7 @@ final class ViewModel: ObservableObject {
                     cartName: "Xalq Bank",
                     currency: "сум", cardImage: nil
                 ),
-                UserCarts(
+                UserCard(
                     cartId: 1,
                     balance: 820360.48,
                     expenses: 1200210.24,
@@ -41,7 +41,7 @@ final class ViewModel: ObservableObject {
                 )
             ],
             selectedCard:
-                UserCarts(
+                UserCard(
                     cartId: 1,
                     balance: 820360.48,
                     expenses: 1200210.24,

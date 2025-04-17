@@ -22,7 +22,7 @@ public final class TransferViewModel: ObservableObject {
     
     // A hard-coded card (in a real app, this might be injected or loaded from a service).
     let fixedCard: UserBalanceAndExpensesModel = UserBalanceAndExpensesModel(
-        cartId: UserCarts(
+        cartId: UserCard(
             cartId: 999,
             balance: 10000,
             expenses: 5000,

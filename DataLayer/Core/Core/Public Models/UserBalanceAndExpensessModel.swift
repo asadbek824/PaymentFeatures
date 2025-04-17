@@ -8,14 +8,14 @@
 import Foundation
 
 public struct UserBalanceAndExpensesModel: Codable {
-    public let cartId: UserCarts
+    public let cartId: UserCard
     
-    public init(cartId: UserCarts) {
+    public init(cartId: UserCard) {
         self.cartId = cartId
     }
 }
 
-public struct UserCarts: Codable, Equatable {
+public struct UserCard: Codable, Equatable {
     public let cartId: Int
     public let balance: Double
     public let expenses: Double
