@@ -7,16 +7,16 @@
 
 import UIKit
 import Core
-import NavigationCoordinator
 
 protocol HomeViewDisplayProtocol: AnyObject {
     func displayUserInitials(_ initials: String)
     func display(sections: [HomeSectionItem])
+    func payShareTapped(senderModel: SenderModel)
 }
 
 public final class HomeViewController: UIViewController {
     
-    //MARK: Interactor And Router
+    //MARK: Interactor And Router && Navigator
     private let interactor: HomeBusseinessProtocol
     private let router: HomeRoutingProtocol
     private var bannerCarousel: PopularBannerCarouselController?
@@ -33,7 +33,10 @@ public final class HomeViewController: UIViewController {
     private var userBalance: (balance: String, expenses: String, currency: String)?
     private var bannerImageAndTitle: (image: String, title: String)?
     
-    init(interactor: HomeBusseinessProtocol, router: HomeRoutingProtocol) {
+    init(
+        interactor: HomeBusseinessProtocol,
+        router: HomeRoutingProtocol
+    ) {
         self.interactor = interactor
         self.router = router
         super.init(nibName: nil, bundle: nil)
@@ -160,6 +163,10 @@ private extension HomeViewController {
 
 //MARK: - HomeViewDisplayProtocol Implementation
 extension HomeViewController: HomeViewDisplayProtocol {
+    
+    func payShareTapped(senderModel: SenderModel) {
+        router.routeToPayShare(senderModel: senderModel)
+    }
     
     func displayUserInitials(_ initials: String) {
         navLeftButton.setTitle(initials, for: .normal)
@@ -289,7 +296,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             let item = items[indexPath.item]
             
             if item.title == "Payme Share" {
-                AppNavigationCoordinator.shared.navigate(to: .payShare)
+                interactor.payShareButtonTapped()
             }
         }
     }

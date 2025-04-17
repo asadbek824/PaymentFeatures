@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		59619B3D2DA2ADF3005A674C /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59619B3C2DA2ADF3005A674C /* Core.framework */; };
+		594A9B272DAFD1B600DFAF83 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A9B262DAFD1B600DFAF83 /* Core.framework */; };
+		594A9B2B2DAFD1BB00DFAF83 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A9B2A2DAFD1BB00DFAF83 /* DesignSystem.framework */; };
+		594A9B2F2DAFD1C000DFAF83 /* NavigationCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A9B2E2DAFD1C000DFAF83 /* NavigationCoordinator.framework */; };
+		594A9B332DAFD1C500DFAF83 /* SharedUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594A9B322DAFD1C500DFAF83 /* SharedUI.framework */; };
 		59FB1E7F2D9EC10400D58B5A /* Payment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E6A2D9EC03800D58B5A /* Payment.framework */; };
-		59FB1E882D9EC36200D58B5A /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59FB1E852D9EC35300D58B5A /* Core.framework */; };
-		7622133F2DA7C78A00F2743E /* NavigationCoordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7622133E2DA7C78A00F2743E /* NavigationCoordinator.framework */; };
-		AD527ABA2DA841A30026C03A /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD527AB92DA841A30026C03A /* DesignSystem.framework */; };
-		AD527D222DA8E41F0026C03A /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD527AB92DA841A30026C03A /* DesignSystem.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,12 +25,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		59619B3C2DA2ADF3005A674C /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		594A9B262DAFD1B600DFAF83 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		594A9B2A2DAFD1BB00DFAF83 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		594A9B2E2DAFD1C000DFAF83 /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		594A9B322DAFD1C500DFAF83 /* SharedUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SharedUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E4E2D9EC00600D58B5A /* PaymentDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymentDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1E6A2D9EC03800D58B5A /* Payment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Payment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		59FB1E852D9EC35300D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7622133E2DA7C78A00F2743E /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD527AB92DA841A30026C03A /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD5C1F3C2D9FBA12005D9BB5 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,9 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD527D222DA8E41F0026C03A /* DesignSystem.framework in Frameworks */,
 				59FB1E7F2D9EC10400D58B5A /* Payment.framework in Frameworks */,
-				59FB1E882D9EC36200D58B5A /* Core.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,9 +73,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD527ABA2DA841A30026C03A /* DesignSystem.framework in Frameworks */,
-				59619B3D2DA2ADF3005A674C /* Core.framework in Frameworks */,
-				7622133F2DA7C78A00F2743E /* NavigationCoordinator.framework in Frameworks */,
+				594A9B272DAFD1B600DFAF83 /* Core.framework in Frameworks */,
+				594A9B2B2DAFD1BB00DFAF83 /* DesignSystem.framework in Frameworks */,
+				594A9B2F2DAFD1C000DFAF83 /* NavigationCoordinator.framework in Frameworks */,
+				594A9B332DAFD1C500DFAF83 /* SharedUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,10 +106,10 @@
 		59FB1E842D9EC35300D58B5A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD527AB92DA841A30026C03A /* DesignSystem.framework */,
-				7622133E2DA7C78A00F2743E /* NavigationCoordinator.framework */,
-				59619B3C2DA2ADF3005A674C /* Core.framework */,
-				59FB1E852D9EC35300D58B5A /* Core.framework */,
+				594A9B322DAFD1C500DFAF83 /* SharedUI.framework */,
+				594A9B2E2DAFD1C000DFAF83 /* NavigationCoordinator.framework */,
+				594A9B2A2DAFD1BB00DFAF83 /* DesignSystem.framework */,
+				594A9B262DAFD1B600DFAF83 /* Core.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

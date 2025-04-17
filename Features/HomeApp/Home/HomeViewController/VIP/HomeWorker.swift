@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NetworkManager
 import Core
 
 protocol HomeWorkeringProtocol {
@@ -14,6 +13,7 @@ protocol HomeWorkeringProtocol {
     func fetchUserBalanceAndExpenses() async throws -> [UserBalanceAndExpensesModel]
     func fetchBanners() async throws -> [BannerModel]
     func fetchPopularBanners() async throws -> [BannerModel]
+    func featchSenderModel() async throws -> SenderModel
 }
 
 final class HomeWorker {
@@ -104,11 +104,11 @@ extension HomeWorker: HomeWorkeringProtocol {
     }
     
     func fetchPopularBanners() async throws -> [BannerModel] {
-//        return try await NetworkService.shared.request(
-//            url: "",
-//            decode: [BannerModel].self,
-//            method: .get
-//        )
+        //        return try await NetworkService.shared.request(
+        //            url: "",
+        //            decode: [BannerModel].self,
+        //            method: .get
+        //        )
         return [
             BannerModel(
                 id: 1,
@@ -129,5 +129,26 @@ extension HomeWorker: HomeWorkeringProtocol {
                 )
             )
         ]
+    }
+    
+    func featchSenderModel() async throws -> SenderModel {
+        let user = try await fetchUser()
+        let balanceModels = try await fetchUserBalanceAndExpenses()
+        
+        let senderCards = balanceModels.map { $0.cartId }
+        
+        guard let selectedCard = senderCards.first else {
+            throw NSError(domain: "NoCardsFound", code: -1, userInfo: [NSLocalizedDescriptionKey: "У пользователя нет карт"])
+        }
+        
+        let model = SenderModel(
+            user: user,
+            senderCards: senderCards,
+            selectedCard: selectedCard
+        )
+        
+        SenderModelCacheImpl.shared.save(sender: model)
+        
+        return model
     }
 }

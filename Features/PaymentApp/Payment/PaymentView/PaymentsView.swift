@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
-import Core
 import NavigationCoordinator
+import Core
 
 public struct PaymentsView: View {
     
     @State private var text: String = ""
     @FocusState private var isTextFocused: Bool
     @State private var hasReceivers: Bool = false
-        
-    public init() { }
+    private let coordinator: AppNavigationCoordinator
+    @StateObject var vm = ViewModel()
+    
+    public init(coordinator: AppNavigationCoordinator) {
+        self.coordinator = coordinator
+    }
     
     public var body: some View {
         VStack(spacing: 50) {
@@ -30,6 +34,9 @@ public struct PaymentsView: View {
         .background(.secondarySystemBackground)
         .hideKeyboardWhenTappedAround()
         .toolbar(content: Toolbar)
+        .onAppear {
+            vm.onAppear()
+        }
     }
     
     @ViewBuilder
@@ -137,7 +144,9 @@ public struct PaymentsView: View {
                     .padding(.leading, 50)
                 
                 Button {
-                    AppNavigationCoordinator.shared.navigate(to: .payShare)
+                    if let nav = UIApplication.shared.topNavController() {
+                        coordinator.navigate(to: .payShare(senderModel: vm.senderModel!), from: nav)
+                    }
                 } label: {
                     CustomButton(
                         image: "target",
@@ -183,7 +192,7 @@ public struct PaymentsView: View {
     private func Toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                //
+                
             } label: {
                 Image(systemName: "exclamationmark.shield.fill")
                     .padding(4)
@@ -195,8 +204,8 @@ public struct PaymentsView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        PaymentsView()
-    }
-}
+//#Preview {
+//    NavigationView {
+//        PaymentsView()
+//    }
+//}

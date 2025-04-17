@@ -7,6 +7,7 @@
 
 import Foundation
 import Core
+import DesignSystem
 
 protocol HomePresentetionProtocol {
     func display(
@@ -15,6 +16,7 @@ protocol HomePresentetionProtocol {
         banners: [BannerModel],
         popularBanners: [BannerModel]
     )
+    func payShareSenderModel(senderModel: SenderModel)
 }
 
 final class HomePresenter {
@@ -50,18 +52,18 @@ extension HomePresenter: HomePresentetionProtocol {
                 isHidden: false
             )),
             .paymeGo([
-                PaymeGoItemViewModel(image: Asset.Image.cartholder, title: "Мои карты"),
-                PaymeGoItemViewModel(image: Asset.Image.paymego, title: "Payme Go"),
-                PaymeGoItemViewModel(image: Asset.Image.paysharegray, title: "Payme Share"),
-                PaymeGoItemViewModel(image: Asset.Image.scaner, title: "QR оплата")
+                PaymeGoItemViewModel(image: AssetsKitDummy.Image.cartholder, title: "Мои карты"),
+                PaymeGoItemViewModel(image: AssetsKitDummy.Image.paymego, title: "Payme Go"),
+                PaymeGoItemViewModel(image: AssetsKitDummy.Image.paysharegray, title: "Payme Share"),
+                PaymeGoItemViewModel(image: AssetsKitDummy.Image.scaner, title: "QR оплата")
             ]),
             .banner(BannerViewModel(
                 imageUrl: banners.first?.media.src ?? "",
                 title: banners.first?.media.title ?? ""
             )),
             .finicalServices([
-                FinicalServicesViewModel(image: Asset.Image.transfer, title: "перевести средства"),
-                FinicalServicesViewModel(image: Asset.Image.tbsbank, title: "кредит от TBC Bank")
+                FinicalServicesViewModel(image: AssetsKitDummy.Image.transfer, title: "перевести средства"),
+                FinicalServicesViewModel(image: AssetsKitDummy.Image.tbsbank, title: "кредит от TBC Bank")
             ]),
             .popular(popularBanners)
         ]
@@ -71,6 +73,12 @@ extension HomePresenter: HomePresentetionProtocol {
             self.view?.displayUserInitials(initials)
         }
         
+    }
+    
+    func payShareSenderModel(senderModel: SenderModel) {
+        DispatchQueue.main.async {
+            self.view?.payShareTapped(senderModel: senderModel)
+        }
     }
 }
 

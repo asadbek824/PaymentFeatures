@@ -13,15 +13,22 @@ class PayShareViewModel: ObservableObject {
     
     @Published var showSheet: Bool = false
     @Published var connectedPeer: PeerDevice?
-    @Published private(set) var multipeerService: MultipeerService?    
+    @Published var senderModel: SenderModel? = nil
+    @Published var receiverModel: ReceiverModel? = nil
+    @Published private(set) var multipeerService: MultipeerService?
     private var cancellables = Set<AnyCancellable>()
     @Published var selectedCard: UserCard = PreviewData.cards.first!
     
-    init() {
+    init(senderModel: SenderModel) {
         print("Initializing and starting peer discovery...")
         self.multipeerService = MultipeerService()
         setupSubscriptions()
         multipeerService?.start()
+        self.senderModel = senderModel
+    }
+    
+    func onAppear() {
+        
     }
     
     private func setupSubscriptions() {
@@ -84,5 +91,11 @@ class PayShareViewModel: ObservableObject {
         
         print("Sending message: \(text)")
         return multipeerService?.sendMessage(text) == true ? true : false
+    }
+    
+    func featchReceiverData() {
+        receiverModel = ReceiverModel(
+            user: UserModel(id: 1, fullName: "Akbar")
+        )
     }
 }

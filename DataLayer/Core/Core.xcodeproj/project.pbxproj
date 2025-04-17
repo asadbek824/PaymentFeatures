@@ -6,15 +6,7 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5969DDAF2DA54F6B00EA6655 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5969DDAE2DA54F6B00EA6655 /* DesignSystem.framework */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
-		594C48122DA7F0E000C6E89F /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		594C48162DA7F11300C6E89F /* NavigationCoordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NavigationCoordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		59619B292DA2A8CA005A674C /* AssetsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AssetsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5969DDAE2DA54F6B00EA6655 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DE72D9EBDB900D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -49,30 +41,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5969DDAF2DA54F6B00EA6655 /* DesignSystem.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		59619B282DA2A8CA005A674C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				594C48162DA7F11300C6E89F /* NavigationCoordinator.framework */,
-				594C48122DA7F0E000C6E89F /* NavigationCoordinator.framework */,
-				5969DDAE2DA54F6B00EA6655 /* DesignSystem.framework */,
-				59619B292DA2A8CA005A674C /* AssetsKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		59FB1DDD2D9EBDB900D58B5A = {
 			isa = PBXGroup;
 			children = (
 				AD5C201E2D9FE923005D9BB5 /* Service */,
 				59FB1DE92D9EBDB900D58B5A /* Core */,
-				59619B282DA2A8CA005A674C /* Frameworks */,
 				59FB1DE82D9EBDB900D58B5A /* Products */,
 			);
 			sourceTree = "<group>";

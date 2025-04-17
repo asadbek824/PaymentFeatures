@@ -8,7 +8,6 @@
 
 /* Begin PBXFileReference section */
 		59619A6E2DA2A0A9005A674C /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		59619B362DA2AD55005A674C /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -47,7 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				59619A702DA2A0A9005A674C /* AssetsKit */,
-				59619B352DA2AD55005A674C /* Frameworks */,
 				59619A6F2DA2A0A9005A674C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,14 +56,6 @@
 				59619A6E2DA2A0A9005A674C /* DesignSystem.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		59619B352DA2AD55005A674C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				59619B362DA2AD55005A674C /* Core.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,8 +156,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = DA7SC56XUA;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -206,8 +196,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = DA7SC56XUA;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = 3DJM2CZRX2;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
