@@ -13,7 +13,24 @@ final class TransferViewModel: ObservableObject {
         self.card = card
     }
     
-    @Published var amount: Double? = nil
+    @Published var amountText: String = "" {
+        didSet {
+            let formatter = amountFormatter
+            if let number = formatter.number(from: amountText) {
+                amount = number.doubleValue
+            } else {
+                amount = nil
+            }
+            print("amountText: \(amountText), parsed: \(amount ?? -1)")
+        }
+    }
+
+    
+    @Published var amount: Double? = nil {
+        didSet {
+            print("User typed: \(amount ?? 9)")
+        }
+    }
     @Published var showValidationError: Bool = false
     
     // Preset amounts and formatter remain the same.
@@ -37,7 +54,7 @@ final class TransferViewModel: ObservableObject {
         if amount < 1000 {
             return "Сумма перевода должна быть не менее 1 000 сум"
         }
-        if amount > 15_000_000 {
+        if amount > 15000000 {
             return "Сумма перевода не может превышать 15 000 000 сум"
         }
         if card.balance < (amount + transactionFee) {
@@ -51,7 +68,6 @@ final class TransferViewModel: ObservableObject {
     }
     
     func submitTransfer() {
-        // Transfer submission logic here.
-        // You might also want to update 'showValidationError' if needed.
+        
     }
 }

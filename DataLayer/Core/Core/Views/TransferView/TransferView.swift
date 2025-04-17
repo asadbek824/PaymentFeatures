@@ -7,7 +7,6 @@
 import SwiftUI
 
 public struct TransferView: View {
-    // MARK: - View Model
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel: TransferViewModel
     
@@ -47,16 +46,20 @@ public struct TransferView: View {
                 .padding(.bottom, 100)
             
             // Amount Input Section.
-            HStack {
-                Text("Сумма перевода")
-                    .font(.callout)
-                    .foregroundStyle(.appPrimary)
-            }
-            AmountField(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
+            Text("Сумма перевода")
+                .font(.callout)
+                .foregroundStyle(.appPrimary)
+            
+            AmountField(amount: $viewModel.amount)
                 .padding(.bottom, 15)
             
-            TransactionFee(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
-                .padding(.bottom, 15)
+            // Only show fee when amount is valid
+            if viewModel.isValid, let _ = viewModel.amount {
+                TransactionFee(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
+                    .padding(.bottom, 15)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+            
             // Display Validation Error if needed.
             if let error = viewModel.validationError, viewModel.showValidationError {
                 Text(error)
@@ -70,10 +73,9 @@ public struct TransferView: View {
                     ForEach(viewModel.presetAmounts, id: \.self) { value in
                         Button {
                             viewModel.amount = Double(value)
-                            // Hide error message when a preset is selected.
                             viewModel.showValidationError = false
                         } label: {
-                            Text("\(value.formattedWithSeparator())")
+                            Text("\(value)")
                                 .foregroundColor(.secondary)
                                 .font(.subheadline)
                                 .padding(.vertical, 8)
@@ -88,10 +90,8 @@ public struct TransferView: View {
             
             Spacer()
             
-            // Submit Button.
             Button(action: {
                 viewModel.submitTransfer()
-                // Navigate to CheckOutView by toggling the flag.
                 showReceipt = true
             }) {
                 Text("Продолжить")
@@ -107,6 +107,7 @@ public struct TransferView: View {
         }
         .padding()
         .background(Color.white)
+        .animation(.easeInOut, value: viewModel.isValid)
     }
 }
 
@@ -157,17 +158,39 @@ struct CardNumberField: View {
 
 struct AmountField: View {
     @Binding var amount: Double?
-    let formatter: NumberFormatter
+    @State private var rawAmount: String
+    
+    init(amount: Binding<Double?>) {
+        self._amount = amount
+        // initialize rawAmount from existing binding value
+        if let val = amount.wrappedValue {
+            self._rawAmount = State(initialValue: String(format: "%.0f", val))
+        } else {
+            self._rawAmount = State(initialValue: "")
+        }
+    }
     
     var body: some View {
-        TextField("от 1 000 до 15 000 000 сум", value: $amount, formatter: formatter)
+        TextField("от 1 000 до 15 000 000 сум", text: $rawAmount)
             .keyboardType(.decimalPad)
             .padding()
             .background(Color.white)
             .cornerRadius(8)
-            .setStroke(color: .appPrimary) // Custom modifier; remove if undefined.
+            .setStroke(color: .appPrimary)
             .foregroundStyle(.label)
             .fontWeight(.medium)
+            .onChange(of: rawAmount) { s in
+                let cleaned = s.replacingOccurrences(of: " ", with: "")
+                amount = Double(cleaned)
+            }
+            // sync when external binding changes (e.g., chips tapped)
+            .onChange(of: amount) { newVal in
+                if let v = newVal {
+                    rawAmount = String(format: "%.0f", v)
+                } else {
+                    rawAmount = ""
+                }
+            }
     }
 }
 
@@ -178,20 +201,8 @@ struct TransactionFee: View {
     var body: some View {
         let fee = (amount ?? 0) * 0.01
         let formattedFee = formatter.string(from: NSNumber(value: fee)) ?? "0"
-        return Text("Комиссия: \(formattedFee) сум")
+        Text("Комиссия: \(formattedFee) сум")
             .font(.caption)
             .foregroundColor(.secondary)
     }
 }
-
-fileprivate extension Int {
-    /// Formats an integer with thousand separators (e.g., "10000" → "10 000").
-    func formattedWithSeparator() -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = " "
-        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
-    }
-}
-
-
