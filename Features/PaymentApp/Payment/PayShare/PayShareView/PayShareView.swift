@@ -5,7 +5,6 @@
 //  Created by Akbarshah Jumanazarov on 4/4/25.
 //
 
-//import NavigationCoordinator
 import SwiftUI
 import DesignSystem
 import SharedUI
@@ -53,7 +52,9 @@ public struct PayShareView: View {
         .onAppear {
             vm.onAppear()
         }
-        
+        .overlay(alignment: .bottom, content: {
+            CardSelectView()
+        })
     }
     
     @ViewBuilder
@@ -72,6 +73,19 @@ public struct PayShareView: View {
             .padding(.top, .screenWidth / 4)
             .frame(maxWidth: .infinity)
         }
+    }
+    
+    @ViewBuilder
+    private func CardSelectView() -> some View {
+        TabView(selection: $vm.selectedCard) {
+            ForEach(vm.senderModel?.senderCards ?? [], id: \.cartNumber) { card in
+                CardItemView(card: card)
+                    .tag(card)
+            }
+        }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+        .frame(height: 145)
     }
 }
 

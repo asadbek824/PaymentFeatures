@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct SenderModel: Codable, Equatable {
+public struct SenderModel: Identifiable, Codable, Equatable, Hashable {
+    public var id: UUID = UUID()
     public let user: UserModel
     public let senderCards: [UserCard]
     public let selectedCard: UserCard

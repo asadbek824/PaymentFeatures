@@ -17,7 +17,7 @@ class PayShareViewModel: ObservableObject {
     @Published var receiverModel: ReceiverModel? = nil
     @Published private(set) var multipeerService: MultipeerService?
     private var cancellables = Set<AnyCancellable>()
-    @Published var selectedCard: UserCard = PreviewData.cards.first!
+    @Published var selectedCard: UserCard? = nil
     
     init(senderModel: SenderModel) {
         print("Initializing and starting peer discovery...")
@@ -25,6 +25,7 @@ class PayShareViewModel: ObservableObject {
         setupSubscriptions()
         multipeerService?.start()
         self.senderModel = senderModel
+        self.selectedCard = senderModel.selectedCard
     }
     
     func onAppear() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UserBalanceAndExpensesModel: Codable {
+public struct UserBalanceAndExpensesModel: Codable, Hashable {
     public let cartId: UserCard
     
     public init(cartId: UserCard) {
@@ -15,7 +15,7 @@ public struct UserBalanceAndExpensesModel: Codable {
     }
 }
 
-public struct UserCard: Codable, Equatable {
+public struct UserCard: Codable, Equatable, Hashable {
     public let cartId: Int
     public let balance: Double
     public let expenses: Double

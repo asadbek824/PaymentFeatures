@@ -32,7 +32,15 @@ final class ViewModel: ObservableObject {
                     currency: "сум", cardImage: nil
                 ),
                 UserCard(
-                    cartId: 1,
+                    cartId: 2,
+                    balance: 820360.48,
+                    expenses: 1200210.24,
+                    cartNumber: "8600060905809696",
+                    cartName: "Xalq Bank",
+                    currency: "сум", cardImage: nil
+                ),
+                UserCard(
+                    cartId: 3,
                     balance: 820360.48,
                     expenses: 1200210.24,
                     cartNumber: "8600060905809696",
