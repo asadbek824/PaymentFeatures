@@ -50,7 +50,7 @@ extension HomeWorker: HomeWorkeringProtocol {
         return [
             UserBalanceAndExpensesModel(
                 cartId:
-                    UserCarts(
+                    UserCard(
                         cartId: 1,
                         balance: 820360.48,
                         expenses: 1200210.24,
@@ -61,7 +61,7 @@ extension HomeWorker: HomeWorkeringProtocol {
             ),
             UserBalanceAndExpensesModel(
                 cartId:
-                    UserCarts(
+                    UserCard(
                         cartId: 2,
                         balance: 1792.76,
                         expenses: 200210.24,
@@ -72,7 +72,7 @@ extension HomeWorker: HomeWorkeringProtocol {
             ),
             UserBalanceAndExpensesModel(
                 cartId:
-                    UserCarts(
+                    UserCard(
                         cartId: 3,
                         balance: 578.75,
                         expenses: 100210.24,

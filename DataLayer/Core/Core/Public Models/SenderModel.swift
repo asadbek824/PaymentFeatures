@@ -9,10 +9,10 @@ import Foundation
 
 public struct SenderModel: Codable, Equatable {
     public let user: UserModel
-    public let senderCards: [UserCarts]
-    public let selectedCard: UserCarts
+    public let senderCards: [UserCard]
+    public let selectedCard: UserCard
     
-    public init(user: UserModel, senderCards: [UserCarts], selectedCard: UserCarts) {
+    public init(user: UserModel, senderCards: [UserCard], selectedCard: UserCard) {
         self.user = user
         self.senderCards = senderCards
         self.selectedCard = selectedCard
