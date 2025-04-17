@@ -8,37 +8,29 @@
 import Home
 import Payment
 import SwiftUI
-import Services
 import NavigationCoordinator
 import Core
+import SharedUI
 
-final class DefaultNavigationFactory: NavigationFactory {
-    func viewController(for route: AppRoute) -> UIViewController {
+public final class DefaultNavigationFactory: NavigationFactory {
+    
+    public init() {}
+    
+    public func makeViewController(for route: AppRoute) -> UIViewController {
         switch route {
-        case .home: return HomeAssemblyImpl.assemble()
-        case .payments: return UIHostingController(rootView: PaymentsView())
-        case .services: return UIHostingController(rootView: ServicesView())
-        case .payShare:
-            let payShareView = PayShareView()
-            let vc = UIHostingController(rootView: payShareView)
+        case .payShare(let model):
+            let vc = UIHostingController(rootView: PayShareView(senderModel: model))
+            vc.hidesBottomBarWhenPushed = true
+            return vc
+        case .transfer(let receiverModel, let senderModel):
+            let vc = UIHostingController(rootView: TransferView(receiverModel: receiverModel, senderModel: senderModel))
             vc.hidesBottomBarWhenPushed = true
             return vc
         case .receipt(let model):
-            let view = ReceiptView(model: model) {
-                AppNavigationCoordinator.shared.popToRoot()
-                AppNavigationCoordinator.shared.popToRoot(animated: true)
+            let receiptView = ReceiptView(model: model) {
+                //                NavigationCoordinator.shared.dismissPresented()
             }
-            let vc = UIHostingController(rootView: view)
-            vc.hidesBottomBarWhenPushed = true
-            vc.navigationController?.setNavigationBarHidden(true, animated: false)
-            return vc
-        case .detail(let title):
-            let vc = UIViewController()
-            vc.view.backgroundColor = .white
-            vc.title = title
-            return vc
-        case .transfer: return UIHostingController(rootView: TransferView())
-        @unknown default: return UIViewController()
+            return UIHostingController(rootView: receiptView)
         }
     }
 }

@@ -4,15 +4,15 @@
 //
 //  Created by Sukhrob on 10/04/25.
 //
+
 import SwiftUI
 
-public enum ReceiptModel: Hashable, Equatable, Displayable {
+public enum ReceiptModel: Hashable, Equatable {
     
     case successPayment
     case failedPayment
     case pendingPayment
 
-    // Instead of separate properties, combine them here.
     public var iconDetails: (icon: String, color: Color) {
         switch self {
         case .successPayment:
@@ -24,7 +24,6 @@ public enum ReceiptModel: Hashable, Equatable, Displayable {
         }
     }
     
-    // Computed property for title.
     public var title: String {
         switch self {
         case .successPayment:
@@ -36,7 +35,6 @@ public enum ReceiptModel: Hashable, Equatable, Displayable {
         }
     }
 
-    // Computed property for description.
     public var description: String {
         switch self {
         case .successPayment:

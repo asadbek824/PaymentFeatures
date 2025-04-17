@@ -40,7 +40,7 @@ public extension View {
                         if let action {
                             action()
                         } else {
-                            Utils.topViewController()?.dismiss(animated: true)
+                            //Utils.topViewController()?.dismiss(animated: true)
                         }
                     } label: {
                         Image(systemName: "chevron.left")

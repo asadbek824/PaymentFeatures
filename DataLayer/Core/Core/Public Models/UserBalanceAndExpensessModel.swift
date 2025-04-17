@@ -15,7 +15,7 @@ public struct UserBalanceAndExpensesModel: Codable {
     }
 }
 
-public struct UserCarts: Codable {
+public struct UserCarts: Codable, Equatable {
     public let cartId: Int
     public let balance: Double
     public let expenses: Double

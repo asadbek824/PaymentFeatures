@@ -9,6 +9,7 @@ import Foundation
 
 protocol HomeBusseinessProtocol {
     func loadAllData()
+    func payShareButtonTapped()
 }
 
 final class HomeInteractor {
@@ -24,6 +25,18 @@ final class HomeInteractor {
 
 //MARK: - HomeBusseinessProtocol Implementation
 extension HomeInteractor: HomeBusseinessProtocol {
+    
+    func payShareButtonTapped() {
+        Task {
+            async let senderModel = worker.featchSenderModel()
+            
+            do {
+                try await presenter.payShareSenderModel(senderModel: senderModel)
+            } catch {
+                print("Ошибка:", error)
+            }
+        }
+    }
     
     func loadAllData() {
         Task {
