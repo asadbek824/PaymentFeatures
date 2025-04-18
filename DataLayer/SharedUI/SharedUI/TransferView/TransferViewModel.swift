@@ -8,17 +8,28 @@
 import Core
 import Combine
 import SwiftUI
+import NavigationCoordinator
 
 public final class TransferViewModel: ObservableObject {
     
     @Published var receiverModel: ReceiverModel?
     @Published var senderModel: SenderModel?
     @Published var amount: String = ""
-    @Published var isReciptPresented: Bool = false
+    @Published var paymentStatus: PaymentStatusModel?
     
-    public init(receiverModel: ReceiverModel?, senderModel: SenderModel?) {
+    private let navigationCoordinator: AppNavigationCoordinator
+    private let source: NavigationSource
+    
+    public init(
+        receiverModel: ReceiverModel?,
+        senderModel: SenderModel?,
+        source: NavigationSource,
+        navigationCoordinator: AppNavigationCoordinator
+    ) {
         self.receiverModel = receiverModel
         self.senderModel = senderModel
+        self.source = source
+        self.navigationCoordinator = navigationCoordinator
     }
     
     public var isAmountValid: Bool {
@@ -28,7 +39,10 @@ public final class TransferViewModel: ObservableObject {
     
     public func performTransfer() {
         withAnimation(.easeInOut(duration: 0.3)) {
-            isReciptPresented = true
+            let model = PaymentStatusModel(status: .success)
+            if let nav = UIApplication.shared.topNavController() {
+                navigationCoordinator.navigate(to: .receipt(model: model, source: source), from: nav)
+            }
         }
     }
 }

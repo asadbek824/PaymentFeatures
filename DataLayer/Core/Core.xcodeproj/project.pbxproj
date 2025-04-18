@@ -6,13 +6,9 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		767534BB2DB28C3600A3739B /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 767534BA2DB28C3600A3739B /* DesignSystem.framework */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
+		598786562DB2743800F69973 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DE72D9EBDB900D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		767534BA2DB28C3600A3739B /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,19 +42,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				767534BB2DB28C3600A3739B /* DesignSystem.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		598786552DB2743800F69973 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				598786562DB2743800F69973 /* DesignSystem.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		59FB1DDD2D9EBDB900D58B5A = {
 			isa = PBXGroup;
 			children = (
 				AD5C201E2D9FE923005D9BB5 /* Service */,
 				59FB1DE92D9EBDB900D58B5A /* Core */,
-				767534B92DB28C3600A3739B /* Frameworks */,
+				598786552DB2743800F69973 /* Frameworks */,
 				59FB1DE82D9EBDB900D58B5A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,14 +72,6 @@
 				59FB1DE72D9EBDB900D58B5A /* Core.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		767534B92DB28C3600A3739B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				767534BA2DB28C3600A3739B /* DesignSystem.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

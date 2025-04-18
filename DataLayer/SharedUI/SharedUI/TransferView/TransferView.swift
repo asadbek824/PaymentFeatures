@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Core
+import NavigationCoordinator
 
 public struct TransferView: View {
     
@@ -15,11 +16,18 @@ public struct TransferView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showCardSheet = false
     
-    public init(receiverModel: ReceiverModel?, senderModel: SenderModel?) {
+    public init(
+        receiverModel: ReceiverModel?,
+        senderModel: SenderModel?,
+        source: NavigationSource,
+        navigationCoordinator: AppNavigationCoordinator
+    ) {
         _viewModel = StateObject(
             wrappedValue: TransferViewModel(
                 receiverModel: receiverModel,
-                senderModel: senderModel
+                senderModel: senderModel,
+                source: source,
+                navigationCoordinator: navigationCoordinator
             )
         )
     }
@@ -45,14 +53,6 @@ public struct TransferView: View {
             ) { selected in
                 viewModel.receiverModel?.selectedCart = selected
                 showCardSheet = false
-            }
-            .presentationDetents([.fraction(0.5), .large])
-            .presentationDragIndicator(.visible)
-        }
-        
-        .fullScreenCover(isPresented: $viewModel.isReciptPresented) {
-            ReceiptView(model: .successPayment) {
-                
             }
         }
     }
@@ -188,4 +188,3 @@ struct ReceiverCardPickerSheet: View {
         }
     }
 }
-

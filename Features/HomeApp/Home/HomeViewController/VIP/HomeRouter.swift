@@ -31,6 +31,6 @@ final class HomeRouter {
 extension HomeRouter: HomeRoutingProtocol {
     
     func routeToPayShare(senderModel: SenderModel) {
-        navigationCoordinator.navigate(to: .payShare(senderModel: senderModel), from: navigationController)
+        navigationCoordinator.navigate(to: .payShare(senderModel: senderModel, source: .homeTab), from: navigationController)
     }
 }

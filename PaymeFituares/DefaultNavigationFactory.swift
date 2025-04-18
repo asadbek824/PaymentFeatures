@@ -13,22 +13,38 @@ import Core
 import SharedUI
 
 public final class DefaultNavigationFactory: NavigationFactory {
-    
+    public weak var coordinator: AppNavigationCoordinator?
+
     public init() {}
-    
+
     public func makeViewController(for route: AppRoute) -> UIViewController {
         switch route {
-        case .payShare(let model):
-            let vc = UIHostingController(rootView: PayShareView(senderModel: model))
+        case .payShare(let model, let source):
+            let vc = UIHostingController(
+                rootView: PayShareView(
+                    senderModel: model,
+                    source: source,
+                    navigationCoordinator: coordinator!
+                )
+            )
             vc.hidesBottomBarWhenPushed = true
             return vc
-        case .transfer(let receiverModel, let senderModel):
-            let vc = UIHostingController(rootView: TransferView(receiverModel: receiverModel, senderModel: senderModel))
+        case .transfer(let receiverModel, let senderModel, let source):
+            let vc = UIHostingController(
+                rootView: TransferView(
+                    receiverModel: receiverModel,
+                    senderModel: senderModel,
+                    source: source,
+                    navigationCoordinator: coordinator!
+                )
+            )
             vc.hidesBottomBarWhenPushed = true
             return vc
-        case .receipt(let model):
-            let receiptView = ReceiptView(model: model) {  }
-            return UIHostingController(rootView: receiptView)
+        case .receipt(let model, let source):
+            let vc = UIHostingController(
+                rootView: ReceiptView(model: model, source: source)
+            )
+            return vc
         }
     }
 }

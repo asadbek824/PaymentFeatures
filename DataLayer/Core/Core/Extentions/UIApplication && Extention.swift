@@ -30,3 +30,15 @@ public extension UIApplication {
         }
     }
 }
+
+public extension UIApplication {
+    func topTabBarController() -> UITabBarController? {
+        return connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows
+            .first(where: \.isKeyWindow)?
+            .rootViewController as? UITabBarController
+    }
+}
+

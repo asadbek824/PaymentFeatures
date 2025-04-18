@@ -9,14 +9,15 @@ import SwiftUI
 import DesignSystem
 import SharedUI
 import Core
+import NavigationCoordinator
 
 public struct PayShareView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm: PayShareViewModel
     
-    public init(senderModel: SenderModel) {
-        _vm = StateObject(wrappedValue: PayShareViewModel(senderModel: senderModel))
+    public init(senderModel: SenderModel, source: NavigationSource, navigationCoordinator: AppNavigationCoordinator) {
+        _vm = StateObject(wrappedValue: PayShareViewModel(senderModel: senderModel, source: source, navigationCoordinator: navigationCoordinator))
     }
     
     public var body: some View {
@@ -44,16 +45,6 @@ public struct PayShareView: View {
             vm.stopSearching()
             vm.disconnect()
         }
-        .fullScreenCover(isPresented: $vm.showSheet) {
-            vm.disconnect()
-        } content: {
-            NavigationStack {
-                TransferView(
-                    receiverModel: vm.receiverModel,
-                    senderModel: vm.senderModel
-                )
-            }
-        }
         .onAppear {
             vm.onAppear()
         }
@@ -70,7 +61,6 @@ public struct PayShareView: View {
                     RadarTargetView(title: peer.name)
                         .onTapGesture {
                             vm.connect(to: peer)
-                            vm.featchReceiverData()
                         }
                 }
             }

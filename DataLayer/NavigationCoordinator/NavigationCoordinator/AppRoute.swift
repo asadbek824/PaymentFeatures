@@ -8,10 +8,15 @@
 import Foundation
 import Core
 
+public enum NavigationSource: Equatable {
+    case homeTab
+    case paymentTab
+}
+
 public enum AppRoute: Equatable {
-    case payShare(senderModel: SenderModel)
-    case transfer(receiverModel: ReceiverModel, senderModel: SenderModel)
-    case receipt(model: ReceiptModel)
+    case payShare(senderModel: SenderModel, source: NavigationSource)
+    case transfer(receiverModel: ReceiverModel, senderModel: SenderModel, source: NavigationSource)
+    case receipt(model: PaymentStatusModel, source: NavigationSource)
 }
 
 public extension AppRoute {

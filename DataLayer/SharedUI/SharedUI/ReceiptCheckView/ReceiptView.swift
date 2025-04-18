@@ -7,94 +7,108 @@
 
 import SwiftUI
 import Core
+import NavigationCoordinator
 
 public struct ReceiptView: View {
-    
+
     @StateObject private var viewModel: ReceiptViewModel
-    let onBack: () -> Void
-    
-    public init(model: ReceiptModel, onBack: @escaping () -> Void) {
-        self.onBack = onBack
-        _viewModel = StateObject(wrappedValue: ReceiptViewModel(model: model as! Displayable))
+    @Environment(\.dismiss) private var dismiss
+
+    public init(model: PaymentStatusModel, source: NavigationSource) {
+        _viewModel = StateObject(wrappedValue: ReceiptViewModel(model: model, source: source))
     }
-    
+
     public var body: some View {
-        VStack(spacing: 50) {
-            paymentStatusStack()
-            BottomButtons()
+        VStack(spacing: 0) {
+            Spacer()
+            statusSection()
+            descriptionSection()
+            Spacer()
+            actionButtonsSection()
         }
-        .background(Color(UIColor.secondarySystemBackground))
+        .padding(.top)
+        .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
-    
+
+    // MARK: - Секция статуса
     @ViewBuilder
-    private func paymentStatusStack() -> some View {
-        VStack {
-            Image(systemName: viewModel.model.iconDetails.icon)
+    private func statusSection() -> some View {
+        let status = viewModel.paymentStatus.status
+
+        VStack(spacing: 20) {
+            Image(systemName: status.paymentStatusIcon.name)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 70, height: 70)
-                .foregroundStyle(viewModel.model.iconDetails.color)
+                .frame(width: 60, height: 60)
+                .foregroundColor(status.paymentStatusIcon.color)
             
-            Text(viewModel.model.title)
-                .font(.headline)
-                .fontWeight(.bold)
-                .padding(.top, 16)
-            
-            Text(viewModel.model.description)
-                .font(.subheadline)
-                .foregroundColor(.gray)
+            Text(status.title)
+                .font(.title3.weight(.semibold))
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 24)
-                .padding(.top, 8)
-        }
-        .fillSuperview()
-    }
-    
-    @ViewBuilder
-    private func BottomButtons() -> some View {
-        HStack(spacing: 16) {
-            CustomButton(
-                image: "arrow.left",
-                title: "Назад",
-                action: onBack
-            )
-            
-            NavigationLink {
-                Text("My Card Transfer") // Replace with actual view
-            } label: {
-                CustomButton(
-                    image: "receipt",
-                    title: "Чек"
-                ) {
-                    
-                }
-            }
-            NavigationLink {
-                Text("Store") // Replace with actual view
-            } label: {
-                CustomButton(
-                    image: "star",
-                    title: "Сохранить"
-                ) {
-                    
-                }
-            }
         }
     }
-    
+
+    // MARK: - Описание
     @ViewBuilder
-    private func CustomButton(image: String, title: String, action: @escaping () -> Void) -> some View {
-        VStack(spacing: 16) {
-            Image(systemName: image)
-                .foregroundColor(.secondary)
-            Text(title)
-                .foregroundColor(.secondary)
-                .frame(maxWidth: .infinity, alignment: .center)
+    private func descriptionSection() -> some View {
+        Text(viewModel.paymentStatus.status.description)
+            .font(.subheadline)
+            .foregroundColor(.gray)
+            .multilineTextAlignment(.center)
+            .padding(.top, 16)
+            .padding(.horizontal)
+    }
+
+    // MARK: - Нижние кнопки
+    @ViewBuilder
+    private func actionButtonsSection() -> some View {
+        HStack(spacing: 0) {
+            actionButton(icon: "arrow.left", title: "В приложение") { navigateBackToSource() }
+
+            Spacer()
+
+            actionButton(icon: "doc.text", title: "Чек") {  }
+
+            Spacer()
+
+            actionButton(icon: "star", title: "Сохранить") {  }
         }
-        .onTapGesture {
-            action()
+        .padding(.horizontal)
+        .padding(.bottom, 16)
+    }
+
+    private func actionButton(icon: String, title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.title2)
+                Text(title)
+                    .font(.footnote)
+            }
+            .foregroundColor(.gray)
+        }
+    }
+}
+
+extension ReceiptView {
+    
+    private func navigateBackToSource() {
+        guard let tabBarController = UIApplication.shared.topTabBarController() else { return }
+
+        switch viewModel.source {
+        case .homeTab:
+            tabBarController.selectedIndex = 0
+        case .paymentTab:
+            tabBarController.selectedIndex = 1
         }
 
+        if let nav = tabBarController.selectedViewController as? UINavigationController {
+            nav.popToRootViewController(animated: false)
+        }
+
+        if let presented = tabBarController.presentedViewController {
+            presented.dismiss(animated: true)
+        }
     }
 }
 
