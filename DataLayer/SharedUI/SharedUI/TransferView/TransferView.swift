@@ -59,19 +59,14 @@ public struct TransferView: View {
         if let receiver = viewModel.receiverModel {
             let card = receiver.selectedCart
             let last4 = card.cartNumber.suffix(4)
+            let cardColor = SelectedCardColor(from: card.cartName)
 
             Button {
                 showCardSheet = true
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.teal.opacity(0.9), Color.cyan]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .fill(cardColor.gradient)
 
                     HStack {
                         VStack(alignment: .leading, spacing: 8) {
@@ -110,6 +105,9 @@ public struct TransferView: View {
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.teal, lineWidth: 1))
                 .focused($isAmountFocused)
+                .onChange(of: viewModel.amount) { newValue in
+                        viewModel.formatAmountInput(newValue)
+                    }
         }
     }
 
@@ -127,7 +125,8 @@ public struct TransferView: View {
                         Text(amount.formattedWithSeparator)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
-                            .background(Color(.systemGray5))
+                            .foregroundColor(.secondaryLabel)
+                            .background(.secondarySystemBackground)
                             .cornerRadius(20)
                     }
                 }

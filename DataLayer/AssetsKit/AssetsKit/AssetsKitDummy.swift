@@ -34,23 +34,14 @@ public final class AssetsKitDummy {
         public static var paysharegray: UIImage {
             return UIImage(named: "paysharegray", in: .assetsKit, compatibleWith: nil)!
         }
-        
-        public enum CardsImage {
-            public static var cardRed: UIImage {
-                return UIImage(named: "cardRed", in: .assetsKit, compatibleWith: nil)!
-            }
-            public static var cardBlue: UIImage {
-                return UIImage(named: "cardBlue", in: .assetsKit, compatibleWith: nil)!
-            }
-            public static var cardPink: UIImage {
-                return UIImage(named: "cardPink", in: .assetsKit, compatibleWith: nil)!
-            }
-            public static var cardCyan: UIImage {
-                return UIImage(named: "cardCyan", in: .assetsKit, compatibleWith: nil)!
-            }
-            public static var cardYellow: UIImage {
-                return UIImage(named: "cardYellow", in: .assetsKit, compatibleWith: nil)!
-            }
+        public static var TBC: UIImage {
+            return UIImage(named: "TBC", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var Humo: UIImage {
+            return UIImage(named: "Humo", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var Uzcard: UIImage {
+            return UIImage(named: "Uzcard", in: .assetsKit, compatibleWith: nil)!
         }
     }
 }

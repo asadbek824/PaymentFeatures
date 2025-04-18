@@ -13,7 +13,7 @@ public enum MockData {
         balance: 820360.48,
         expenses: 1200210.24,
         cartNumber: "8600060905809696",
-        cartName: "Xalq Bank",
+        cartName: "TBC",
         currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
     )
     
@@ -23,22 +23,22 @@ public enum MockData {
                 balance: 820360.48,
                 expenses: 1200210.24,
                 cartNumber: "8600060905809696",
-                cartName: "Xalq Bank",
+                cartName: "TBC",
                 currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
             ),
             UserCard(
                 cartId: 2,
-                balance: 820360.48,
+                balance: 1050000.20,
                 expenses: 1200210.24,
-                cartNumber: "8600060905809696",
-                cartName: "Xalq Bank",
+                cartNumber: "8600060905807315",
+                cartName: "Humo",
                 currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardPink.jpg"),
             UserCard(
                 cartId: 3,
-                balance: 820360.48,
+                balance: 2100000.25,
                 expenses: 1200210.24,
-                cartNumber: "8600060905809696",
-                cartName: "Xalq Bank",
+                cartNumber: "8600060905809489",
+                cartName: "Uzcard",
                 currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardRed.jpg")
         
         ]
