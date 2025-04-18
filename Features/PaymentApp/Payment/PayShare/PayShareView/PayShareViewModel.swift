@@ -39,7 +39,7 @@ class PayShareViewModel: ObservableObject {
                 self?.objectWillChange.send()
             }
             .store(in: &cancellables)
-            
+        
         multipeerService?.$connectedPeers
             .receive(on: DispatchQueue.main)
             .map { $0.first }
@@ -49,24 +49,24 @@ class PayShareViewModel: ObservableObject {
             .store(in: &cancellables)
         
         multipeerService?.$messages
-             .receive(on: DispatchQueue.main)
-             .compactMap { messages -> [PeerMessage] in
-                 messages.filter { !$0.isFromSelf }
-             }
-             .filter { !$0.isEmpty }
-             .compactMap { $0.last }
-             .sink { [weak self] message in
-                 
-                 let futureDate = Date().addingTimeInterval(2)
-                 NotificationService.shared.scheduleNotification(
+            .receive(on: DispatchQueue.main)
+            .compactMap { messages -> [PeerMessage] in
+                messages.filter { !$0.isFromSelf }
+            }
+            .filter { !$0.isEmpty }
+            .compactMap { $0.last }
+            .sink { [weak self] message in
+                
+                let futureDate = Date().addingTimeInterval(2)
+                NotificationService.shared.scheduleNotification(
                     title: "Входящий перевод от \(message.sender)",
                     body: "\(message.text) сумов",
                     at: futureDate
-                 )
-                 
-                 self?.multipeerService?.clearMessages()
-             }
-             .store(in: &cancellables)
+                )
+                
+                self?.multipeerService?.clearMessages()
+            }
+            .store(in: &cancellables)
     }
     
     func stopSearching() {
@@ -96,7 +96,31 @@ class PayShareViewModel: ObservableObject {
     
     func featchReceiverData() {
         receiverModel = ReceiverModel(
-            user: UserModel(id: 1, fullName: "Akbar")
+            user: UserModel(id: 1, fullName: "Akbar"),
+            receiverCarts: [
+                UserCard(
+                    cartId: 1,
+                    balance: 1000,
+                    expenses: 10000,
+                    cartNumber: "8600050406958979",
+                    cartName: "Akbars Card",
+                    currency: "сум", cardImage: nil
+                ),
+                UserCard(
+                    cartId: 2,
+                    balance: 10000,
+                    expenses: 100000,
+                    cartNumber: "8600050406958686",
+                    cartName: "Akbars Card",
+                    currency: "сум", cardImage: nil
+                )
+            ],
+            selectedCart: .init(cartId: 1,
+                                balance: 1000,
+                                expenses: 10000,
+                                cartNumber: "8600050406958979",
+                                cartName: "Akbars Card",
+                                currency: "сум", cardImage: nil)
         )
     }
 }

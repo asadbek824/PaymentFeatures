@@ -47,7 +47,12 @@ public struct PayShareView: View {
         .fullScreenCover(isPresented: $vm.showSheet) {
             vm.disconnect()
         } content: {
-            TransferView(receiverModel: vm.receiverModel, senderModel: vm.senderModel)
+            NavigationStack {
+                TransferView(
+                    receiverModel: vm.receiverModel,
+                    senderModel: vm.senderModel
+                )
+            }
         }
         .onAppear {
             vm.onAppear()

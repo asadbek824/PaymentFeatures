@@ -27,9 +27,7 @@ public final class DefaultNavigationFactory: NavigationFactory {
             vc.hidesBottomBarWhenPushed = true
             return vc
         case .receipt(let model):
-            let receiptView = ReceiptView(model: model) {
-                //                NavigationCoordinator.shared.dismissPresented()
-            }
+            let receiptView = ReceiptView(model: model) {  }
             return UIHostingController(rootView: receiptView)
         }
     }
