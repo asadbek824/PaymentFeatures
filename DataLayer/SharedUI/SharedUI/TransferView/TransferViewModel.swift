@@ -16,6 +16,7 @@ public final class TransferViewModel: ObservableObject {
     @Published var senderModel: SenderModel?
     @Published var amount: String = ""
     @Published var paymentStatus: PaymentStatusModel?
+    @Published var selectedCard: UserCard? = nil
     
     private let navigationCoordinator: AppNavigationCoordinator
     private let source: NavigationSource

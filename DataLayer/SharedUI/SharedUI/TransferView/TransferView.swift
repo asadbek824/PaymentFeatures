@@ -47,13 +47,10 @@ public struct TransferView: View {
         .navigationBarTitleDisplayMode(.inline)
         .backButton { dismiss() }
         .sheet(isPresented: $showCardSheet) {
-            ReceiverCardPickerSheet(
-                cards: viewModel.receiverModel?.receiverCarts ?? [],
-                selectedCard: viewModel.receiverModel?.selectedCart
-            ) { selected in
-                viewModel.receiverModel?.selectedCart = selected
-                showCardSheet = false
-            }
+            ReceiverCardPickerSheet()
+                .environmentObject(viewModel)
+            .presentationDetents([.fraction(0.5), .large])
+            .presentationDragIndicator(.visible)
         }
     }
     
@@ -154,37 +151,4 @@ public struct TransferView: View {
     }
 }
 
-struct ReceiverCardPickerSheet: View {
-    let cards: [UserCard]
-    let selectedCard: UserCard?
-    let onSelect: (UserCard) -> Void
 
-    var body: some View {
-        NavigationStack {
-            List(cards, id: \.self) { card in
-                Button {
-                    onSelect(card)
-                } label: {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(card.cartName.uppercased())
-                                .font(.headline)
-                            Text("**** \(card.cartNumber.suffix(4))")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        if selectedCard == card {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.teal)
-                        }
-                    }
-                    .padding(.vertical, 6)
-                }
-                .buttonStyle(.plain)
-            }
-            .navigationTitle("Выберите карту")
-            .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-}

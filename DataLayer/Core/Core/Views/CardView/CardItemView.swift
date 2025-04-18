@@ -5,13 +5,21 @@
 //  Created by Sukhrob on 17/04/25.
 //
 
-import Core
 import SwiftUI
 
-struct CardItemView: View {
-    let card: UserCard
+public enum PeopleType {
+    case receiver
+    case sender
+}
+
+public struct CardItemView: View {
+    public let card: UserCard
     
-    var body: some View {
+    public init(card: UserCard) {
+        self.card = card
+    }
+    
+    public var body: some View {
         HStack {
             // Left column: Card info text
             VStack(alignment: .leading, spacing: 8) {
