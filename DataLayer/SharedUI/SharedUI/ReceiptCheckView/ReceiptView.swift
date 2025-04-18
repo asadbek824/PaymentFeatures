@@ -98,13 +98,3 @@ public struct ReceiptView: View {
     }
 }
 
-// MARK: - PREVIEW
-//
-//struct ReceiptView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            ReceiptView(model: .failedPayment) {  }
-//        }
-//    }
-//}
-

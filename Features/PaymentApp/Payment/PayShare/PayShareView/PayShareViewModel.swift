@@ -97,30 +97,8 @@ class PayShareViewModel: ObservableObject {
     func featchReceiverData() {
         receiverModel = ReceiverModel(
             user: UserModel(id: 1, fullName: "Akbar"),
-            receiverCarts: [
-                UserCard(
-                    cartId: 1,
-                    balance: 1000,
-                    expenses: 10000,
-                    cartNumber: "8600050406958979",
-                    cartName: "Akbars Card",
-                    currency: "сум", cardImage: nil
-                ),
-                UserCard(
-                    cartId: 2,
-                    balance: 10000,
-                    expenses: 100000,
-                    cartNumber: "8600050406958686",
-                    cartName: "Akbars Card",
-                    currency: "сум", cardImage: nil
-                )
-            ],
-            selectedCart: .init(cartId: 1,
-                                balance: 1000,
-                                expenses: 10000,
-                                cartNumber: "8600050406958979",
-                                cartName: "Akbars Card",
-                                currency: "сум", cardImage: nil)
+            receiverCarts: MockData.cards,
+            selectedCart: MockData.card
         )
     }
 }

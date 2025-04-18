@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ReceiverModel: Codable, Equatable {
+public struct ReceiverModel: Equatable {
     public let user: UserModel
     public let receiverCarts: [UserCard]
     public var selectedCart: UserCard

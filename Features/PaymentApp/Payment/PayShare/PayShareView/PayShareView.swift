@@ -64,7 +64,7 @@ public struct PayShareView: View {
     
     @ViewBuilder
     private func DiscoveredTargetsView() -> some View {
-        if let peers = vm.multipeerService?.discoveredPeers, peers.count > 0 {
+        if let peers = vm.multipeerService?.discoveredPeers, !peers.isEmpty {
             HStack(spacing: 16) {
                 ForEach(peers) { peer in
                     RadarTargetView(title: peer.name)
@@ -79,11 +79,12 @@ public struct PayShareView: View {
             .frame(maxWidth: .infinity)
         }
     }
+
     
     @ViewBuilder
     private func CardSelectView() -> some View {
         TabView(selection: $vm.selectedCard) {
-            ForEach(vm.senderModel?.senderCards ?? [], id: \.cartNumber) { card in
+            ForEach(vm.senderModel?.senderCards ?? [], id: \.cartId) { card in
                 CardItemView(card: card)
                     .tag(card)
             }
@@ -96,7 +97,49 @@ public struct PayShareView: View {
 }
 
 //#Preview {
+//    let card = UserCard(
+//        cartId: 1,
+//        balance: 820360.48,
+//        expenses: 1200210.24,
+//        cartNumber: "8600060905809696",
+//        cartName: "Xalq Bank",
+//        currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
+//    )
+//    
+//    let cards: [UserCard] = [
+//        UserCard(
+//            cartId: 1,
+//            balance: 820360.48,
+//            expenses: 1200210.24,
+//            cartNumber: "8600060905809696",
+//            cartName: "Xalq Bank",
+//            currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
+//        ),
+//        UserCard(
+//            cartId: 2,
+//            balance: 720360.48,
+//            expenses: 1200210.24,
+//            cartNumber: "8600060905809696",
+//            cartName: "Xalq Bank",
+//            currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
+//        ),
+//        UserCard(
+//            cartId: 3,
+//            balance: 620360.48,
+//            expenses: 1200210.24,
+//            cartNumber: "8600060905809696",
+//            cartName: "Xalq Bank",
+//            currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
+//        )
+//    ]
+//    
 //    NavigationView {
-//        PayShareView()
+//        PayShareView(
+//            senderModel: .init(
+//                user: .init(id: 1, fullName: "Suxrob"),
+//                senderCards: cards,
+//                selectedCard: card
+//            )
+//        )
 //    }
 //}

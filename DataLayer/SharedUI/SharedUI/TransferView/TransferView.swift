@@ -46,7 +46,10 @@ public struct TransferView: View {
                 viewModel.receiverModel?.selectedCart = selected
                 showCardSheet = false
             }
+            .presentationDetents([.fraction(0.5), .large])
+            .presentationDragIndicator(.visible)
         }
+        
         .fullScreenCover(isPresented: $viewModel.isReciptPresented) {
             ReceiptView(model: .successPayment) {
                 
@@ -185,3 +188,4 @@ struct ReceiverCardPickerSheet: View {
         }
     }
 }
+
