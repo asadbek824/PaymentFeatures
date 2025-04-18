@@ -145,7 +145,7 @@ public struct PaymentsView: View {
                 
                 Button {
                     if let nav = UIApplication.shared.topNavController() {
-                        coordinator.navigate(to: .payShare(senderModel: vm.senderModel!), from: nav)
+                        coordinator.navigate(to: .payShare(senderModel: vm.senderModel!, source: .paymentTab), from: nav)
                     }
                 } label: {
                     CustomButton(

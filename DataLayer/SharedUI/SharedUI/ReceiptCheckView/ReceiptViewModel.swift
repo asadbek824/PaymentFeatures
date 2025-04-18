@@ -6,16 +6,16 @@
 //
 
 import SwiftUI
+import Core
+import NavigationCoordinator
 
-protocol ReceiptViewModelProtocol: ObservableObject {
-    var model: Displayable { get }
-}
+final class ReceiptViewModel: ObservableObject {
+    @Published var paymentStatus: PaymentStatusModel
+    let source: NavigationSource
 
-final class ReceiptViewModel: ReceiptViewModelProtocol {
-    @Published var model: Displayable
-
-    init(model: Displayable) {
-        self.model = model
+    init(model: PaymentStatusModel, source: NavigationSource) {
+        self.paymentStatus = model
+        self.source = source
     }
 }
 

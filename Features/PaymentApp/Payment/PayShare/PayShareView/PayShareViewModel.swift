@@ -8,6 +8,8 @@
 import Core
 import Combine
 import Foundation
+import NavigationCoordinator
+import UIKit
 
 class PayShareViewModel: ObservableObject {
     
@@ -19,13 +21,17 @@ class PayShareViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     @Published var selectedCard: UserCard? = nil
     
-    init(senderModel: SenderModel) {
-        print("Initializing and starting peer discovery...")
+    let source: NavigationSource
+    let navigationCoordinator: AppNavigationCoordinator
+    
+    init(senderModel: SenderModel, source: NavigationSource, navigationCoordinator: AppNavigationCoordinator) {
         self.multipeerService = MultipeerService()
-        setupSubscriptions()
-        multipeerService?.start()
         self.senderModel = senderModel
         self.selectedCard = senderModel.selectedCard
+        self.source = source
+        self.navigationCoordinator = navigationCoordinator
+        setupSubscriptions()
+        multipeerService?.start()
     }
     
     func onAppear() {
@@ -77,7 +83,24 @@ class PayShareViewModel: ObservableObject {
     func connect(to peer: PeerDevice) {
         print("Attempting to connect to \(peer.name)")
         multipeerService?.connectToPeer(peer)
-        showSheet = true
+        featchReceiverData {
+            self.goToTransfer()
+        }
+    }
+    
+    func goToTransfer() {
+        guard let nav = UIApplication.shared.topNavController(),
+              let sender = senderModel,
+              let receiver = receiverModel else { return }
+        
+        navigationCoordinator.navigate(
+            to: .transfer(
+                receiverModel: receiver,
+                senderModel: sender,
+                source: source
+            ),
+            from: nav
+        )
     }
     
     func disconnect() {
@@ -94,7 +117,7 @@ class PayShareViewModel: ObservableObject {
         return multipeerService?.sendMessage(text) == true ? true : false
     }
     
-    func featchReceiverData() {
+    func featchReceiverData(completion: @escaping () -> Void) {
         receiverModel = ReceiverModel(
             user: UserModel(id: 1, fullName: "Akbar"),
             receiverCarts: [
@@ -122,5 +145,6 @@ class PayShareViewModel: ObservableObject {
                                 cartName: "Akbars Card",
                                 currency: "сум", cardImage: nil)
         )
+        completion()
     }
 }

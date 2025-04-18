@@ -18,9 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    private lazy var factory: DefaultNavigationFactory = {
+        DefaultNavigationFactory()
+    }()
+    
     private lazy var navigationCoordinator: AppNavigationCoordinator = {
-        let factory = DefaultNavigationFactory()
-        return AppNavigationCoordinator(factory: factory)
+        let coordinator = AppNavigationCoordinator(factory: factory)
+        factory.coordinator = coordinator
+        return coordinator
     }()
     
     private var tabBarItemsData: [TabBarItemData] = []
@@ -73,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 if let nav = UIApplication.shared.topNavController(),
                    let model = SenderModelCacheImpl.shared.load() {
-                    self.navigationCoordinator.navigate(to: .payShare(senderModel: model), from: nav)
+                    self.navigationCoordinator.navigate(to: .payShare(senderModel: model, source: .homeTab), from: nav)
                 }
             }
             return true
