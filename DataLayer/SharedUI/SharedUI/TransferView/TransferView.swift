@@ -8,13 +8,12 @@
 import SwiftUI
 import Core
 
-// MARK: - TransferView
-
 public struct TransferView: View {
-    // MARK: - View Model
-    @StateObject private var viewModel: TransferViewModel
     
-    @State private var showReceipt = false
+    @StateObject private var viewModel: TransferViewModel
+    @FocusState private var isAmountFocused: Bool
+    @Environment(\.dismiss) private var dismiss
+    @State private var showCardSheet = false
     
     public init(receiverModel: ReceiverModel?, senderModel: SenderModel?) {
         _viewModel = StateObject(
@@ -26,167 +25,163 @@ public struct TransferView: View {
     }
     
     public var body: some View {
-        ZStack {
-            mainContent()
+        VStack(spacing: 24) {
+            receiverCard()
+                .padding()
+            amountInput()
+                .padding(.horizontal)
+            quickAmounts()
+            Spacer()
+            continueButton()
+                .padding()
         }
-        .fillSuperview()
         .navigationTitle("Перевод")
         .navigationBarTitleDisplayMode(.inline)
-        .fullScreenCover(isPresented: $showReceipt) {
-            ReceiptView(model: .successPayment, onBack: {  })
+        .backButton { dismiss() }
+        .sheet(isPresented: $showCardSheet) {
+            ReceiverCardPickerSheet(
+                cards: viewModel.receiverModel?.receiverCarts ?? [],
+                selectedCard: viewModel.receiverModel?.selectedCart
+            ) { selected in
+                viewModel.receiverModel?.selectedCart = selected
+                showCardSheet = false
+            }
+        }
+        .fullScreenCover(isPresented: $viewModel.isReciptPresented) {
+            ReceiptView(model: .successPayment) {
+                
+            }
         }
     }
     
     @ViewBuilder
-    private func mainContent() -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            // Header Section with card info.
-            CardNumberField(card: viewModel.fixedCard) { }
-                .padding(.bottom, 100)
-            
-            // Amount Input Section.
-            HStack {
-                Text("Сумма перевода")
-                    .font(.callout)
-                    .foregroundStyle(.appPrimary)
-            }
-            AmountField(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
-                .padding(.bottom, 15)
-            
-            // Display Validation Error if needed.
-            if let error = viewModel.validationError, viewModel.showValidationError {
-                Text(error)
-                    .foregroundColor(.red)
-                    .font(.caption)
-            }
-            
-            // Chips Section for preset amounts.
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(viewModel.presetAmounts, id: \.self) { value in
-                        Button {
-                            viewModel.amount = Double(value)
-                            // Hide error message when a preset is selected.
-                            viewModel.showValidationError = false
-                        } label: {
-                            Text("\(value.formattedWithSeparator())")
-                                .foregroundColor(.secondary)
+    private func receiverCard() -> some View {
+        if let receiver = viewModel.receiverModel {
+            let card = receiver.selectedCart
+            let last4 = card.cartNumber.suffix(4)
+
+            Button {
+                showCardSheet = true
+            } label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.teal.opacity(0.9), Color.cyan]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(card.cartName.uppercased())
+                                .font(.headline)
+                                .foregroundColor(.white)
+
+                            Text("**** \(last4)")
                                 .font(.subheadline)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 16)
-                                .background(Color.gray.opacity(0.1))
-                                .cornerRadius(16)
+                                .foregroundColor(.white.opacity(0.9))
+                        }
+
+                        Spacer()
+
+                        Image(systemName: "chevron.down")
+                            .foregroundColor(.white.opacity(0.8))
+                            .imageScale(.medium)
+                    }
+                    .padding()
+                }
+                .frame(height: 100)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    @ViewBuilder
+    private func amountInput() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Сумма перевода")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+
+            TextField("от 1 000 до 15 000 000 сум", text: $viewModel.amount)
+                .keyboardType(.numberPad)
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.teal, lineWidth: 1))
+                .focused($isAmountFocused)
+        }
+    }
+
+    @ViewBuilder
+    private func quickAmounts() -> some View {
+        let quickAmounts = [1_000, 50_000, 100_000, 200_000]
+        
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(quickAmounts, id: \.self) { amount in
+                    Button(action: {
+                        viewModel.amount = "\(amount.formattedWithSeparator)"
+                        isAmountFocused = false
+                    }) {
+                        Text(amount.formattedWithSeparator)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Color(.systemGray5))
+                            .cornerRadius(20)
+                    }
+                }
+            }
+            .padding(.horizontal)
+        }
+    }
+
+    @ViewBuilder
+    private func continueButton() -> some View {
+        Button(action: viewModel.performTransfer) {
+            Text("Продолжить")
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.teal)
+                .foregroundColor(.white)
+                .cornerRadius(14)
+        }
+        .disabled(!viewModel.isAmountValid)
+        .opacity(viewModel.isAmountValid ? 1 : 0.5)
+    }
+}
+
+struct ReceiverCardPickerSheet: View {
+    let cards: [UserCard]
+    let selectedCard: UserCard?
+    let onSelect: (UserCard) -> Void
+
+    var body: some View {
+        NavigationStack {
+            List(cards, id: \.self) { card in
+                Button {
+                    onSelect(card)
+                } label: {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(card.cartName.uppercased())
+                                .font(.headline)
+                            Text("**** \(card.cartNumber.suffix(4))")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                        if selectedCard == card {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.teal)
                         }
                     }
+                    .padding(.vertical, 6)
                 }
+                .buttonStyle(.plain)
             }
-            .padding(.top, 4)
-            
-            Spacer()
-            
-            Button(action: {
-                viewModel.submitTransfer()
-                showReceipt = true
-            }) {
-                Text("Продолжить")
-                    .foregroundColor(.white)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.appPrimary)
-                    .cornerRadius(8)
-            }
-//            .disabled(!viewModel.isValid)
+            .navigationTitle("Выберите карту")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
-        .background(Color.white)
-    }
-}
-
-// MARK: - Subviews
-
-/// A button-like view to show the current (and only) card’s info.
-struct CardNumberField: View {
-    let card: UserBalanceAndExpensesModel?
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 16) {
-                if let card = card,
-                   let cardImage = card.cartId.cardImage,
-                   !cardImage.isEmpty {
-                    Image(cardImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                } else {
-                    Image(systemName: "creditcard.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.blue)
-                }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    if let card = card {
-                        Text(card.cartId.cartName)
-                            .font(.headline)
-                            .foregroundColor(.primary)
-                        let visibleSuffix = card.cartId.cartNumber.suffix(4)
-                        Text("** \(visibleSuffix)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    } else {
-                        Text("Нет карты")
-                            .foregroundColor(.white)
-                    }
-                }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(UIColor.secondarySystemBackground))
-            .cornerRadius(8)
-        }
-    }
-}
-
-/// A text field for entering the amount to transfer.
-/// Uses a NumberFormatter so that manual input is formatted.
-struct AmountField: View {
-    @Binding var amount: Double?
-    let formatter: NumberFormatter
-    
-    var body: some View {
-        TextField("от 1 000 до 15 000 000 сум", value: $amount, formatter: formatter)
-            .keyboardType(.decimalPad)
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .setStroke(color: .appPrimary) // Custom modifier; remove if undefined.
-            .foregroundStyle(.label)
-            .fontWeight(.medium)
-    }
-}
-
-// MARK: - Preview
-//
-//struct TransferView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            TransferView()
-//        }
-//    }
-//}
-
-// MARK: - Helpers
-
-fileprivate extension Int {
-    /// Formats an integer with thousand separators (e.g., “10000” → “10 000”).
-    func formattedWithSeparator() -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = " "
-        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
     }
 }

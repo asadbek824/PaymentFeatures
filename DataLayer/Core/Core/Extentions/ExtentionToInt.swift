@@ -110,3 +110,12 @@ public extension Int {
     static var ninetyNine: Int { return 99 }
     static var oneHundred: Int { return 100 }
 }
+
+public extension Int {
+    var formattedWithSeparator: String {
+        let formatter = NumberFormatter()
+        formatter.groupingSeparator = " "
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: self)) ?? "\(self)"
+    }
+}
