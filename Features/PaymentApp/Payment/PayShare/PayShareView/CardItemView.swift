@@ -35,9 +35,8 @@ struct CardItemView: View {
         .background(
             LinearGradient(
                 gradient: Gradient(colors: [
-//                        PreviewData.color(for: card).opacity(0.7),
-//                        PreviewData.color(for: card)
-                ]),
+                    .red.opacity(0.7),
+                    .red                ]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

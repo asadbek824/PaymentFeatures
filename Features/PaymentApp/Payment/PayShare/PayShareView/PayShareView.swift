@@ -82,6 +82,7 @@ public struct PayShareView: View {
                 CardItemView(card: card)
                     .tag(card)
             }
+            
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))

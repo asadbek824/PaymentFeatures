@@ -50,8 +50,15 @@ public struct TransferView: View {
                     .font(.callout)
                     .foregroundStyle(.appPrimary)
             }
-            AmountField(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
+            AmountField(amount: $viewModel.amount)
                 .padding(.bottom, 15)
+            
+            // Display Validation Error if needed.
+            if viewModel.isValid, let _ = viewModel.amount {
+                TransactionFee(amount: $viewModel.amount, formatter: viewModel.amountFormatter)
+                    .padding(.bottom, 15)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
             
             // Display Validation Error if needed.
             if let error = viewModel.validationError, viewModel.showValidationError {
@@ -69,7 +76,7 @@ public struct TransferView: View {
                             // Hide error message when a preset is selected.
                             viewModel.showValidationError = false
                         } label: {
-                            Text("\(value.formattedWithSeparator())")
+                            Text("\(value)")
                                 .foregroundColor(.secondary)
                                 .font(.subheadline)
                                 .padding(.vertical, 8)
@@ -96,10 +103,12 @@ public struct TransferView: View {
                     .background(Color.appPrimary)
                     .cornerRadius(8)
             }
-//            .disabled(!viewModel.isValid)
+            .disabled(!viewModel.isValid)
+            .opacity(viewModel.isValid ? 1 : 0.6)
         }
         .padding()
         .background(Color.white)
+        .animation(.easeInOut, value: viewModel.isValid)
     }
 }
 
@@ -109,7 +118,7 @@ public struct TransferView: View {
 struct CardNumberField: View {
     let card: UserBalanceAndExpensesModel?
     let action: () -> Void
-
+    
     var body: some View {
         Button(action: action) {
             HStack(spacing: 16) {
@@ -155,29 +164,54 @@ struct CardNumberField: View {
 /// Uses a NumberFormatter so that manual input is formatted.
 struct AmountField: View {
     @Binding var amount: Double?
-    let formatter: NumberFormatter
+    @State private var rawAmount: String
+    
+    init(amount: Binding<Double?>) {
+        self._amount = amount
+        // initialize rawAmount from existing binding value
+        if let val = amount.wrappedValue {
+            self._rawAmount = State(initialValue: String(format: "%.0f", val))
+        } else {
+            self._rawAmount = State(initialValue: "")
+        }
+    }
     
     var body: some View {
-        TextField("от 1 000 до 15 000 000 сум", value: $amount, formatter: formatter)
+        TextField("от 1 000 до 15 000 000 сум", text: $rawAmount)
             .keyboardType(.decimalPad)
             .padding()
             .background(Color.white)
             .cornerRadius(8)
-            .setStroke(color: .appPrimary) // Custom modifier; remove if undefined.
+            .setStroke(color: .appPrimary)
             .foregroundStyle(.label)
             .fontWeight(.medium)
+            .onChange(of: rawAmount) { s in
+                let cleaned = s.replacingOccurrences(of: " ", with: "")
+                amount = Double(cleaned)
+            }
+        // sync when external binding changes (e.g., chips tapped)
+            .onChange(of: amount) { newVal in
+                if let v = newVal {
+                    rawAmount = String(format: "%.0f", v)
+                } else {
+                    rawAmount = ""
+                }
+            }
     }
 }
 
-// MARK: - Preview
-//
-//struct TransferView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationView {
-//            TransferView()
-//        }
-//    }
-//}
+struct TransactionFee: View {
+    @Binding var amount: Double?
+    let formatter: NumberFormatter
+    
+    var body: some View {
+        let fee = (amount ?? 0) * 0.01
+        let formattedFee = formatter.string(from: NSNumber(value: fee)) ?? "0"
+        Text("Комиссия: \(formattedFee) сум")
+            .font(.caption)
+            .foregroundColor(.secondary)
+    }
+}
 
 // MARK: - Helpers
 

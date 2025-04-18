@@ -54,14 +54,14 @@ public final class TransferViewModel: ObservableObject {
         if amount < 1000 {
             return "Сумма перевода должна быть не менее 1 000 сум"
         }
-        if amount > 15_000_000 {
+        if amount > 15000000 {
             return "Сумма перевода не может превышать 15 000 000 сум"
         }
         // Calculate total required amount including 1% fee.
-        let totalRequired = amount * 1.01
-        if fixedCard.cartId.balance < totalRequired {
-            return "На карте недостаточно средств для совершения перевода с комиссией 1%"
-        }
+//        let totalRequired = amount * 1.01
+//        if fixedCard.cartId.balance < totalRequired {
+//            return "На карте недостаточно средств для совершения перевода с комиссией 1%"
+//        }
         return nil
     }
     
@@ -74,16 +74,16 @@ public final class TransferViewModel: ObservableObject {
     
     /// Call this function on submit. It handles transfer logic and logs the result.
     func submitTransfer() {
-        if let error = validationError {
-            print("Validation Error: \(error)")
-            showValidationError = true
-        } else {
-            showValidationError = false
-            
-            let amountValue = amount.flatMap { amountFormatter.string(from: NSNumber(value: $0)) } ?? "0"
-            print("Transferring amount: \(amountValue) to card: \(fixedCard.cartId.cartNumber)")
-            // Place your transfer logic here, for example, calling an API or updating the app state.
-        }
+//        if let error = validationError {
+//            print("Validation Error: \(error)")
+//            showValidationError = true
+//        } else {
+//            showValidationError = false
+//            
+//            let amountValue = amount.flatMap { amountFormatter.string(from: NSNumber(value: $0)) } ?? "0"
+//            print("Transferring amount: \(amountValue) to card: \(fixedCard.cartId.cartNumber)")
+//            // Place your transfer logic here, for example, calling an API or updating the app state.
+//        }
     }
 }
 
