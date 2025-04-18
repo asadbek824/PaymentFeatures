@@ -36,7 +36,7 @@ struct CardItemView: View {
             LinearGradient(
                 gradient: Gradient(colors: [
                     .red.opacity(0.7),
-                    .red                ]),
+                    .red]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
