@@ -48,14 +48,14 @@ struct CardItemView: View {
     }
 }
 
-#Preview {
-    let model = UserCard(
-        cartId: 1,
-        balance: 820360.48,
-        expenses: 1200210.24,
-        cartNumber: "8600060905809696",
-        cartName: "Xalq Bank",
-        currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
-    )
-    CardItemView(card: model)
-}
+//#Preview {
+//    let model = UserCard(
+//        cartId: 1,
+//        balance: 820360.48,
+//        expenses: 1200210.24,
+//        cartNumber: "8600060905809696",
+//        cartName: "Xalq Bank",
+//        currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
+//    )
+//    CardItemView(card: model)
+//}
