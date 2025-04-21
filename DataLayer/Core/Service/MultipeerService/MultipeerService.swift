@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import MultipeerConnectivity
 
-public class MultipeerService: NSObject, ObservableObject {
+public class MultipeerService: NSObject {
     
     public static let shared = MultipeerService()
     
@@ -19,11 +19,23 @@ public class MultipeerService: NSObject, ObservableObject {
     private var advertiser: MCNearbyServiceAdvertiser
     private var browser: MCNearbyServiceBrowser
     
-    @Published public var discoveredPeers: [PeerDevice] = []
-    @Published public var connectedPeers: [PeerDevice] = []
-    @Published public var messages: [PeerMessage] = []
-    @Published public var connectionStatus: ConnectionStatus = .notConnected
-        
+    // Callbacks for view model
+    public var onPeerDiscovered: ((PeerDevice) -> Void)?
+    public var onPeerLost: ((MCPeerID) -> Void)?
+    public var onConnectionStatusChanged: ((ConnectionStatus) -> Void)?
+    public var onPeersUpdated: (([PeerDevice]) -> Void)?
+    public var onMessageReceived: ((PeerMessage) -> Void)?
+    
+    // Internal state
+    private var discoveredPeers: [PeerDevice] = []
+    private var connectedPeers: [PeerDevice] = []
+    private var messages: [PeerMessage] = []
+    private var connectionStatus: ConnectionStatus = .notConnected {
+        didSet {
+            onConnectionStatusChanged?(connectionStatus)
+        }
+    }
+    
     public override init() {
         print("MultipeerService: Initializing...")
         session = MCSession(peer: myPeerId, securityIdentity: nil, encryptionPreference: .none)
@@ -101,7 +113,7 @@ public class MultipeerService: NSObject, ObservableObject {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.messages.append(PeerMessage(text: text, sender: self.myPeerId.displayName, isFromSelf: true))
-                self.objectWillChange.send()
+                self.onMessageReceived?(PeerMessage(text: text, sender: self.myPeerId.displayName, isFromSelf: true))
             }
             return true
         } catch {
@@ -112,6 +124,7 @@ public class MultipeerService: NSObject, ObservableObject {
     
     private func updateConnectedPeers() {
         connectedPeers = session.connectedPeers.map { PeerDevice(id: $0, isConnected: true) }
+        onPeersUpdated?(connectedPeers)
         
         if !connectedPeers.isEmpty {
             let peerNames = connectedPeers.map { $0.name }.joined(separator: ", ")
@@ -139,7 +152,6 @@ public class MultipeerService: NSObject, ObservableObject {
 
 extension MultipeerService: MCSessionDelegate {
     public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        print("MultipeerService: Peer \(peerID.displayName) changed state to: \(state.rawValue)")
         DispatchQueue.main.async {
             switch state {
             case .connected:
@@ -164,10 +176,10 @@ extension MultipeerService: MCSessionDelegate {
         guard let text = String(data: data, encoding: .utf8) else { return }
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
             print("📥 MultipeerService: Received message from \(peerID.displayName): \(text)")
-            self.messages.append(PeerMessage(text: text, sender: peerID.displayName, isFromSelf: false))
-            self.objectWillChange.send()  // Explicitly notify observers
+            let message = PeerMessage(text: text, sender: peerID.displayName, isFromSelf: false)
+            self?.messages.append(message)
+            self?.onMessageReceived?(message)
         }
     }
     
@@ -197,8 +209,8 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
             
             if !self.session.connectedPeers.contains(peerID) {
                 let peer = PeerDevice(id: peerID, isConnected: false)
-                self.objectWillChange.send()
                 self.discoveredPeers.append(peer)
+                self.onPeerDiscovered?(peer)
                 print("📱 MultipeerService: Added new peer to discovered peers: \(peerID.displayName)")
             }
         }
@@ -208,13 +220,14 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
         print("🔍 MultipeerService: Lost peer: \(peerID.displayName)")
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.objectWillChange.send()
+            
             self.discoveredPeers.removeAll(where: { $0.id == peerID })
             self.connectedPeers.removeAll(where: { $0.id == peerID })
+            self.onPeerLost?(peerID)
             
             if self.connectedPeers.isEmpty {
                 switch self.connectionStatus {
-                case .searching: break  // Do nothing if already searching
+                case .searching: break
                 default: self.connectionStatus = .notConnected
                 }
             }

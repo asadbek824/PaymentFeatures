@@ -14,9 +14,13 @@ public enum NavigationSource: Equatable {
 }
 
 public enum AppRoute: Equatable {
-    case payShare(senderModel: SenderModel, source: NavigationSource)
-    case transfer(receiverModel: ReceiverModel, senderModel: SenderModel, source: NavigationSource)
-    case receipt(model: PaymentStatusModel, source: NavigationSource)
+    case payShare(senderModel: SenderModel,
+                  source: NavigationSource)
+    case transfer(receiverModel: ReceiverModel,
+                  senderModel: SenderModel,
+                  source: NavigationSource)
+    case receipt(model: PaymentStatusModel,
+                 source: NavigationSource)
 }
 
 public extension AppRoute {

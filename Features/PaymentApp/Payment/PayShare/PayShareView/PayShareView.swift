@@ -32,36 +32,32 @@ public struct PayShareView: View {
         }
         .overlay(alignment: .top) {
             DiscoveredTargetsView()
-                .id(vm.multipeerService?.discoveredPeers.count)
+                .id(vm.discoveredPeers.count)
         }
         .backButton {
+            vm.stop()
             dismiss()
         }
         .fillSuperview()
         .navigationTitle("Pay Share")
         .navigationBarTitleDisplayMode(.inline)
         .background(.secondarySystemBackground)
-        .onDisappear {
-            vm.stopSearching()
-            vm.disconnect()
-        }
-        .onAppear {
-            vm.onAppear()
-        }
-        .overlay(alignment: .bottom, content: {
-            CardSelectView()
-        })
+        .animation(.bouncy, value: vm.discoveredPeers)
+        .onAppear(perform: vm.start)
+        .overlay(alignment: .bottom, content: CardSelectView)
     }
     
     @ViewBuilder
     private func DiscoveredTargetsView() -> some View {
-        if let peers = vm.multipeerService?.discoveredPeers, !peers.isEmpty {
+        if vm.discoveredPeers.count > 0 {
             HStack(spacing: 16) {
-                ForEach(peers) { peer in
+                ForEach(vm.discoveredPeers) { peer in
                     RadarTargetView(title: peer.name)
                         .onTapGesture {
-                            vm.connect(to: peer)
+                            vm.connectToPeer(peer)
                         }
+                        .transition(.scale)
+                        .shadow(radius: 5)
                 }
             }
             .padding()
