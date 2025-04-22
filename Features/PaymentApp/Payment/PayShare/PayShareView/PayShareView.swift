@@ -41,6 +41,7 @@ public struct PayShareView: View {
         .fillSuperview()
         .navigationTitle("Pay Share")
         .navigationBarTitleDisplayMode(.inline)
+        .frame(maxWidth: .screenWidth)
         .background(.secondarySystemBackground)
         .animation(.bouncy, value: vm.discoveredPeers)
         .onAppear(perform: vm.start)
@@ -80,51 +81,3 @@ public struct PayShareView: View {
         .frame(height: 145)
     }
 }
-
-//#Preview {
-//    let card = UserCard(
-//        cartId: 1,
-//        balance: 820360.48,
-//        expenses: 1200210.24,
-//        cartNumber: "8600060905809696",
-//        cartName: "Xalq Bank",
-//        currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
-//    )
-//    
-//    let cards: [UserCard] = [
-//        UserCard(
-//            cartId: 1,
-//            balance: 820360.48,
-//            expenses: 1200210.24,
-//            cartNumber: "8600060905809696",
-//            cartName: "Xalq Bank",
-//            currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
-//        ),
-//        UserCard(
-//            cartId: 2,
-//            balance: 720360.48,
-//            expenses: 1200210.24,
-//            cartNumber: "8600060905809696",
-//            cartName: "Xalq Bank",
-//            currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
-//        ),
-//        UserCard(
-//            cartId: 3,
-//            balance: 620360.48,
-//            expenses: 1200210.24,
-//            cartNumber: "8600060905809696",
-//            cartName: "Xalq Bank",
-//            currency: "сум", image: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
-//        )
-//    ]
-//    
-//    NavigationView {
-//        PayShareView(
-//            senderModel: .init(
-//                user: .init(id: 1, fullName: "Suxrob"),
-//                senderCards: cards,
-//                selectedCard: card
-//            )
-//        )
-//    }
-//}

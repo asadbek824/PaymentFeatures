@@ -8,6 +8,9 @@
 import Foundation
 
 public enum MockData {
+    
+    public static let user: UserModel = .init(id: 1, fullName: "Akbar Jumanazarov")
+    
     public static let card: UserCard = UserCard(
         cartId: 1,
         balance: 820360.48,
