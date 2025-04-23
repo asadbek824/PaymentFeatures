@@ -34,5 +34,8 @@ public final class AssetsKitDummy {
         public static var paysharegray: UIImage {
             return UIImage(named: "paysharegray", in: .assetsKit, compatibleWith: nil)!
         }
+        public static var payshareintro: UIImage {
+            return UIImage(named: "multipeerConnectivity", in: .assetsKit, compatibleWith: nil)!
+        }
     }
 }

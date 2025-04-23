@@ -10,6 +10,7 @@ import Foundation
 protocol HomeBusseinessProtocol {
     func loadAllData()
     func payShareButtonTapped()
+    func payShareIntroSectionTapped()
 }
 
 final class HomeInteractor {
@@ -25,6 +26,10 @@ final class HomeInteractor {
 
 //MARK: - HomeBusseinessProtocol Implementation
 extension HomeInteractor: HomeBusseinessProtocol {
+    
+    func payShareIntroSectionTapped() {
+        presenter.payShareIntroPresent()
+    }
     
     func payShareButtonTapped() {
         Task {

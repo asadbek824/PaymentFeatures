@@ -12,6 +12,7 @@ protocol HomeViewDisplayProtocol: AnyObject {
     func displayUserInitials(_ initials: String)
     func display(sections: [HomeSectionItem])
     func payShareTapped(senderModel: SenderModel)
+    func payShareIntroTapped()
 }
 
 public final class HomeViewController: UIViewController {
@@ -111,6 +112,10 @@ private extension HomeViewController {
         
         collectionView.register(BalanceCell.self, forCellWithReuseIdentifier: BalanceCell.identifier)
         collectionView.register(PaymeGoCell.self, forCellWithReuseIdentifier: PaymeGoCell.identifier)
+        collectionView.register(
+            PayShareIntroCell.self,
+            forCellWithReuseIdentifier: PayShareIntroCell.identifier
+        )
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identifier)
         collectionView.register(PopularCell.self, forCellWithReuseIdentifier: PopularCell.identifier)
         collectionView.register(
@@ -138,6 +143,7 @@ private extension HomeViewController {
             switch self.sections[sectionIndex] {
             case .balance: return LayoutFactory.balanceLayout()
             case .paymeGo: return LayoutFactory.paymeGoLayout()
+            case .payShareIntro: return LayoutFactory.payShareIntroLayout()
             case .banner: return LayoutFactory.bannerLayout()
             case .finicalServices: return LayoutFactory.financeServiceLayout()
             case .popular: return LayoutFactory.popularLayout()
@@ -163,6 +169,10 @@ private extension HomeViewController {
 
 //MARK: - HomeViewDisplayProtocol Implementation
 extension HomeViewController: HomeViewDisplayProtocol {
+    
+    func payShareIntroTapped() {
+        router.routeToPayShareIntro()
+    }
     
     func payShareTapped(senderModel: SenderModel) {
         router.routeToPayShare(senderModel: senderModel)
@@ -202,6 +212,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         switch sections[section] {
         case .balance: return 1
         case .banner: return 1
+        case .payShareIntro: return 1
         case .paymeGo(let items): return items.count
         case .finicalServices(let items): return items.count
         case .popular(let items): return items.count
@@ -236,6 +247,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
             ) as? PaymeGoCell else { return UICollectionViewCell() }
             
             cell.configure(with: vm.image, title: vm.title)
+            
+            return cell
+            
+        case .payShareIntro(let item):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PayShareIntroCell.identifier,
+                for: indexPath
+            ) as? PayShareIntroCell else { return UICollectionViewCell() }
+            
+            cell.configure(with: item.image, title: item.title)
             
             return cell
         case .banner(let item):
@@ -292,12 +313,19 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = sections[indexPath.section]
         
-        if case .paymeGo(let items) = section {
+        switch section {
+        case .paymeGo(let items):
             let item = items[indexPath.item]
             
             if item.title == "Payme Share" {
                 interactor.payShareButtonTapped()
             }
+            
+        case .payShareIntro:
+            
+            interactor.payShareIntroSectionTapped()
+            
+        default: break
         }
     }
 }

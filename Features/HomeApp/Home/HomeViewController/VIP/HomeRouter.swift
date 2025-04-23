@@ -11,6 +11,7 @@ import Core
 
 protocol HomeRoutingProtocol {
     func routeToPayShare(senderModel: SenderModel)
+    func routeToPayShareIntro()
 }
 
 final class HomeRouter {
@@ -32,5 +33,9 @@ extension HomeRouter: HomeRoutingProtocol {
     
     func routeToPayShare(senderModel: SenderModel) {
         navigationCoordinator.navigate(to: .payShare(senderModel: senderModel, source: .homeTab), from: navigationController)
+    }
+    
+    func routeToPayShareIntro() {
+        navigationCoordinator.navigate(to: .payShareIntro, from: navigationController)
     }
 }

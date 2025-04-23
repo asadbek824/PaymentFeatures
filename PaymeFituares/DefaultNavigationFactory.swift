@@ -45,6 +45,10 @@ public final class DefaultNavigationFactory: NavigationFactory {
                 rootView: ReceiptView(model: model, source: source)
             )
             return vc
+        case .payShareIntro:
+            let vc = UIHostingController(rootView: PayShareIntroView())
+            vc.hidesBottomBarWhenPushed = true
+            return vc
         }
     }
 }

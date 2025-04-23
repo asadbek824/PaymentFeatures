@@ -15,7 +15,7 @@ struct PayShareIntoParagraphContent: Identifiable {
     let description: String
 }
 
-struct PayShareIntroView: View {
+public struct PayShareIntroView: View {
     
     @State private var selectedTabIndex: Int = 0
     
@@ -25,33 +25,33 @@ struct PayShareIntroView: View {
         .init(title: "Безопасность и удобство", description: "Не нужно запоминать номера карт или носить их с собой — всё безопасно и удобно!")
     ]
     
-    var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    Logo()
-                    
-                    Text("Pay Share - это:")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        
-                    VStack(spacing: 24) {
-                        ForEach(content) { content in
-                            Paragraph(title: content.title, description: content.description)
-                        }
+    public init() {  }
+    
+    public var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                Logo()
+                
+                Text("Pay Share - это:")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                VStack(spacing: 24) {
+                    ForEach(content) { content in
+                        Paragraph(title: content.title, description: content.description)
                     }
                 }
-                .padding()
             }
-            .clipped()
-            .scrollIndicators(.hidden)
-            .navigationTitle("Что такое Pay Share?")
-            .navigationBarTitleDisplayMode(.inline)
-            .fillSuperview()
-            .background(.secondarySystemBackground)
-            .safeAreaInset(edge: .bottom, content: BottomInset)
+            .padding()
         }
+        .clipped()
+        .scrollIndicators(.hidden)
+        .navigationTitle("Что такое Pay Share?")
+        .navigationBarTitleDisplayMode(.inline)
+        .fillSuperview()
+        .background(.secondarySystemBackground)
+        .safeAreaInset(edge: .bottom, content: BottomInset)
     }
     
     @ViewBuilder

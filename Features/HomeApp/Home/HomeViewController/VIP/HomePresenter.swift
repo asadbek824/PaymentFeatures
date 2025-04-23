@@ -17,6 +17,7 @@ protocol HomePresentetionProtocol {
         popularBanners: [BannerModel]
     )
     func payShareSenderModel(senderModel: SenderModel)
+    func payShareIntroPresent()
 }
 
 final class HomePresenter {
@@ -57,6 +58,9 @@ extension HomePresenter: HomePresentetionProtocol {
                 PaymeGoItemViewModel(image: AssetsKitDummy.Image.paysharegray, title: "Payme Share"),
                 PaymeGoItemViewModel(image: AssetsKitDummy.Image.scaner, title: "QR оплата")
             ]),
+            .payShareIntro(
+                PayShareIntroViewModel(image: AssetsKitDummy.Image.payshareintro, title: "Попробуйте Payme Share")
+            ),
             .banner(BannerViewModel(
                 imageUrl: banners.first?.media.src ?? "",
                 title: banners.first?.media.title ?? ""
@@ -78,6 +82,12 @@ extension HomePresenter: HomePresentetionProtocol {
     func payShareSenderModel(senderModel: SenderModel) {
         DispatchQueue.main.async {
             self.view?.payShareTapped(senderModel: senderModel)
+        }
+    }
+    
+    func payShareIntroPresent() {
+        DispatchQueue.main.async {
+            self.view?.payShareIntroTapped()
         }
     }
 }

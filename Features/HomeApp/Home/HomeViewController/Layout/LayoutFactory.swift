@@ -46,6 +46,33 @@ enum LayoutFactory {
         section.orthogonalScrollingBehavior = .continuous
         return section
     }
+    
+    static func payShareIntroLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(100)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+
+        let backgroundDecoration = NSCollectionLayoutDecorationItem.background(
+            elementKind: BackgrounViewWhiteIsCornerRadiusExsistToTop.reuseIdentifier
+        )
+        backgroundDecoration.contentInsets = .zero
+        section.decorationItems = [backgroundDecoration]
+
+        return section
+    }
 
     static func bannerLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
@@ -66,7 +93,7 @@ enum LayoutFactory {
         section.orthogonalScrollingBehavior = .continuous
 
         let backgroundDecoration = NSCollectionLayoutDecorationItem.background(
-            elementKind: BackgrounViewWhiteIsCornerRadiusExsistToTop.reuseIdentifier
+            elementKind: BackgrounViewWhite.reuseIdentifier
         )
         backgroundDecoration.contentInsets = .zero
         section.decorationItems = [backgroundDecoration]
