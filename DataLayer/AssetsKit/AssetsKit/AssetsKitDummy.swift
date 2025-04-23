@@ -43,5 +43,8 @@ public final class AssetsKitDummy {
         public static var Uzcard: UIImage {
             return UIImage(named: "Uzcard", in: .assetsKit, compatibleWith: nil)!
         }
+        public static var payshareintro: UIImage {
+            return UIImage(named: "multipeerConnectivity", in: .assetsKit, compatibleWith: nil)!
+        }
     }
 }
