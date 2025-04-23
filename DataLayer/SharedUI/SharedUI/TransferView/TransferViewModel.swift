@@ -46,6 +46,11 @@ public final class TransferViewModel: ObservableObject {
                 navigationCoordinator.navigate(to: .receipt(model: model, source: source), from: nav)
             }
         }
+        NotificationCenter.default.post(
+            name: Notification.Name("TRANSFER"),
+            object: nil,
+            userInfo: ["amount" : amount]
+        )
     }
     
     let numberFormatter: NumberFormatter = {

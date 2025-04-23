@@ -10,9 +10,7 @@ import UserNotifications
 
 public final class NotificationService {
     
-    public static let shared = NotificationService()
-
-    private init() {
+    public init() {
         requestAuthorization()
     }
 

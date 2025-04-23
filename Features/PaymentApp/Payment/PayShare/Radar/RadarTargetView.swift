@@ -29,8 +29,8 @@ struct RadarTargetView: View {
             .scaledToFit()
             .frame(maxWidth: 32, maxHeight: 32)
             .frame(maxWidth: 80, maxHeight: 80)
-            .foregroundStyle(.secondaryLabel)
-            .background(.systemBackground)
+            .foregroundStyle(.gray)
+            .background(.white)
             .clipShape(.circle)
             
             Text(title)
