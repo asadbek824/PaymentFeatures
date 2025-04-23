@@ -24,9 +24,9 @@ class PayShareViewModel: ObservableObject {
     private let multipeerService = MultipeerService.shared
     @Published var discoveredPeers: [PeerDevice] = []
     @Published var connectedPeers: [PeerDevice] = []
-    @Published var messages: [PeerMessage] = []
     @Published var connectionStatus: ConnectionStatus = .notConnected
     private var cancellables = Set<AnyCancellable>()
+    private let notificationService = NotificationService()
     
     init(senderModel: SenderModel, source: NavigationSource, navigationCoordinator: AppNavigationCoordinator) {
         self.senderModel = senderModel
@@ -82,7 +82,13 @@ class PayShareViewModel: ObservableObject {
         }
         
         multipeerService.onMessageReceived = { [weak self] message in
-            self?.messages.append(message)
+            if !message.isFromSelf {
+                self?.notificationService.scheduleNotification(
+                    title: "Входящий перевод",
+                    body: "Баланс пополнен на \(message.text) сумов",
+                    at: Date().addingTimeInterval(2)
+                )
+            }
         }
     }
     
@@ -103,7 +109,7 @@ class PayShareViewModel: ObservableObject {
         multipeerService.disconnect()
     }
     
-    func sendMessage(_ text: String) -> Bool {
+    func sendMessage(_ text: String) {
         multipeerService.sendMessage(text)
     }
     

@@ -101,9 +101,9 @@ public class MultipeerService: NSObject {
         messages = []
     }
     
-    public func sendMessage(_ text: String) -> Bool {
+    public func sendMessage(_ text: String) {
         guard !session.connectedPeers.isEmpty, let data = text.data(using: .utf8) else {
-            return false
+            return
         }
         
         do {
@@ -115,10 +115,8 @@ public class MultipeerService: NSObject {
                 self.messages.append(PeerMessage(text: text, sender: self.myPeerId.displayName, isFromSelf: true))
                 self.onMessageReceived?(PeerMessage(text: text, sender: self.myPeerId.displayName, isFromSelf: true))
             }
-            return true
         } catch {
             print("❌ MultipeerService: Error sending message: \(error.localizedDescription)")
-            return false
         }
     }
     

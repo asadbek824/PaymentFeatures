@@ -129,7 +129,7 @@ public struct PayShareIntroView: View {
                     .clipShape(.rect(cornerRadius: 12))
             }
         }
-        .padding()
+        .padding([.horizontal, .bottom])
     }
 }
 

@@ -31,21 +31,29 @@ public struct PayShareView: View {
                 .clipShape(.circle)
         }
         .overlay(alignment: .top) {
-            DiscoveredTargetsView()
-                .id(vm.discoveredPeers.count)
+            VStack {
+                InfoPane()
+                DiscoveredTargetsView()
+                    .id(vm.discoveredPeers.count)
+            }
         }
         .backButton {
             vm.stop()
             dismiss()
         }
         .fillSuperview()
-        .navigationTitle("Pay Share")
+        .navigationTitle("PayShare")
         .navigationBarTitleDisplayMode(.inline)
         .frame(maxWidth: .screenWidth)
         .background(.secondarySystemBackground)
         .animation(.bouncy, value: vm.discoveredPeers)
         .onAppear(perform: vm.start)
         .overlay(alignment: .bottom, content: CardSelectView)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("TRANSFER"))) { notification in
+            if let amount = notification.userInfo?["amount"] as? String {
+                vm.sendMessage(amount)
+            }
+        }
     }
     
     @ViewBuilder
@@ -62,7 +70,6 @@ public struct PayShareView: View {
                 }
             }
             .padding()
-            .padding(.top, .screenWidth / 4)
             .frame(maxWidth: .infinity)
         }
     }
@@ -79,5 +86,19 @@ public struct PayShareView: View {
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
         .frame(height: 145)
+    }
+    
+    @ViewBuilder
+    private func InfoPane() -> some View {
+        HStack {
+            Text("Убедитесь, что у другого пользователя также открыт экран Pay Share.")
+                .font(.callout)
+                .foregroundStyle(.secondaryLabel)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .setStroke(color: .secondaryLabel, cornerRadius: 12)
+        .padding()
     }
 }
