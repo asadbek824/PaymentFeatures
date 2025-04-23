@@ -32,36 +32,33 @@ public struct PayShareView: View {
         }
         .overlay(alignment: .top) {
             DiscoveredTargetsView()
-                .id(vm.multipeerService?.discoveredPeers.count)
+                .id(vm.discoveredPeers.count)
         }
         .backButton {
+            vm.stop()
             dismiss()
         }
         .fillSuperview()
         .navigationTitle("Pay Share")
         .navigationBarTitleDisplayMode(.inline)
+        .frame(maxWidth: .screenWidth)
         .background(.secondarySystemBackground)
-        .onDisappear {
-            vm.stopSearching()
-            vm.disconnect()
-        }
-        .onAppear {
-            vm.onAppear()
-        }
-        .overlay(alignment: .bottom, content: {
-            CardSelectView()
-        })
+        .animation(.bouncy, value: vm.discoveredPeers)
+        .onAppear(perform: vm.start)
+        .overlay(alignment: .bottom, content: CardSelectView)
     }
     
     @ViewBuilder
     private func DiscoveredTargetsView() -> some View {
-        if let peers = vm.multipeerService?.discoveredPeers, peers.count > 0 {
+        if vm.discoveredPeers.count > 0 {
             HStack(spacing: 16) {
-                ForEach(peers) { peer in
+                ForEach(vm.discoveredPeers) { peer in
                     RadarTargetView(title: peer.name)
                         .onTapGesture {
-                            vm.connect(to: peer)
+                            vm.connectToPeer(peer)
                         }
+                        .transition(.scale)
+                        .shadow(radius: 5)
                 }
             }
             .padding()
@@ -69,11 +66,12 @@ public struct PayShareView: View {
             .frame(maxWidth: .infinity)
         }
     }
+
     
     @ViewBuilder
     private func CardSelectView() -> some View {
         TabView(selection: $vm.selectedCard) {
-            ForEach(vm.senderModel?.senderCards ?? [], id: \.cartNumber) { card in
+            ForEach(vm.senderModel?.senderCards ?? [], id: \.cartId) { card in
                 CardItemView(card: card)
                     .tag(card)
             }
@@ -83,9 +81,3 @@ public struct PayShareView: View {
         .frame(height: 145)
     }
 }
-
-//#Preview {
-//    NavigationView {
-//        PayShareView()
-//    }
-//}

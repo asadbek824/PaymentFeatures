@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct ReceiverModel: Codable, Equatable {
+public struct ReceiverModel: Identifiable, Equatable {
+    public var id: UUID = UUID()
     public let user: UserModel
     public let receiverCarts: [UserCard]
     public var selectedCart: UserCard

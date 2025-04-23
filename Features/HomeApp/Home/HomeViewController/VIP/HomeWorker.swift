@@ -47,41 +47,7 @@ extension HomeWorker: HomeWorkeringProtocol {
         //            body: body
         //        )
         
-        return [
-            UserBalanceAndExpensesModel(
-                cartId:
-                    UserCard(
-                        cartId: 1,
-                        balance: 820360.48,
-                        expenses: 1200210.24,
-                        cartNumber: "8600060905809696",
-                        cartName: "Xalq Bank",
-                        currency: "сум", cardImage: nil
-                    )
-            ),
-            UserBalanceAndExpensesModel(
-                cartId:
-                    UserCard(
-                        cartId: 2,
-                        balance: 1792.76,
-                        expenses: 200210.24,
-                        cartNumber: "8600060905809999",
-                        cartName: "Asadbek Yo'ldoshev",
-                        currency: "сум", cardImage: nil
-                    )
-            ),
-            UserBalanceAndExpensesModel(
-                cartId:
-                    UserCard(
-                        cartId: 3,
-                        balance: 578.75,
-                        expenses: 100210.24,
-                        cartNumber: "8600060905807777",
-                        cartName: "Asadbek Yo'ldoshev",
-                        currency: "сум", cardImage: nil
-                    )
-            ),
-        ]
+        return MockData.cards.map { UserBalanceAndExpensesModel(cartId: $0) }
     }
     
     func fetchBanners() async throws -> [BannerModel] {

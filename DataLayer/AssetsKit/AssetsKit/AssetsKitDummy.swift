@@ -34,8 +34,14 @@ public final class AssetsKitDummy {
         public static var paysharegray: UIImage {
             return UIImage(named: "paysharegray", in: .assetsKit, compatibleWith: nil)!
         }
-        public static var payshareintro: UIImage {
-            return UIImage(named: "multipeerConnectivity", in: .assetsKit, compatibleWith: nil)!
+        public static var TBC: UIImage {
+            return UIImage(named: "TBC", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var Humo: UIImage {
+            return UIImage(named: "Humo", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var Uzcard: UIImage {
+            return UIImage(named: "Uzcard", in: .assetsKit, compatibleWith: nil)!
         }
     }
 }

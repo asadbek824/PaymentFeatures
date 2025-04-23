@@ -15,7 +15,8 @@ public struct UserBalanceAndExpensesModel: Codable, Hashable {
     }
 }
 
-public struct UserCard: Codable, Equatable, Hashable {
+public struct UserCard: Identifiable, Codable, Equatable, Hashable {
+    public var id: UUID = UUID()
     public let cartId: Int
     public let balance: Double
     public let expenses: Double

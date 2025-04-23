@@ -22,41 +22,9 @@ final class ViewModel: ObservableObject {
     func featchSenderData() {
         senderModel = SenderModel(
             user: UserModel(id: 1, fullName: "AssA"),
-            senderCards: [
-                UserCard(
-                    cartId: 1,
-                    balance: 820360.48,
-                    expenses: 1200210.24,
-                    cartNumber: "8600060905809696",
-                    cartName: "Xalq Bank",
-                    currency: "сум", cardImage: nil
-                ),
-                UserCard(
-                    cartId: 2,
-                    balance: 820360.48,
-                    expenses: 1200210.24,
-                    cartNumber: "8600060905809696",
-                    cartName: "Xalq Bank",
-                    currency: "сум", cardImage: nil
-                ),
-                UserCard(
-                    cartId: 3,
-                    balance: 820360.48,
-                    expenses: 1200210.24,
-                    cartNumber: "8600060905809696",
-                    cartName: "Xalq Bank",
-                    currency: "сум", cardImage: nil
-                )
-            ],
+            senderCards: MockData.cards,
             selectedCard:
-                UserCard(
-                    cartId: 1,
-                    balance: 820360.48,
-                    expenses: 1200210.24,
-                    cartNumber: "8600060905809696",
-                    cartName: "Xalq Bank",
-                    currency: "сум", cardImage: nil
-                )
+                MockData.card
         )
     }
 }

@@ -15,7 +15,9 @@ public final class TransferViewModel: ObservableObject {
     @Published var receiverModel: ReceiverModel?
     @Published var senderModel: SenderModel?
     @Published var amount: String = ""
+    
     @Published var paymentStatus: PaymentStatusModel?
+    @Published var selectedCard: UserCard? = nil
     
     private let navigationCoordinator: AppNavigationCoordinator
     private let source: NavigationSource
@@ -45,4 +47,28 @@ public final class TransferViewModel: ObservableObject {
             }
         }
     }
+    
+    let numberFormatter: NumberFormatter = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.groupingSeparator = " "
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }()
+
+        func formatAmountInput(_ input: String) {
+            let digits = input.filter { $0.isWholeNumber }
+            if let number = Int(digits) {
+                if let formatted = numberFormatter.string(from: NSNumber(value: number)) {
+                    if formatted != amount {
+                        amount = formatted
+                    }
+                }
+            } else {
+                amount = ""
+            }
+        }
+    
+    
+    
 }
