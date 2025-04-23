@@ -57,7 +57,7 @@ class PayShareViewModel: ObservableObject {
     
     func featchReceiverData() {
         receiverModel = ReceiverModel(
-            user: UserModel(id: 1, fullName: "Akbar"),
+            user: UserModel(id: 1, fullName: "Akbar Jumanazarov"),
             receiverCarts: MockData.cards,
             selectedCart: MockData.card
         )
