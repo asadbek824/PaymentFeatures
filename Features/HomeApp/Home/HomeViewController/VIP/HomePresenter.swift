@@ -59,7 +59,7 @@ extension HomePresenter: HomePresentetionProtocol {
                 PaymeGoItemViewModel(image: AssetsKitDummy.Image.scaner, title: "QR оплата")
             ]),
             .payShareIntro(
-                PayShareIntroViewModel(image: AssetsKitDummy.Image.payshareintro, title: "Попробуйте Payme Share")
+                PayShareIntroViewModel(image: AssetsKitDummy.Image.payshareintro, title: "Моментальные\nпереводы рядом")
             ),
             .banner(BannerViewModel(
                 imageUrl: banners.first?.media.src ?? "",

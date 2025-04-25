@@ -60,7 +60,7 @@ enum LayoutFactory {
             heightDimension: .absolute(100)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 36, leading: 8, bottom: 16, trailing: 8)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
@@ -87,7 +87,7 @@ enum LayoutFactory {
             heightDimension: .absolute(100)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 26, leading: 8, bottom: 16, trailing: 8)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous

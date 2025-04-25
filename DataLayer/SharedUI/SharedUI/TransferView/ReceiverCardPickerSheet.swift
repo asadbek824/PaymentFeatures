@@ -17,17 +17,18 @@ public struct ReceiverCardPickerSheet: View {
         NavigationStack {
             ScrollView {
                 ForEach(vm.receiverModel?.receiverCarts ?? []) { card in
-                    
-                    //TODO: Надо убрать в моделВью
                     let iconName: String = {
                         switch card.cartName.lowercased() {
-                        case "tbc":   return "TBC"
-                        case "humo":  return "Humo"
-                        default:
-                            return "Uzcard"
+                        case "tbc": return "TBC"
+                        case "humo": return "Humo"
+                        default: return "Uzcard"
                         }
                     }()
                     
+                    let cardSuffix = String(card.cartNumber.suffix(4))
+                    let userName = vm.receiverModel?.user.fullName.uppercased() ?? ""
+
+                    let isSelected = vm.receiverModel?.selectedCart == card
 
                     Button {
                         withAnimation {
@@ -37,38 +38,34 @@ public struct ReceiverCardPickerSheet: View {
                     } label: {
                         HStack {
                             Image(iconName, bundle: .assetsKit)
-                              .resizable()
-                              .scaledToFill()
-                              .frame(width: 60, height: 38)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 60, height: 38)
 
                             VStack(alignment: .leading) {
-                                Text("**** \(card.cartNumber.suffix(4))")
+                                Text("**** \(cardSuffix)")
                                     .font(.headline)
                                     .foregroundColor(.primary)
-                                Text(card.cartName.uppercased())
+                                Text(userName)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
                             .padding(.horizontal)
-//                            .setStroke(color: .black)
+
                             Spacer()
-                            if vm.receiverModel?.selectedCart == card {
+                            if isSelected {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.teal)
                             }
                             Image(systemName: "chevron.right")
                                 .foregroundStyle(.gray)
-                            
                         }
                         .padding()
-//                        .setStroke(color: .red)
                     }
-                    .navigationTitle("Выберите карту")
-                    .navigationBarTitleDisplayMode(.inline)
-                        Divider()
-                            .frame(height: 1)
-                            .background(Color.gray.opacity(0.1))
 
+                    Divider()
+                        .frame(height: 1)
+                        .background(Color.gray.opacity(0.1))
                 }
             }
         }
