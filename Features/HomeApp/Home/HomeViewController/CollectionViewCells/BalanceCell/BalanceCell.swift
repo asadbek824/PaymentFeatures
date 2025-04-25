@@ -20,16 +20,30 @@ final class BalanceCell: UICollectionViewCell {
     }
     
     // MARK: - UI Components
-    private lazy var titleLabel = makeLabel(text: "Общий баланс", font: .systemFont(ofSize: 16), alignment: .center)
+    private lazy var titleLabel = makeLabel(
+        text: "Общий баланс",
+        font: .systemFont(ofSize: 16),
+        alignment: .center
+    )
 
-    private lazy var expensesLabel = makeLabel(text: "расход за", font: .systemFont(ofSize: 14))
+    private lazy var expensesLabel = makeLabel(
+        text: "расход за",
+        font: .systemFont(ofSize: 14)
+    )
     lazy var balanceLabel = makeLabel(font: .boldSystemFont(ofSize: 32))
     lazy var balanceCurrencyLabel = makeLabel(font: .systemFont(ofSize: 16))
     lazy var expenseLabel = makeLabel(font: .systemFont(ofSize: 14))
     lazy var expenseCurrencyLabel = makeLabel(font: .systemFont(ofSize: 14))
-    private lazy var balanceHiddenLabel = makeLabel(text: "ПОКАЗАТЬ БАЛАНС", font: .boldSystemFont(ofSize: 16), alignment: .center)
+    private lazy var balanceHiddenLabel = makeLabel(
+        text: "ПОКАЗАТЬ БАЛАНС",
+        font: .boldSystemFont(ofSize: 16),
+        alignment: .center
+    )
 
-    private lazy var eyeButton: UIButton = makeIconButton(systemName: "eye.slash", action: #selector(toggleBalanceVisibility))
+    private lazy var eyeButton: UIButton = makeIconButton(
+        systemName: "eye.slash",
+        action: #selector(toggleBalanceVisibility)
+    )
     private lazy var moreButton: UIButton = makeIconButton(systemName: "ellipsis")
 
     private let contentStack = UIStackView()
@@ -50,7 +64,13 @@ final class BalanceCell: UICollectionViewCell {
 
 // MARK: - Configure Method
 extension BalanceCell {
-    func configure(balance: String, balanceCurrency: String, expenses: String, expenseCurrency: String, isHidden: Bool) {
+    func configure(
+        balance: String,
+        balanceCurrency: String,
+        expenses: String,
+        expenseCurrency: String,
+        isHidden: Bool
+    ) {
         balanceLabel.text = balance
         balanceCurrencyLabel.text = balanceCurrency
         expenseLabel.text = expenses
@@ -95,7 +115,9 @@ private extension BalanceCell {
     }
     
     func makeBalanceRow() -> UIStackView {
-        let stack = UIStackView(arrangedSubviews: [balanceLabel, balanceHiddenLabel, balanceCurrencyLabel])
+        let stack = UIStackView(
+            arrangedSubviews: [balanceLabel, balanceHiddenLabel, balanceCurrencyLabel]
+        )
         stack.axis = .horizontal
         stack.spacing = 8
         stack.alignment = .bottom
@@ -125,7 +147,11 @@ private extension BalanceCell {
 // MARK: - Factory Methods
 private extension BalanceCell {
     
-    func makeLabel(text: String? = nil, font: UIFont, alignment: NSTextAlignment = .left) -> UILabel {
+    func makeLabel(
+        text: String? = nil,
+        font: UIFont,
+        alignment: NSTextAlignment = .left
+    ) -> UILabel {
         let label = UILabel()
         label.text = text
         label.font = font

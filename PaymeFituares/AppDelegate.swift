@@ -73,12 +73,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
         if url.scheme == "paymeFeature2", url.host == "pay-share" {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 if let nav = UIApplication.shared.topNavController(),
                    let model = SenderModelCacheImpl.shared.load() {
-                    self.navigationCoordinator.navigate(to: .payShare(senderModel: model, source: .homeTab), from: nav)
+                    self.navigationCoordinator.navigate(
+                        to: .payShare(senderModel: model, source: .homeTab),
+                        from: nav
+                    )
                 }
             }
             return true
@@ -89,9 +96,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    public func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                       willPresent notification: UNNotification,
-                                       withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    public func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
         completionHandler([.banner, .sound])
     }
 }

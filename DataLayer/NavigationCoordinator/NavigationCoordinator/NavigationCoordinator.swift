@@ -17,12 +17,24 @@ public final class AppNavigationCoordinator {
         self.factory = factory
     }
 
-    public func navigate(to route: AppRoute, from navigationController: UINavigationController?) {
+    public func navigate(
+        to route: AppRoute,
+        from navigationController: UINavigationController?
+    ) {
         let vc = factory.makeViewController(for: route)
-        handleNavigation(for: route, viewController: vc, navigationController: navigationController)
+        
+        handleNavigation(
+            for: route,
+            viewController: vc,
+            navigationController: navigationController
+        )
     }
 
-    private func handleNavigation(for route: AppRoute, viewController: UIViewController, navigationController: UINavigationController?) {
+    private func handleNavigation(
+        for route: AppRoute,
+        viewController: UIViewController,
+        navigationController: UINavigationController?
+    ) {
         switch route.presentationStyle {
         case .push:
             navigationController?.pushViewController(viewController, animated: true)
@@ -34,6 +46,12 @@ public final class AppNavigationCoordinator {
     }
 
     public func dismissPresented(animated: Bool = true) {
-        UIApplication.shared.windows.first?.rootViewController?.presentedViewController?.dismiss(animated: animated)
+        UIApplication
+            .shared
+            .windows
+            .first?
+            .rootViewController?
+            .presentedViewController?
+            .dismiss(animated: animated)
     }
 }
