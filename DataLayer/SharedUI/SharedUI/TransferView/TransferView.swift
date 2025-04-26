@@ -70,7 +70,7 @@ public struct TransferView: View {
 
                     HStack {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(card.cartName.uppercased())
+                            Text(receiver.user.fullName)
                                 .font(.headline)
                                 .foregroundColor(.white)
 
