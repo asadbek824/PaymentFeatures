@@ -46,5 +46,14 @@ public final class AssetsKitDummy {
         public static var payshareintro: UIImage {
             return UIImage(named: "PayShareIntro", in: .assetsKit, compatibleWith: nil)!
         }
+        public static var Idea: UIImage {
+            return UIImage(named: "idea", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var Team: UIImage {
+            return UIImage(named: "boss", in: .assetsKit, compatibleWith: nil)!
+        }
+        public static var lock: UIImage {
+            return UIImage(named: "padlock", in: .assetsKit, compatibleWith: nil)!
+        }
     }
 }

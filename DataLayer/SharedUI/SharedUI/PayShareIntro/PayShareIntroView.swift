@@ -12,7 +12,7 @@ import SwiftUI
 struct PayShareIntoParagraphContent: Identifiable {
     let id = UUID()
     let title: String
-    let description: String
+    let icon: UIImage
 }
 
 public struct PayShareIntroView: View {
@@ -20,9 +20,9 @@ public struct PayShareIntroView: View {
     @State private var selectedTabIndex: Int = 0
     
     private let content: [PayShareIntoParagraphContent] = [
-        .init(title: "Новая функция перевода денег", description: "Отправляйте деньги без номера карты или телефона — просто откройте экран \"Pay Share\"."),
-        .init(title: "Простота перевода", description: "Откройте приложение, попросите другого пользователя сделать то же самое, и когда он появится на \"радаре\", отправьте деньги."),
-        .init(title: "Безопасность и удобство", description: "Не нужно запоминать номера карт или носить их с собой — всё безопасно и удобно!")
+        .init(title: "Быстрые и Удобные Переводы", icon: AssetsKitDummy.Image.Idea),
+        .init(title: "Переводы без номера карты", icon: AssetsKitDummy.Image.Team),
+        .init(title: "Безопасный способ перевода", icon: AssetsKitDummy.Image.lock)
     ]
     
     public init() {  }
@@ -39,7 +39,7 @@ public struct PayShareIntroView: View {
                 
                 VStack(spacing: 24) {
                     ForEach(content) { content in
-                        Paragraph(title: content.title, description: content.description)
+                        Paragraph(title: content.title, icon: content.icon)
                     }
                 }
             }
@@ -79,15 +79,19 @@ public struct PayShareIntroView: View {
     }
     
     @ViewBuilder
-    private func Paragraph(title: String, description: String) -> some View {
-        VStack(alignment: .leading) {
+    private func Paragraph(title: String, icon: UIImage) -> some View {
+        HStack(spacing: 5) {
+            Image(uiImage: icon)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 40, maxHeight: 40)
+
             Text(title)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading)
-                .font(.title3)
+                .font(.body)
                 .fontWeight(.semibold)
             
-            Text(description)
-                .font(.callout)
         }
     }
     
