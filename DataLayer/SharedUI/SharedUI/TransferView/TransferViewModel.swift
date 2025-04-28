@@ -12,6 +12,8 @@ import NavigationCoordinator
 
 public final class TransferViewModel: ObservableObject {
     
+    @Published var showCardSheet = false
+    
     @Published var receiverModel: ReceiverModel?
     @Published var senderModel: SenderModel?
     @Published var amount: String = ""
@@ -60,7 +62,6 @@ public final class TransferViewModel: ObservableObject {
     }
     
     /// A user-facing validation message, if invalid
-    /// A user-facing validation message, if invalid
     public var validationMessage: String? {
         guard wasAmountEverValid else { return nil }
         switch amountValidationState {
@@ -77,7 +78,6 @@ public final class TransferViewModel: ObservableObject {
         }
     }
 
-    
     /// Форматированная строка комиссии 1%, или nil, если сумма невалидна
     public var feeAmount: String? {
         guard isAmountValid,
@@ -94,6 +94,11 @@ public final class TransferViewModel: ObservableObject {
                 navigationCoordinator.navigate(to: .receipt(model: model, source: source), from: nav)
             }
         }
+        
+        publishNotifiation()
+    }
+    
+    private func publishNotifiation() {
         NotificationCenter.default.post(
             name: Notification.Name("TRANSFER"),
             object: nil,
@@ -126,4 +131,14 @@ public final class TransferViewModel: ObservableObject {
         }
     }
 
+    func getIconName(for cartName: String) -> String {
+        switch cartName.lowercased() {
+        case "tbc":
+            return "TBC"
+        case "humo":
+            return "Humo"
+        default:
+            return "Uzcard"
+        }
+    }
 }

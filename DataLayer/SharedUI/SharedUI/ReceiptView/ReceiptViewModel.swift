@@ -10,6 +10,7 @@ import Core
 import NavigationCoordinator
 
 final class ReceiptViewModel: ObservableObject {
+    
     @Published var paymentStatus: PaymentStatusModel
     let source: NavigationSource
 
