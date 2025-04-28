@@ -49,8 +49,8 @@ public struct TransferView: View {
         .sheet(isPresented: $showCardSheet) {
             ReceiverCardPickerSheet()
                 .environmentObject(viewModel)
-            .presentationDetents([.fraction(0.5), .large])
-            .presentationDragIndicator(.visible)
+                .presentationDetents([.fraction(0.5), .large])
+                .presentationDragIndicator(.visible)
         }
     }
     
@@ -60,27 +60,27 @@ public struct TransferView: View {
             let card = receiver.selectedCart
             let last4 = card.cartNumber.suffix(4)
             let cardColor = SelectedCardColor(from: card.cartName)
-
+            
             Button {
                 showCardSheet = true
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(cardColor.gradient)
-
+                    
                     HStack {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(receiver.user.fullName)
                                 .font(.headline)
                                 .foregroundColor(.white)
-
+                            
                             Text("**** \(last4)")
                                 .font(.subheadline)
                                 .foregroundColor(.white.opacity(0.9))
                         }
-
+                        
                         Spacer()
-
+                        
                         Image(systemName: "chevron.down")
                             .foregroundColor(.white.opacity(0.8))
                             .imageScale(.medium)
@@ -92,25 +92,37 @@ public struct TransferView: View {
             .buttonStyle(.plain)
         }
     }
-
+    
     @ViewBuilder
     private func amountInput() -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Сумма перевода")
                 .font(.subheadline)
                 .foregroundColor(.gray)
-
+            
             TextField("от 1 000 до 15 000 000 сум", text: $viewModel.amount)
                 .keyboardType(.numberPad)
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 10).stroke(Color.teal, lineWidth: 1))
                 .focused($isAmountFocused)
                 .onChange(of: viewModel.amount) { newValue in
-                        viewModel.formatAmountInput(newValue)
-                    }
+                    viewModel.formatAmountInput(newValue)
+                }
+            if let feeString = viewModel.feeAmount {
+                Text("Комиссия: \(feeString) сум")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+            }
+            if let message = viewModel.validationMessage{
+                Text(message)
+                    .foregroundColor(.red)
+                    .font(.footnote)
+            }
         }
+        .animation(.easeInOut(duration: 0.3), value: viewModel.feeAmount)
+        
     }
-
+    
     @ViewBuilder
     private func quickAmounts() -> some View {
         let quickAmounts = [1_000, 50_000, 100_000, 200_000]
@@ -134,7 +146,7 @@ public struct TransferView: View {
             .padding(.horizontal)
         }
     }
-
+    
     @ViewBuilder
     private func continueButton() -> some View {
         Button(action: viewModel.performTransfer) {
@@ -149,5 +161,3 @@ public struct TransferView: View {
         .opacity(viewModel.isAmountValid ? 1 : 0.5)
     }
 }
-
-
