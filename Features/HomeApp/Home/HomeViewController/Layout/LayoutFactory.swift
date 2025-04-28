@@ -7,6 +7,7 @@
 
 import UIKit
 import Core
+import SharedUI
 
 enum LayoutFactory {
     
@@ -29,7 +30,7 @@ enum LayoutFactory {
 
     static func paymeGoLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0 / 3.0),
+            widthDimension: .fractionalWidth(1.0 / 4.0),
             heightDimension: .estimated(120)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -40,10 +41,37 @@ enum LayoutFactory {
             heightDimension: .absolute(160)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 32, bottom: 0, trailing: 32)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 0, trailing: 16)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
+        return section
+    }
+    
+    static func payShareIntroLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(100)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 36, leading: 8, bottom: 16, trailing: 8)
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+
+        let backgroundDecoration = NSCollectionLayoutDecorationItem.background(
+            elementKind: BackgrounViewWhiteIsCornerRadiusExsistToTop.reuseIdentifier
+        )
+        backgroundDecoration.contentInsets = .zero
+        section.decorationItems = [backgroundDecoration]
+
         return section
     }
 
@@ -60,13 +88,13 @@ enum LayoutFactory {
             heightDimension: .absolute(100)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 8, bottom: 16, trailing: 8)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 26, leading: 8, bottom: 16, trailing: 8)
 
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
 
         let backgroundDecoration = NSCollectionLayoutDecorationItem.background(
-            elementKind: BackgrounViewWhiteIsCornerRadiusExsistToTop.reuseIdentifier
+            elementKind: BackgrounViewWhite.reuseIdentifier
         )
         backgroundDecoration.contentInsets = .zero
         section.decorationItems = [backgroundDecoration]

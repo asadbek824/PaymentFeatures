@@ -10,6 +10,7 @@ import UIKit
 enum HomeSectionItem {
     case balance(BalanceViewModel)
     case paymeGo([PaymeGoItemViewModel])
+    case payShareIntro(PayShareIntroViewModel)
     case banner(BannerViewModel)
     case finicalServices([FinicalServicesViewModel])
     case popular([PopularViewModel])

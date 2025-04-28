@@ -6,27 +6,25 @@
 //
 
 import Foundation
-
-protocol HomeAssemblyProtocol {  }
+import NavigationCoordinator
 
 public final class HomeAssemblyImpl: AnyObject {
     
-    public static func assemble() -> HomeViewController {
+    public static func assemble(cordinator: AppNavigationCoordinator) -> HomeViewController {
         
-        let router = HomeRouter()
+        let router = HomeRouter(navigationCoordinator: cordinator)
         let presenter = HomePresenter()
         let worker = HomeWorker()
         let interactor = HomeInteractor(presenter: presenter, worker: worker)
         
-        let viewController = HomeViewController(interactor: interactor, router: router)
+        let viewController = HomeViewController(
+            interactor: interactor,
+            router: router
+        )
         
         presenter.view = viewController
         router.viewController = viewController
         
         return viewController
     }
-}
-
-extension HomeAssemblyImpl: HomeAssemblyProtocol {
-    
 }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NetworkManager
 import Core
 
 protocol HomeWorkeringProtocol {
@@ -14,6 +13,7 @@ protocol HomeWorkeringProtocol {
     func fetchUserBalanceAndExpenses() async throws -> [UserBalanceAndExpensesModel]
     func fetchBanners() async throws -> [BannerModel]
     func fetchPopularBanners() async throws -> [BannerModel]
+    func featchSenderModel() async throws -> SenderModel
 }
 
 final class HomeWorker {
@@ -34,7 +34,7 @@ extension HomeWorker: HomeWorkeringProtocol {
         //            decode: UserModel.self,
         //            method: .get
         //        )
-        return UserModel(id: 1, fullName: "Asadbek Yoldoshev")
+        return UserModel(id: 1, fullName: "Asadbek Yoldoshev" )
     }
     
     func fetchUserBalanceAndExpenses() async throws -> [UserBalanceAndExpensesModel] {
@@ -47,41 +47,7 @@ extension HomeWorker: HomeWorkeringProtocol {
         //            body: body
         //        )
         
-        return [
-            UserBalanceAndExpensesModel(
-                cartId:
-                    UserCarts(
-                        cartId: 1,
-                        balance: 820360.48,
-                        expenses: 1200210.24,
-                        cartNumber: "8600060905809696",
-                        cartName: "Xalq Bank",
-                        currency: "сум"
-                    )
-            ),
-            UserBalanceAndExpensesModel(
-                cartId:
-                    UserCarts(
-                        cartId: 2,
-                        balance: 1792.76,
-                        expenses: 200210.24,
-                        cartNumber: "8600060905809999",
-                        cartName: "Asadbek Yo'ldoshev",
-                        currency: "сум"
-                    )
-            ),
-            UserBalanceAndExpensesModel(
-                cartId:
-                    UserCarts(
-                        cartId: 3,
-                        balance: 578.75,
-                        expenses: 100210.24,
-                        cartNumber: "8600060905807777",
-                        cartName: "Asadbek Yo'ldoshev",
-                        currency: "сум"
-                    )
-            ),
-        ]
+        return MockData.cards.map { UserBalanceAndExpensesModel(cartId: $0) }
     }
     
     func fetchBanners() async throws -> [BannerModel] {
@@ -104,11 +70,11 @@ extension HomeWorker: HomeWorkeringProtocol {
     }
     
     func fetchPopularBanners() async throws -> [BannerModel] {
-//        return try await NetworkService.shared.request(
-//            url: "",
-//            decode: [BannerModel].self,
-//            method: .get
-//        )
+        //        return try await NetworkService.shared.request(
+        //            url: "",
+        //            decode: [BannerModel].self,
+        //            method: .get
+        //        )
         return [
             BannerModel(
                 id: 1,
@@ -129,5 +95,26 @@ extension HomeWorker: HomeWorkeringProtocol {
                 )
             )
         ]
+    }
+    
+    func featchSenderModel() async throws -> SenderModel {
+        let user = try await fetchUser()
+        let balanceModels = try await fetchUserBalanceAndExpenses()
+        
+        let senderCards = balanceModels.map { $0.cartId }
+        
+        guard let selectedCard = senderCards.first else {
+            throw NSError(domain: "NoCardsFound", code: -1, userInfo: [NSLocalizedDescriptionKey: "У пользователя нет карт"])
+        }
+        
+        let model = SenderModel(
+            user: user,
+            senderCards: senderCards,
+            selectedCard: selectedCard
+        )
+        
+        SenderModelCacheImpl.shared.save(sender: model)
+        
+        return model
     }
 }

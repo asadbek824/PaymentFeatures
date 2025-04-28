@@ -5,16 +5,18 @@
 //  Created by Asadbek Yoldoshev on 4/3/25.
 //
 
-import SwiftUI
 import Core
+import NavigationCoordinator
+import SwiftUI
 
 public struct PaymentsView: View {
     
-    @State private var text: String = ""
     @FocusState private var isTextFocused: Bool
-    @State private var hasReceivers: Bool = false
-        
-    public init() { }
+    @StateObject var vm: PaymentsViewViewModel
+    
+    public init(coordinator: AppNavigationCoordinator) {
+        _vm = StateObject(wrappedValue: PaymentsViewViewModel(coordinator: coordinator))
+    }
     
     public var body: some View {
         VStack(spacing: 50) {
@@ -29,6 +31,7 @@ public struct PaymentsView: View {
         .background(.secondarySystemBackground)
         .hideKeyboardWhenTappedAround()
         .toolbar(content: Toolbar)
+        .onAppear(perform: vm.onAppear)
     }
     
     @ViewBuilder
@@ -49,7 +52,7 @@ public struct PaymentsView: View {
                     Image(systemName: "rectangle.fill.on.rectangle.fill")
                         .foregroundStyle(Color(UIColor.lightGray))
                     
-                    TextField("Номер карты или телефона", text: $text)
+                    TextField("Номер карты или телефона", text: $vm.text)
                         .focused($isTextFocused)
                         .keyboardType(.numberPad)
                     
@@ -67,7 +70,7 @@ public struct PaymentsView: View {
     private func Receivers() -> some View {
         VStack(alignment: .leading) {
             VStack {
-                if !hasReceivers {
+                if !vm.hasReceivers {
                     Button {
                         //
                     } label: {
@@ -84,15 +87,11 @@ public struct PaymentsView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                } else {
-                    ScrollView(.horizontal) {
-                        
-                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 100)
             
-            NavigationLink {
+            Button {
                 //
             } label: {
                 Text("Все получатели")
@@ -108,8 +107,8 @@ public struct PaymentsView: View {
     private func BottomButtons() -> some View {
         VStack(spacing: 16) {
             VStack(spacing: 0) {
-                NavigationLink {
-                    
+                Button {
+                    //
                 } label: {
                     CustomButton(
                         image: "phone",
@@ -122,8 +121,8 @@ public struct PaymentsView: View {
                 Divider()
                     .padding(.leading, 50)
                 
-                NavigationLink {
-                    
+                Button {
+                    //
                 } label: {
                     CustomButton(
                         image: "creditcard",
@@ -135,8 +134,8 @@ public struct PaymentsView: View {
                 Divider()
                     .padding(.leading, 50)
                 
-                NavigationLink {
-                    PayShareView()
+                Button {
+                    vm.navigateToPayShare()
                 } label: {
                     CustomButton(
                         image: "target",
@@ -149,7 +148,7 @@ public struct PaymentsView: View {
             .clipShape(.rect(cornerRadius: 16))
             
             Button {
-                
+                //
             } label: {
                 CustomButton(
                     image: "rectangle.portrait.on.rectangle.portrait.angled",
@@ -191,11 +190,5 @@ public struct PaymentsView: View {
                     .clipShape(.circle)
             }
         }
-    }
-}
-
-#Preview {
-    NavigationView {
-        PaymentsView()
     }
 }

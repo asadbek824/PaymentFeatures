@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "payShareLogo.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

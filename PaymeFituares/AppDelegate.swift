@@ -5,67 +5,73 @@
 //  Created by Asadbek Yoldoshev on 4/3/25.
 //
 
+import Core
 import UIKit
 import SwiftUI
-import Core
-import Home
-import Payment
-import Services
+import NavigationCoordinator
+import WidgetKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     
-    private let tabBarItemsData = [
-        TabBarItemData(
-            image: "house.fill",
-            title: "главная",
-            type: .uikit(HomeAssemblyImpl.assemble())
-        ),
-        TabBarItemData(
-            image: "arrow.left.arrow.right",
-            title: "перевод",
-            type: .swiftui(AnyView(PaymentsView()))
-        ),
-        TabBarItemData(
-            image: "square.grid.2x2",
-            title: "сервисы",
-            type: .swiftui(AnyView(ServicesView()))
-        )
-    ]
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        let tabBarVC = UITabBarController()
-        tabBarVC.viewControllers = createTabBarItems(tabBarItems: tabBarItemsData)
-        tabBarVC.selectedIndex = 0
-        tabBarVC.tabBar.backgroundColor = .white
-        tabBarVC.tabBar.tintColor = .appColor.primary
+    private lazy var factory: DefaultNavigationFactory = {
+        DefaultNavigationFactory()
+    }()
+    
+    private lazy var navigationCoordinator: AppNavigationCoordinator = {
+        let coordinator = AppNavigationCoordinator(factory: factory)
+        factory.coordinator = coordinator
+        return coordinator
+    }()
+    
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = tabBarVC
+        window?.rootViewController = TabBarController(coordinator: navigationCoordinator)
         window?.makeKeyAndVisible()
         
         return true
     }
-}
-
-extension AppDelegate {
     
-    private func createTabBarItems(tabBarItems: [TabBarItemData]) -> [UIViewController] {
-        var tabBars: [UIViewController] = []
-        
-        for item in tabBarItems {
-            let viewController = item.type.viewController
-            let navVC = UINavigationController(rootViewController: viewController)
-            
-            navVC.tabBarItem.title = item.title
-            navVC.tabBarItem.image = UIImage(systemName: item.image)
-            
-            tabBars.append(navVC)
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        handleDeepLink(url: url)
+    }
+    
+    private func handleDeepLink(url: URL) -> Bool {
+        guard url.scheme == "paymeFeature2", url.host == "pay-share" else {
+            return false
         }
         
-        return tabBars
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            if let nav = UIApplication.shared.topNavController(),
+               let model = SenderModelCacheImpl.shared.load() {
+                self.navigationCoordinator.navigate(
+                    to: .payShare(senderModel: model, source: .homeTab),
+                    from: nav
+                )
+            }
+        }
+        return true
+    }
+}
+
+// MARK: - UNUserNotificationCenterDelegate
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    public func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .sound])
     }
 }

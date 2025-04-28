@@ -5,157 +5,110 @@
 //  Created by Akbarshah Jumanazarov on 4/4/25.
 //
 
-import Core
 import SwiftUI
+import DesignSystem
+import SharedUI
+import Core
+import NavigationCoordinator
 
-struct PayShareView: View {
+public struct PayShareView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var vm = PayShareViewModel()
+    @StateObject private var vm: PayShareViewModel
     
-    var body: some View {
-        VStack {
-            GeometryReader {
-                let size = $0.size
-                
-                ZStack {
-                    RadarView()
-                    RadarTargetView(title: "Me")
-                }
-                .frame(width: size.width, height: size.height)
-            }
-            .overlay(alignment: .top) {
+    public init(
+        senderModel: SenderModel,
+        source: NavigationSource,
+        navigationCoordinator: AppNavigationCoordinator
+    ) {
+        _vm = StateObject(
+            wrappedValue: PayShareViewModel(
+                senderModel: senderModel,
+                source: source,
+                navigationCoordinator: navigationCoordinator
+            )
+        )
+    }
+    
+    public var body: some View {
+        ZStack {
+            RadarView()
+            
+            Image(uiImage: AssetsKitDummy.Image.payshare)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: .screenWidth / 4, maxHeight: .screenWidth / 4)
+                .clipShape(.circle)
+        }
+        .overlay(alignment: .top) {
+            VStack {
+                InfoPane()
                 DiscoveredTargetsView()
-                    .id(vm.multipeerService?.discoveredPeers.count)
+                    .id(vm.discoveredPeers.count)
             }
         }
         .backButton {
+            vm.stop()
             dismiss()
         }
         .fillSuperview()
-        .navigationTitle("Pay Share")
+        .navigationTitle("PayShare")
         .navigationBarTitleDisplayMode(.inline)
+        .frame(maxWidth: .screenWidth)
         .background(.secondarySystemBackground)
-        .onDisappear {
-            vm.stopSearching()
-        }
-        .sheet(isPresented: $vm.showSheet) {
-            vm.disconnect()
-        } content: {
-            PayShareSheet(vm: vm)
-                .presentationDetents([.medium])
-        }
-        .alert(item: $vm.receivedMessage) { message in
-            Alert(
-                title: Text("Received \(message.text) from \(message.sender)"),
-                dismissButton: .cancel(Text("OK"))
-            )
+        .animation(.bouncy, value: vm.discoveredPeers)
+        .onAppear(perform: vm.start)
+        .overlay(alignment: .bottom, content: CardSelectView)
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("TRANSFER"))) { notification in
+            if let amount = notification.userInfo?["amount"] as? String {
+                vm.sendMessage(amount)
+            }
         }
     }
     
     @ViewBuilder
     private func DiscoveredTargetsView() -> some View {
-        if let peers = vm.multipeerService?.discoveredPeers, peers.count > 0 {
+        if vm.discoveredPeers.count > 0 {
             HStack(spacing: 16) {
-                ForEach(peers) { peer in
+                ForEach(vm.discoveredPeers) { peer in
                     RadarTargetView(title: peer.name)
                         .onTapGesture {
-                            vm.connect(to: peer)
+                            vm.connectToPeer(peer)
                         }
+                        .transition(.scale)
+                        .shadow(radius: 5)
                 }
             }
             .padding()
-            .padding(.top, .screenWidth / 4)
             .frame(maxWidth: .infinity)
         }
     }
-}
 
-struct PayShareSheet: View {
     
-    @Environment(\.dismiss) private var dismiss
-    @State private var amount = ""
-    @ObservedObject var vm: PayShareViewModel
-    
-    var body: some View {
-        NavigationView {
-            VStack(spacing: 12) {
-                VStack {
-                    Text("Получатель:")
-                        .padding(.leading)
-                        .font(.caption2)
-                        .foregroundStyle(.secondaryLabel)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    HStack(spacing: 16) {
-                        Image(systemName: "person")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                            .frame(width: 60, height: 60)
-                            .foregroundStyle(.secondaryLabel)
-                            .background(.secondarySystemBackground)
-                            .clipShape(.circle)
-                        
-                        Text(vm.connectedPeer?.name ?? "Неизвестный")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(.systemBackground)
-                    .clipShape(.rect(cornerRadius: 12))
-                }
-                
-                HStack {
-                    TextField("Введите сумму", text: $amount)
-                        .keyboardType(.numberPad)
-                    
-                    Image(systemName: "creditcard")
-                }
-                .padding()
-                .background(.systemBackground)
-                .clipShape(.rect(cornerRadius: 12))
-                
-                Spacer()
-            }
-            .padding()
-            .navigationTitle("Детали трансфера")
-            .navigationBarTitleDisplayMode(.inline)
-            .fillSuperview()
-            .background(.secondarySystemBackground)
-            .safeAreaInset(edge: .bottom, content: BottomInset)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Отмена") {
-                        vm.disconnect()
-                        dismiss()
-                    }
-                }
+    @ViewBuilder
+    private func CardSelectView() -> some View {
+        TabView(selection: $vm.selectedCard) {
+            ForEach(vm.senderModel?.senderCards ?? [], id: \.cartId) { card in
+                CardItemView(card: card)
+                    .tag(card)
             }
         }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+        .frame(height: 145)
     }
     
     @ViewBuilder
-    func BottomInset() -> some View {
-        Button {
-            if vm.sendMessage(amount) == true {
-                dismiss()
-            }
-        } label: {
-            Text("Отправить")
-                .padding()
-                .frame(maxWidth: .infinity)
-                .foregroundStyle(.white)
-                .fontWeight(.medium)
-                .background(.appPrimary)
-                .clipShape(.rect(cornerRadius: 12))
+    private func InfoPane() -> some View {
+        HStack {
+            Text("Убедитесь, что у другого пользователя также открыт экран Pay Share.")
+                .font(.callout)
+                .foregroundStyle(.secondaryLabel)
+                .multilineTextAlignment(.center)
         }
         .padding()
-    }
-}
-
-#Preview {
-    NavigationView {
-        PayShareView()
+        .frame(maxWidth: .infinity)
+        .setStroke(color: .secondaryLabel, cornerRadius: 12)
+        .padding()
     }
 }

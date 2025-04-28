@@ -8,101 +8,116 @@
 import Core
 import Combine
 import Foundation
+import NavigationCoordinator
+import UIKit
 
 class PayShareViewModel: ObservableObject {
     
+    let source: NavigationSource
+    let navigationCoordinator: AppNavigationCoordinator
+    
     @Published var showSheet: Bool = false
-    @Published var connectedPeer: PeerDevice?
-    @Published private(set) var multipeerService: MultipeerService?
-    @Published var receivedMessage: PeerMessage?
+    @Published var senderModel: SenderModel? = nil
+    @Published var receiverModel: ReceiverModel? = nil
+    @Published var selectedCard: UserCard? = nil
     
+    private let multipeerService = MultipeerService.shared
+    @Published var discoveredPeers: [PeerDevice] = []
+    @Published var connectedPeers: [PeerDevice] = []
+    @Published var connectionStatus: ConnectionStatus = .notConnected
     private var cancellables = Set<AnyCancellable>()
+    private let notificationService = NotificationService()
     
-    init() {
-        print("Initializing and starting peer discovery...")
-        self.multipeerService = MultipeerService()
-        setupSubscriptions()
-        multipeerService?.start()
+    init(
+        senderModel: SenderModel,
+        source: NavigationSource,
+        navigationCoordinator: AppNavigationCoordinator
+    ) {
+        self.senderModel = senderModel
+        self.selectedCard = senderModel.selectedCard
+        self.source = source
+        self.navigationCoordinator = navigationCoordinator
+        setupObservers()
+        featchReceiverData()
     }
     
-    private func setupSubscriptions() {
-        multipeerService?.$discoveredPeers
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
-            .store(in: &cancellables)
-            
-        multipeerService?.$connectedPeers
-            .receive(on: DispatchQueue.main)
-            .map { $0.first }
-            .sink { [weak self] peer in
-                self?.connectedPeer = peer
-            }
-            .store(in: &cancellables)
+    func goToTransfer() {
+        guard let nav = UIApplication.shared.topNavController(),
+              let sender = senderModel,
+              let receiver = receiverModel
+        else {
+            return
+        }
         
-        multipeerService?.$connectionStatus
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] status in
-                self?.handleConnectionStatus(status)
-            }
-            .store(in: &cancellables)
-        
-        multipeerService?.$messages
-             .receive(on: DispatchQueue.main)
-             .compactMap { messages -> [PeerMessage] in
-                 messages.filter { !$0.isFromSelf }
-             }
-             .filter { !$0.isEmpty }
-             .compactMap { $0.last }
-             .sink { [weak self] message in
-                 self?.receivedMessage = message
-                 self?.multipeerService?.clearMessages()
-             }
-             .store(in: &cancellables)
+        navigationCoordinator.navigate(
+            to: .transfer(
+                receiverModel: receiver,
+                senderModel: sender,
+                source: source
+            ),
+            from: nav
+        )
     }
     
-    private func handleConnectionStatus(_ status: ConnectionStatus) {
-        switch status {
-        case .notConnected:
-            print("notConnected")
-        case .searching:
-            print("searching")
-        case .connecting(let to):
-            print("connecting")
-        case .connected(let to):
-            print("connected")
-        case .failed(let error):
-            print("failed")
-        case .stopped:
-            print("stopped")
-        @unknown default:
-            print("unknown default")
+    func featchReceiverData() {
+        receiverModel = ReceiverModel(
+            user: UserModel(id: 1, fullName: "Akbar Jumanazarov"),
+            receiverCarts: MockData.cards,
+            selectedCart: MockData.card
+        )
+    }
+    
+    //MARK: - Multipeer Service
+    private func setupObservers() {
+        multipeerService.onPeerDiscovered = { [weak self] peer in
+            self?.discoveredPeers.append(peer)
+        }
+        
+        multipeerService.onPeerLost = { [weak self] peerId in
+            self?.discoveredPeers.removeAll(where: { $0.id == peerId })
+        }
+        
+        multipeerService.onConnectionStatusChanged = { [weak self] status in
+            self?.connectionStatus = status
+        }
+        
+        multipeerService.onPeersUpdated = { [weak self] connected in
+            self?.connectedPeers = connected
+        }
+        
+        multipeerService.onMessageReceived = { [weak self] message in
+            if !message.isFromSelf {
+                self?.notificationService.scheduleNotification(
+                    title: "Входящий перевод",
+                    body: "Баланс пополнен на \(message.text) сумов",
+                    at: Date().addingTimeInterval(2)
+                )
+            }
         }
     }
     
-    func stopSearching() {
-        print("Stopping peer discovery...")
-        multipeerService?.stop()
+    func start() {
+        multipeerService.start()
     }
     
-    func connect(to peer: PeerDevice) {
-        print("Attempting to connect to \(peer.name)")
-        multipeerService?.connectToPeer(peer)
-        showSheet = true
+    func stop() {
+        multipeerService.stop()
+    }
+    
+    func connectToPeer(_ peer: PeerDevice) {
+        multipeerService.connectToPeer(peer)
+        goToTransfer()
     }
     
     func disconnect() {
-        print("Disconnecting...")
-        multipeerService?.disconnect()
+        multipeerService.disconnect()
     }
     
-    func sendMessage(_ text: String) -> Bool {
-        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return false
-        }
-        
-        print("Sending message: \(text)")
-        return multipeerService?.sendMessage(text) == true ? true : false
+    func sendMessage(_ text: String) {
+        multipeerService.sendMessage(text)
+    }
+    
+    func clearMessages() {
+        multipeerService.clearMessages()
     }
 }
