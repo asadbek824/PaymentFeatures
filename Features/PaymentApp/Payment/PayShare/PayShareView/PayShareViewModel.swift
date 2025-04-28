@@ -28,7 +28,11 @@ class PayShareViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let notificationService = NotificationService()
     
-    init(senderModel: SenderModel, source: NavigationSource, navigationCoordinator: AppNavigationCoordinator) {
+    init(
+        senderModel: SenderModel,
+        source: NavigationSource,
+        navigationCoordinator: AppNavigationCoordinator
+    ) {
         self.senderModel = senderModel
         self.selectedCard = senderModel.selectedCard
         self.source = source
