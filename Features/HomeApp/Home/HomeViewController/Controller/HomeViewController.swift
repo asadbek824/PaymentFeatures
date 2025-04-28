@@ -27,7 +27,10 @@ public final class HomeViewController: UIViewController {
     private let navLeftButton = UIButton()
     private let navRightButton1 = UIButton()
     private let navRightButton2 = UIButton()
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: makeLayout()
+    )
     
     private var sections: [HomeSectionItem] = []
     
@@ -292,7 +295,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             switch sections[indexPath.section] {
             case .finicalServices(_):
@@ -311,7 +318,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         return UICollectionReusableView()
     }
     
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         let section = sections[indexPath.section]
         
         switch section {
