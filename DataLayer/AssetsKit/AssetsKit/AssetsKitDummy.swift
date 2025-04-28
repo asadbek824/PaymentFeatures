@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 public final class AssetsKitDummy {
+    
     public enum Image {
         public static var paymego: UIImage {
             return UIImage(named: "paymego", in: .assetsKit, compatibleWith: nil)!

@@ -5,12 +5,8 @@
 //  Created by Sukhrob on 17/04/25.
 //
 
+import Core
 import SwiftUI
-
-public enum PeopleType {
-    case receiver
-    case sender
-}
 
 public struct CardItemView: View {
     public let card: UserCard
@@ -55,15 +51,3 @@ public struct CardItemView: View {
         .padding(.bottom, 40)
     }
 }
-
-//#Preview {
-//    let model = UserCard(
-//        cartId: 1,
-//        balance: 820360.48,
-//        expenses: 1200210.24,
-//        cartNumber: "8600060905809696",
-//        cartName: "Xalq Bank",
-//        currency: "сум", cardImage: "https://raw.githubusercontent.com/00020647/imagesForPayShare/refs/heads/main/cardBlue.jpg"
-//    )
-//    CardItemView(card: model)
-//}
