@@ -5,70 +5,68 @@
 //  Created by Sukhrob on 18/04/25.
 //
 
-import SwiftUI
 import Core
+import SwiftUI
 
 public struct ReceiverCardPickerSheet: View {
-    @EnvironmentObject var vm: TransferViewModel
+    
+    @EnvironmentObject private var vm: TransferViewModel
     @Environment(\.dismiss) private var dismiss
-
     
     public var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach(vm.receiverModel?.receiverCarts ?? []) { card in
-                    let iconName: String = {
-                        switch card.cartName.lowercased() {
-                        case "tbc": return "TBC"
-                        case "humo": return "Humo"
-                        default: return "Uzcard"
-                        }
-                    }()
-                    
-                    let cardSuffix = String(card.cartNumber.suffix(4))
-                    let userName = vm.receiverModel?.user.fullName.uppercased() ?? ""
-
-                    let isSelected = vm.receiverModel?.selectedCart == card
-
-                    Button {
-                        withAnimation {
-                            vm.receiverModel?.selectedCart = card
-                            dismiss()
-                        }
-                    } label: {
-                        HStack {
-                            Image(iconName, bundle: .assetsKit)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 60, height: 38)
-
-                            VStack(alignment: .leading) {
-                                Text("**** \(cardSuffix)")
-                                    .font(.headline)
-                                    .foregroundColor(.primary)
-                                Text(userName)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.horizontal)
-
-                            Spacer()
-                            if isSelected {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.teal)
-                            }
-                            Image(systemName: "chevron.right")
-                                .foregroundStyle(.gray)
-                        }
-                        .padding()
+                VStack(spacing: 0) {
+                    ForEach(vm.receiverModel?.receiverCarts ?? []) { card in
+                        CardButton(for: card)
+                        
+                        Divider()
+                            .background(Color.gray.opacity(0.1))
                     }
-
-                    Divider()
-                        .frame(height: 1)
-                        .background(Color.gray.opacity(0.1))
                 }
             }
         }
+    }
+    
+    @ViewBuilder
+    private func CardButton(for card: UserCard) -> some View {
+        let isSelected = vm.receiverModel?.selectedCart == card
+        let iconName = vm.getIconName(for: card.cartName)
+        let cardSuffix = card.cartNumber.suffix(4)
+        let userName = vm.receiverModel?.user.fullName.uppercased() ?? ""
         
+        Button {
+            withAnimation {
+                vm.receiverModel?.selectedCart = card
+                dismiss()
+            }
+        } label: {
+            HStack(spacing: 16) {
+                Image(iconName, bundle: .assetsKit)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 60, height: 38)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("**** \(cardSuffix)")
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    Text(userName)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                if isSelected {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.teal)
+                }
+
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.gray)
+            }
+            .padding()
+        }
     }
 }

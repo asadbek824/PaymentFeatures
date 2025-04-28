@@ -5,8 +5,9 @@
 //  Created by Asadbek Yoldoshev on 4/3/25.
 //
 
-import UIKit
 import Core
+import UIKit
+import SharedUI
 
 protocol HomeViewDisplayProtocol: AnyObject {
     func displayUserInitials(_ initials: String)

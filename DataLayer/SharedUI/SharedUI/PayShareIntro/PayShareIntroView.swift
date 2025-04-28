@@ -9,28 +9,14 @@ import Core
 import DesignSystem
 import SwiftUI
 
-struct PayShareIntoParagraphContent: Identifiable {
-    let id = UUID()
-    let title: String
-    let icon: UIImage
-}
-
 public struct PayShareIntroView: View {
     
-    @State private var selectedTabIndex: Int = 0
-    
-    private let content: [PayShareIntoParagraphContent] = [
-        .init(title: "Быстрые и Удобные Переводы", icon: AssetsKitDummy.Image.Idea),
-        .init(title: "Переводы без номера карты", icon: AssetsKitDummy.Image.Team),
-        .init(title: "Безопасный способ перевода", icon: AssetsKitDummy.Image.lock)
-    ]
-    
-    public init() {  }
+    public init() { }
     
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                Logo()
+                logo
                 
                 Text("Pay Share - это:")
                     .font(.title)
@@ -38,8 +24,8 @@ public struct PayShareIntroView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 VStack(spacing: 24) {
-                    ForEach(content) { content in
-                        Paragraph(title: content.title, icon: content.icon)
+                    ForEach(PayShareIntroConstants.content) { content in
+                        paragraph(title: content.title, icon: content.icon)
                     }
                 }
             }
@@ -51,23 +37,21 @@ public struct PayShareIntroView: View {
         .navigationBarTitleDisplayMode(.inline)
         .fillSuperview()
         .background(.secondarySystemBackground)
-        .safeAreaInset(edge: .bottom, content: BottomInset)
+        .safeAreaInset(edge: .bottom, content: BottomButtons)
     }
-    
+}
+
+// MARK: - ViewBuilders
+private extension PayShareIntroView {
     @ViewBuilder
-    private func Logo() -> some View {
+    private var logo: some View {
         ZStack {
-            Circle()
-                .fill(.appPrimary.opacity(0.2))
-                .frame(maxWidth: .screenWidth / 3 + 90, maxHeight: .screenWidth / 3 + 90)
-            
-            Circle()
-                .fill(.appPrimary.opacity(0.4))
-                .frame(maxWidth: .screenWidth / 3 + 60, maxHeight: .screenWidth / 3 + 60)
-            
-            Circle()
-                .fill(.appPrimary.opacity(0.6))
-            .frame(maxWidth: .screenWidth / 3 + 30, maxHeight: .screenWidth / 3 + 30)
+            ForEach([90, 60, 30, 0], id: \.self) { offset in
+                Circle()
+                    .fill(.appPrimary.opacity(offset == 0 ? 1 : 0.2 + Double(90 - offset) / 300))
+                    .frame(maxWidth: .screenWidth / 3 + CGFloat(offset),
+                          maxHeight: .screenWidth / 3 + CGFloat(offset))
+            }
             
             Image(uiImage: AssetsKitDummy.Image.payshare)
                 .resizable()
@@ -79,67 +63,71 @@ public struct PayShareIntroView: View {
     }
     
     @ViewBuilder
-    private func Paragraph(title: String, icon: UIImage) -> some View {
+    private func paragraph(title: String, icon: UIImage) -> some View {
         HStack(spacing: 5) {
             Image(uiImage: icon)
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: 40, maxHeight: 40)
-
+            
             Text(title)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading)
                 .font(.body)
                 .fontWeight(.semibold)
-            
         }
     }
     
     @ViewBuilder
-    private func TabContent(title: String, image: UIImage) -> some View {
+    private func BottomButtons() -> some View {
         VStack {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                
-            Text(title)
-        }
-    }
-    
-    @ViewBuilder
-    private func BottomInset() -> some View {
-        VStack {
-            Button {
-                //
-            } label: {
-                Text("Попробовать")
-                    .padding()
-                    .fontWeight(.medium)
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(.white)
-                    .background(.appPrimary)
-                    .clipShape(.rect(cornerRadius: 12))
-            }
-            
-            Button {
-                //
-            } label: {
-                Text("Пропустить")
-                    .padding()
-                    .fontWeight(.medium)
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(.appPrimary)
-                    .background(.appPrimary.opacity(0.15))
-                    .clipShape(.rect(cornerRadius: 12))
-            }
+            actionButton(title: "Попробовать", style: .primary)
+            actionButton(title: "Пропустить", style: .secondary)
         }
         .padding([.horizontal, .bottom])
+    }
+    
+    @ViewBuilder
+    private func actionButton(title: String, style: ButtonStyle) -> some View {
+        Button {
+            // Action handled by coordinator
+        } label: {
+            Text(title)
+                .padding()
+                .fontWeight(.medium)
+                .frame(maxWidth: .infinity)
+                .foregroundStyle(style.foreground)
+                .background(style.background)
+                .clipShape(.rect(cornerRadius: 12))
+        }
+    }
+}
+
+// MARK: - Button Style
+private extension PayShareIntroView {
+    enum ButtonStyle {
+        case primary
+        case secondary
+        
+        var background: Color {
+            switch self {
+            case .primary: return .appPrimary
+            case .secondary: return .appPrimary.opacity(0.15)
+            }
+        }
+        
+        var foreground: Color {
+            switch self {
+            case .primary: return .white
+            case .secondary: return .appPrimary
+            }
+        }
     }
 }
 
 #Preview {
     VStack {
-        
+        //
     }
     .padding()
     .fillSuperview()

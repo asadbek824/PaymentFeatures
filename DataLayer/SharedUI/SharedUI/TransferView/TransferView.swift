@@ -5,16 +5,15 @@
 //  Created by Sukhrob on 10/04/25.
 //
 
-import SwiftUI
 import Core
 import NavigationCoordinator
+import SwiftUI
 
 public struct TransferView: View {
     
     @StateObject private var viewModel: TransferViewModel
     @FocusState private var isAmountFocused: Bool
     @Environment(\.dismiss) private var dismiss
-    @State private var showCardSheet = false
     
     public init(
         receiverModel: ReceiverModel?,
@@ -34,35 +33,32 @@ public struct TransferView: View {
     
     public var body: some View {
         VStack(spacing: 24) {
-            receiverCard()
-                .padding()
-            amountInput()
-                .padding(.horizontal)
-            quickAmounts()
+            ReceiverCard()
+            AmountInput()
+            QuickAmounts()
             Spacer()
-            continueButton()
-                .padding()
+            ContinueButton()
         }
         .navigationTitle("Перевод")
         .navigationBarTitleDisplayMode(.inline)
         .backButton { dismiss() }
-        .sheet(isPresented: $showCardSheet) {
+        .sheet(isPresented: $viewModel.showCardSheet) {
             ReceiverCardPickerSheet()
                 .environmentObject(viewModel)
-                .presentationDetents([.fraction(0.5), .large])
+                .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
     }
     
     @ViewBuilder
-    private func receiverCard() -> some View {
+    private func ReceiverCard() -> some View {
         if let receiver = viewModel.receiverModel {
             let card = receiver.selectedCart
             let last4 = card.cartNumber.suffix(4)
             let cardColor = SelectedCardColor(from: card.cartName)
             
             Button {
-                showCardSheet = true
+                viewModel.showCardSheet = true
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: 16)
@@ -89,12 +85,13 @@ public struct TransferView: View {
                 }
                 .frame(height: 100)
             }
-            .buttonStyle(.plain)
+            .padding()
+
         }
     }
     
     @ViewBuilder
-    private func amountInput() -> some View {
+    private func AmountInput() -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Сумма перевода")
                 .font(.subheadline)
@@ -103,16 +100,21 @@ public struct TransferView: View {
             TextField("от 1 000 до 15 000 000 сум", text: $viewModel.amount)
                 .keyboardType(.numberPad)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 10).stroke(Color.teal, lineWidth: 1))
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.teal, lineWidth: 1)
+                }
                 .focused($isAmountFocused)
                 .onChange(of: viewModel.amount) { newValue in
                     viewModel.formatAmountInput(newValue)
                 }
+            
             if let feeString = viewModel.feeAmount {
                 Text("Комиссия: \(feeString) сум")
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
+            
             if let message = viewModel.validationMessage{
                 Text(message)
                     .foregroundColor(.red)
@@ -120,20 +122,20 @@ public struct TransferView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.feeAmount)
-        
+        .padding(.horizontal)
     }
     
     @ViewBuilder
-    private func quickAmounts() -> some View {
+    private func QuickAmounts() -> some View {
         let quickAmounts = [1_000, 50_000, 100_000, 200_000]
         
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(quickAmounts, id: \.self) { amount in
-                    Button(action: {
+                    Button {
                         viewModel.amount = "\(amount.formattedWithSeparator)"
                         isAmountFocused = false
-                    }) {
+                    } label: {
                         Text(amount.formattedWithSeparator)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
@@ -148,7 +150,7 @@ public struct TransferView: View {
     }
     
     @ViewBuilder
-    private func continueButton() -> some View {
+    private func ContinueButton() -> some View {
         Button(action: viewModel.performTransfer) {
             Text("Продолжить")
                 .frame(maxWidth: .infinity)
@@ -159,5 +161,6 @@ public struct TransferView: View {
         }
         .disabled(!viewModel.isAmountValid)
         .opacity(viewModel.isAmountValid ? 1 : 0.5)
+        .padding()
     }
 }

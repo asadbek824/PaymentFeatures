@@ -8,8 +8,6 @@
 import Foundation
 import NavigationCoordinator
 
-protocol HomeAssemblyProtocol {  }
-
 public final class HomeAssemblyImpl: AnyObject {
     
     public static func assemble(cordinator: AppNavigationCoordinator) -> HomeViewController {
@@ -29,8 +27,4 @@ public final class HomeAssemblyImpl: AnyObject {
         
         return viewController
     }
-}
-
-extension HomeAssemblyImpl: HomeAssemblyProtocol {
-    
 }

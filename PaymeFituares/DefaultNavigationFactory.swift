@@ -29,6 +29,7 @@ public final class DefaultNavigationFactory: NavigationFactory {
             )
             vc.hidesBottomBarWhenPushed = true
             return vc
+            
         case .transfer(let receiverModel, let senderModel, let source):
             let vc = UIHostingController(
                 rootView: TransferView(
@@ -40,15 +41,20 @@ public final class DefaultNavigationFactory: NavigationFactory {
             )
             vc.hidesBottomBarWhenPushed = true
             return vc
+            
         case .receipt(let model, let source):
             let vc = UIHostingController(
                 rootView: ReceiptView(model: model, source: source)
             )
             return vc
+            
         case .payShareIntro:
             let vc = UIHostingController(rootView: PayShareIntroView())
             vc.hidesBottomBarWhenPushed = true
             return vc
+            
+        @unknown default:
+            fatalError("Unhandled route: \(route)")
         }
     }
 }

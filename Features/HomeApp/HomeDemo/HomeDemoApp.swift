@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct HomeApppApp: App {
+struct HomeAppApp: App {
     var body: some Scene {
         WindowGroup {
             HomeViewControllerRepresentable()
