@@ -46,12 +46,16 @@ public final class AppNavigationCoordinator {
     }
 
     public func dismissPresented(animated: Bool = true) {
-        UIApplication
-            .shared
-            .windows
-            .first?
-            .rootViewController?
-            .presentedViewController?
-            .dismiss(animated: animated)
+        guard
+            let scene = UIApplication.shared.connectedScenes
+                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+            let window = scene.windows.first,
+            let rootViewController = window.rootViewController,
+            let presentedViewController = rootViewController.presentedViewController
+        else {
+            return
+        }
+
+        presentedViewController.dismiss(animated: animated)
     }
 }
