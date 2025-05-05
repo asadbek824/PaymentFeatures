@@ -37,7 +37,7 @@ public class MultipeerService: NSObject {
     }
     
     public override init() {
-        print("MultipeerService: Initializing...")
+        Logger.log("MultipeerService: Initializing...")
         session = MCSession(peer: myPeerId, securityIdentity: nil, encryptionPreference: .none)
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerId, discoveryInfo: nil, serviceType: serviceType)
         browser = MCNearbyServiceBrowser(peer: myPeerId, serviceType: serviceType)
@@ -47,18 +47,18 @@ public class MultipeerService: NSObject {
         session.delegate = self
         advertiser.delegate = self
         browser.delegate = self
-        print("MultipeerService: Initialized with device name: \(myPeerId.displayName)")
+        Logger.log("MultipeerService: Initialized with device name: \(myPeerId.displayName)")
     }
     
     public func start() {
-        print("MultipeerService: Starting services...")
+        Logger.log("MultipeerService: Starting services...")
         stop()
         
         advertiser.startAdvertisingPeer()
-        print("MultipeerService: Started advertising")
+        Logger.log("MultipeerService: Started advertising")
         
         browser.startBrowsingForPeers()
-        print("MultipeerService: Started browsing")
+        Logger.log("MultipeerService: Started browsing")
         
         connectionStatus = .searching
     }
@@ -71,18 +71,18 @@ public class MultipeerService: NSObject {
         defaults?.set(names, forKey: "peerNames")
         defaults?.set(status, forKey: "connectionStatus")
         
-        print("💾 Сохранили peers: \(names)")
+        Logger.log("💾 Сохранили peers: \(names)")
     }
     
     public func stop() {
-        print("MultipeerService: Stopping services...")
+        Logger.log("MultipeerService: Stopping services...")
         advertiser.stopAdvertisingPeer()
         browser.stopBrowsingForPeers()
         session.disconnect()
         discoveredPeers.removeAll()
         connectedPeers.removeAll()
         connectionStatus = .stopped
-        print("MultipeerService: All services stopped")
+        Logger.log("MultipeerService: All services stopped")
     }
     
     public func connectToPeer(_ peer: PeerDevice) {
@@ -108,7 +108,7 @@ public class MultipeerService: NSObject {
         
         do {
             try session.send(data, toPeers: session.connectedPeers, with: .reliable)
-            print("📤 MultipeerService: Sending message: \(text)")
+            Logger.log("📤 MultipeerService: Sending message: \(text)")
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -116,7 +116,7 @@ public class MultipeerService: NSObject {
                 self.onMessageReceived?(PeerMessage(text: text, sender: self.myPeerId.displayName, isFromSelf: true))
             }
         } catch {
-            print("❌ MultipeerService: Error sending message: \(error.localizedDescription)")
+            Logger.log("❌ MultipeerService: Error sending message: \(error)")
         }
     }
     
@@ -138,12 +138,12 @@ public class MultipeerService: NSObject {
     }
     
     public func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
-        print("❌ MultipeerService: Failed to start browsing: \(error.localizedDescription)")
+        Logger.log("❌ MultipeerService: Failed to start browsing: \(error)")
         connectionStatus = .failed(error: "Failed to start browsing")
     }
     
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
-        print("❌ MultipeerService: Failed to start advertising: \(error.localizedDescription)")
+        Logger.log("❌ MultipeerService: Failed to start advertising: \(error)")
         connectionStatus = .failed(error: "Failed to start advertising")
     }
 }
@@ -153,16 +153,16 @@ extension MultipeerService: MCSessionDelegate {
         DispatchQueue.main.async {
             switch state {
             case .connected:
-                print("✅ MultipeerService: Connected to \(peerID.displayName)")
+                Logger.log("✅ MultipeerService: Connected to \(peerID.displayName)")
                 self.connectionStatus = .connected(to: peerID.displayName)
             case .connecting:
-                print("⏳ MultipeerService: Connecting to \(peerID.displayName)...")
+                Logger.log("⏳ MultipeerService: Connecting to \(peerID.displayName)...")
                 self.connectionStatus = .connecting(to: peerID.displayName)
             case .notConnected:
-                print("❌ MultipeerService: Disconnected from \(peerID.displayName)")
+                Logger.log("❌ MultipeerService: Disconnected from \(peerID.displayName)")
                 self.connectionStatus = .notConnected
             @unknown default:
-                print("⚠️ MultipeerService: Unknown state for \(peerID.displayName)")
+                Logger.log("⚠️ MultipeerService: Unknown state for \(peerID.displayName)")
                 self.connectionStatus = .failed(error: "Unknown connection state")
             }
             
@@ -174,7 +174,7 @@ extension MultipeerService: MCSessionDelegate {
         guard let text = String(data: data, encoding: .utf8) else { return }
         
         DispatchQueue.main.async { [weak self] in
-            print("📥 MultipeerService: Received message from \(peerID.displayName): \(text)")
+            Logger.log("📥 MultipeerService: Received message from \(peerID.displayName): \(text)")
             let message = PeerMessage(text: text, sender: peerID.displayName, isFromSelf: false)
             self?.messages.append(message)
             self?.onMessageReceived?(message)
@@ -191,14 +191,14 @@ extension MultipeerService: MCSessionDelegate {
 extension MultipeerService: MCNearbyServiceAdvertiserDelegate {
     
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        print("📨 MultipeerService: Received invitation from peer: \(peerID.displayName)")
+        Logger.log("📨 MultipeerService: Received invitation from peer: \(peerID.displayName)")
         invitationHandler(true, self.session)
     }
 }
 
 extension MultipeerService: MCNearbyServiceBrowserDelegate {
     public func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {
-        print("✨ MultipeerService: Found peer: \(peerID.displayName)")
+        Logger.log("✨ MultipeerService: Found peer: \(peerID.displayName)")
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
@@ -209,13 +209,13 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
                 let peer = PeerDevice(id: peerID, isConnected: false)
                 self.discoveredPeers.append(peer)
                 self.onPeerDiscovered?(peer)
-                print("📱 MultipeerService: Added new peer to discovered peers: \(peerID.displayName)")
+                Logger.log("📱 MultipeerService: Added new peer to discovered peers: \(peerID.displayName)")
             }
         }
     }
     
     public func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-        print("🔍 MultipeerService: Lost peer: \(peerID.displayName)")
+        Logger.log("🔍 MultipeerService: Lost peer: \(peerID.displayName)")
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -225,8 +225,10 @@ extension MultipeerService: MCNearbyServiceBrowserDelegate {
             
             if self.connectedPeers.isEmpty {
                 switch self.connectionStatus {
-                case .searching: break
-                default: self.connectionStatus = .notConnected
+                case .searching:
+                    break
+                default:
+                    self.connectionStatus = .notConnected
                 }
             }
         }

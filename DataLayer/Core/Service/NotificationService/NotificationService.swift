@@ -17,7 +17,7 @@ public final class NotificationService {
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
-                print("🛑 Notification permission error: \(error)")
+                Logger.log("🛑 Notification permission error: \(error)")
                 return
             }
         }
@@ -40,7 +40,7 @@ public final class NotificationService {
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
-                print("🛑 Failed to schedule notification: \(error)")
+                Logger.log("🛑 Failed to schedule notification: \(error)")
             }
         }
     }
