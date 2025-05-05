@@ -11,7 +11,6 @@ import SwiftUI
 @main
 struct PaymeShareWidgetBundle: WidgetBundle {
     var body: some Widget {
-        PeerWidget()
         PaymeLockScreenWidget()
     }
 }

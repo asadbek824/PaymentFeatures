@@ -8,10 +8,6 @@
 import Core
 import SwiftUI
 
-enum ReceiptType {
-    case sent, received
-}
-
 struct ReceiptView: View {
     
     var type: ReceiptType
@@ -60,7 +56,3 @@ struct ReceiptView: View {
         }
     }
 }
-
-//#Preview {
-//    ReceiptView(type: .sent, show: .constant(true))
-//}

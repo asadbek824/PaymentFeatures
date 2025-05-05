@@ -63,21 +63,21 @@ public struct ReceiptView: View {
     @ViewBuilder
     private func actionButtonsSection() -> some View {
         HStack(spacing: 0) {
-            actionButton(icon: "arrow.left", title: "В приложение") { navigateBackToSource() }
+            actionButton(icon: "arrow.left", title: "В приложение") { navigateBackToSource()
+            }
 
-            Spacer()
-
-            actionButton(icon: "doc.text", title: "Чек") {  }
-
-            Spacer()
-
-            actionButton(icon: "star", title: "Сохранить") {  }
+            actionButton(icon: "doc.text", title: "Чек") {}
+            actionButton(icon: "star", title: "Сохранить") {}
         }
         .padding(.horizontal)
         .padding(.bottom, 16)
     }
 
-    private func actionButton(icon: String, title: String, action: @escaping () -> Void) -> some View {
+    private func actionButton(
+        icon: String,
+        title: String,
+        action: @escaping () -> Void
+    ) -> some View {
         Button(action: action) {
             VStack(spacing: 6) {
                 Image(systemName: icon)
@@ -86,6 +86,7 @@ public struct ReceiptView: View {
                     .font(.footnote)
             }
             .foregroundColor(.gray)
+            .frame(maxWidth: .infinity)
         }
     }
 }
@@ -100,6 +101,8 @@ extension ReceiptView {
             tabBarController.selectedIndex = 0
         case .paymentTab:
             tabBarController.selectedIndex = 1
+        @unknown default:
+            fatalError("Unknown navigation source")
         }
 
         if let nav = tabBarController.selectedViewController as? UINavigationController {

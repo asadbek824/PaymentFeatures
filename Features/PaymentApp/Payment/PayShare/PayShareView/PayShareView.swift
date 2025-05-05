@@ -16,8 +16,18 @@ public struct PayShareView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm: PayShareViewModel
     
-    public init(senderModel: SenderModel, source: NavigationSource, navigationCoordinator: AppNavigationCoordinator) {
-        _vm = StateObject(wrappedValue: PayShareViewModel(senderModel: senderModel, source: source, navigationCoordinator: navigationCoordinator))
+    public init(
+        senderModel: SenderModel,
+        source: NavigationSource,
+        navigationCoordinator: AppNavigationCoordinator
+    ) {
+        _vm = StateObject(
+            wrappedValue: PayShareViewModel(
+                senderModel: senderModel,
+                source: source,
+                navigationCoordinator: navigationCoordinator
+            )
+        )
     }
     
     public var body: some View {

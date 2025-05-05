@@ -14,7 +14,7 @@ public final class NotificationService {
         requestAuthorization()
     }
 
-    func requestAuthorization() {
+    private func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
                 Logger.log("🛑 Notification permission error: \(error)")
