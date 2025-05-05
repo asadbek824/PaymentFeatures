@@ -5,6 +5,7 @@
 //  Created by Asadbek Yoldoshev on 4/3/25.
 //
 
+import Core
 import Foundation
 
 protocol HomeBusseinessProtocol {
@@ -38,7 +39,7 @@ extension HomeInteractor: HomeBusseinessProtocol {
             do {
                 try await presenter.payShareSenderModel(senderModel: senderModel)
             } catch {
-                print("Ошибка:", error)
+                Logger.log("Error presenting sender model: \(error)")
             }
         }
     }
@@ -58,7 +59,7 @@ extension HomeInteractor: HomeBusseinessProtocol {
                     popularBanners: popularBanners
                 )
             } catch {
-                print("Ошибка:", error)
+                Logger.log("Error loading cells: \(error)")
             }
         }
     }
