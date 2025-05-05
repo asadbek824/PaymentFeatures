@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		496F378F2DB300A5007E6455 /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 496F378E2DB300A5007E6455 /* DesignSystem.framework */; };
+		76AF1AD32DC8A4070051986F /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF1AB72DC8A4070051986F /* MockData.swift */; };
 		AD7E6C542DC89677009D7601 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7E6C532DC89677009D7601 /* Logger.swift */; };
 /* End PBXBuildFile section */
 
@@ -15,6 +16,7 @@
 		496F378E2DB300A5007E6455 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		598786562DB2743800F69973 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59FB1DE72D9EBDB900D58B5A /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76AF1AB72DC8A4070051986F /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		AD7E6C532DC89677009D7601 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 		AD7E6C522DC8966B009D7601 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				76AF1AB72DC8A4070051986F /* MockData.swift */,
 				AD7E6C532DC89677009D7601 /* Logger.swift */,
 			);
 			path = Helpers;
@@ -177,6 +180,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76AF1AD32DC8A4070051986F /* MockData.swift in Sources */,
 				AD7E6C542DC89677009D7601 /* Logger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
